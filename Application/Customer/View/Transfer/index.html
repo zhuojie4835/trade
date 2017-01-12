@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>艺术品应价交易</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"  />
+    <link rel="stylesheet" href="__CSS__/home.css" />
+    <link rel="stylesheet" href="__CSS__/idangerous.swiper.css" />
+</head>
+<body class="trade_wrapper">
+<div class="art_top">
+    <div class="art_t_l fl">
+        <div class="arrow-left arrow-box" >
+            <a onclick="javascript:history.go(-1);"> <b class="aleft"><i class="left-arrow1"></i><i class="left-arrow2"></i></b></a>
+        </div>
+    </div>
+    <div class="art_t_c fl"><span>定向转让</span></div>
+</div>
+
+<div class="intent_con">
+    <div class="intent_con_label">
+        <label class="intent_con_labels">产品:</label>
+        <span>易经书法 600001</span>
+    </div>
+    <div class="intent_con_label">
+        <label  class="intent_con_labels">对方账号:</label>
+        <input class="intent_con_label_input" type="text" placeholder="请输入对方账号" />
+    </div>
+    <div class="intent_con_label">
+        <label  class="intent_con_labels">方向:</label>
+        <input class="checked-btn intent_con_label_btn btnmar" type="button" value="买入" />
+        <input class="checked-btn intent_con_label_btn" type="button" value="卖出" />
+    </div>
+    <div class="intent_con_label">
+        <label class="intent_con_labels">价格:</label>
+        <input class="intent_con_label_input" type="text" placeholder="请设置转让价格" />
+    </div>
+    <div class="intent_con_label">
+        <label  class="intent_con_labels">数量:</label>
+        <input class="intent_con_label_input" type="text" placeholder="请设置转让数量" />
+    </div>
+    <div class="intent_con_label">
+        <label class="intent_con_labels">校验码:</label>
+        <input class="intent_con_label_input" type="text" placeholder="请设置4位数校验码" />
+    </div>
+    <div class="intent_con_label">
+        <label class="intent_con_labels">&nbsp;</label>
+        <p><label><input class="intent_con_label_check" type="checkbox" checked/> 我同意《<a href="#">意向交易协议</a>》</label></p>
+    </div>
+    <div class="clear"></div>
+    <div class="intent_con_btn">
+        <input type="button" value="提交" />
+    </div>
+</div>
+
+<div class="user_pro_list">
+    <div class="tabs">
+        <ul>
+            <li class="active"><a href="javascript:;">我发起的</a></li>
+            <li><a href="javascript:;" >我收到的</a></li>
+        </ul>
+    </div>
+    <div id="user-tabs-container" class="swiper-container tableswiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="user_box new_user_box">
+                    <div class="user_box_tit intent_box_tit">
+                        <ul>
+                            <li class="new-li">产品</li>
+                            <li>方向</li>
+                            <li class="new-li">对手账号</li>
+                            <li>检验码</li>
+                            <li class="new-li-last">状态</li>
+                        </ul>
+                    </div>
+                    <div class="user_box_table intent_box_table">
+                        <ul>
+                            <li>
+                                <dl class="click_dl">
+                                    <dd class="lhdd new-li"><span>易经书法<br/>600001</span></dd>
+                                    <dd>买</dd>
+                                    <dd class="new-li">13888888888</dd>
+                                    <dd>4567</dd>
+                                    <dd class="new-li-last">待处理</dd>
+                                    <div class="clear"></div>
+                                    <div class="hide_ul">
+                                        <span>价格:50000</span>
+                                        <span>数量:100</span>
+                                        <input type="button" value="取&nbsp;消" />
+                                    </div>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl class="click_dl">
+                                    <dd class="lhdd new-li"><span>易经书法<br/>600001</span></dd>
+                                    <dd>买</dd>
+                                    <dd class="new-li">13888888888</dd>
+                                    <dd>4567</dd>
+                                    <dd class="new-li-last">待处理</dd>
+                                    <div class="clear"></div>
+                                    <div class="hide_ul">
+                                        <span>价格:50000</span>
+                                        <span>数量:100</span>
+                                        <input type="button" value="取&nbsp;消" />
+                                    </div>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="user_box new_user_box">
+                    <div class="user_box_tit intent_box_tit">
+                        <ul>
+                            <li class="new-li">产品</li>
+                            <li>方向</li>
+                            <li class="new-li">发起人</li>
+                            <li>校验码</li>
+                            <li class="new-li-last">状态</li>
+                        </ul>
+                    </div>
+                    <div class="user_box_table intent_box_table">
+                        <ul>
+                            <li>
+                                <dl class="click_dl">
+                                    <dd class="lhdd new-li"><span>易经书法<br/>600001</span></dd>
+                                    <dd>买</dd>
+                                    <dd class="new-li">188****2123</dd>
+                                    <dd>4567</dd>
+                                    <dd class="new-li-last">待处理</dd>
+                                    <div class="clear"></div>
+                                    <div class="hide_ul two_hide">
+                                        <span>价格：50000</span>
+                                        <span>数量：100</span>
+                                        <input class="ok_acc" type="button" value="接&nbsp;受"/>
+                                    </div>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl class="click_dl">
+                                    <dd class="lhdd new-li"><span>易经书法<br/>600001</span></dd>
+                                    <dd>买</dd>
+                                    <dd class="new-li">188****2123</dd>
+                                    <dd>4567</dd>
+                                    <dd class="new-li-last">待处理</dd>
+                                    <div class="clear"></div>
+                                    <div class="hide_ul two_hide">
+                                        <span>价格：50000</span>
+                                        <span>数量：100</span>
+                                        <input class="ok_acc" type="button" value="接&nbsp;受"/>
+                                    </div>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hidden_box">
+    <div class="hidebox"></div>
+    <div class="ok_box">
+        <div class="ok_box_con">
+            <h2>确认接受 188****1234 发起的意向交易，</h2>
+            <p><label>校验码:</label><b>4567</b></p>
+            <p><label>产品:</label>易经书法</p>
+            <p><label>产品代码:</label>600001</p>
+            <p><label>方向:</label>买入</p>
+            <p><label>价格:</label>50000</p>
+            <p><label>数量:</label>100</p>
+        </div>
+        <div class="ok_box_foot">
+            <input type="button" class="closeBox" value="取&nbsp;&nbsp;消" />
+            <input type="button" value="接受交易" id="ok_box_ok" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript" src="__JS__/idangerous.swiper.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var tabsSwiper = new Swiper('#user-tabs-container',{
+            speed:500,
+            onSlideChangeStart: function(){
+                $(".tabs .active").removeClass('active')
+                $(".tabs li").eq(tabsSwiper.activeIndex).addClass('active')
+            }
+        })
+        $(".tabs li").on('touchstart mousedown',function(e){
+            e.preventDefault();
+            $(".tabs .active").removeClass('active');
+            $(this).addClass('active');
+            tabsSwiper.swipeTo( $(this).index() );
+        })
+        $(".tabs li").click(function(e){
+            e.preventDefault();
+        });
+        $(".checked-btn").on("click",function(){
+            $(".checked-btn").removeClass("on");
+             $(this).addClass("on");
+        });
+        $(".click_dl").on("click",function(){
+            $(".hide_ul").height("0");
+            $(this).find(".hide_ul").height("30px");
+        });
+
+        $(function(){
+            $(".ok_acc").on("click",function(){
+                $(".hidden_box").addClass("show_box");
+            });
+            $(".closeBox").on("click",function(){
+                $(".hidden_box").removeClass("show_box");
+            });
+        });
+
+
+    });
+</script>
+</body>
+</html>

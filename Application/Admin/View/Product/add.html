@@ -1,0 +1,228 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>{$meta_title}</h2>
+	</div>
+	<div class="tab-wrap">
+		<ul class="tab-nav nav">
+			<li data-tab="tab1" class="current"><a href="javascript:void(0);">产品信息</a></li>
+			<li data-tab="tab2"><a href="javascript:void(0);">交易信息</a></li>
+		</ul>
+		<div class="tab-content">
+			<form action="{:U()}" method="post" class="form-horizontal">
+				<!-- 产品信息 -->
+				<div id="tab1" class="tab-pane in tab1">
+					<div class="form-item">
+						<label class="item-label">产品状态<span class="check-tips"></span></label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.agent_type_text}</span>
+							<else/>
+								<select name="status">
+									<volist name="_status_val" id="vo">
+										<option value="{$key}" <if condition="$key eq $info[status]">selected</if>>{$vo}</option>
+									</volist>
+								</select>
+							</if>
+							
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">
+							商品编号<span class="check-tips"></span>
+						</label>
+						<div class="controls">
+							<if condition="$is_view OR $is_edit">
+								<span>{$info.number}</span>
+							<else/>
+								<input type="text" name="number" class="text " value="{$info.number}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">商品名称</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.product_name}</span>
+							<else/>
+								<input type="text" name="product_name" class="text " value="{$info.product_name}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">商品简称</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.short_name}</span>
+							<else/>
+								<input type="text" name="short_name" class="text " value="{$info.short_name}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">行业</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.industry}</span>
+							<else/>
+								<select name="industry">
+									<volist name="_industry_val" id="vo">
+										<option value="{$key}" <if condition="$key eq $info[industry]">selected</if>>{$vo}</option>
+									</volist>
+								</select>
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">发行方式</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.issue_type}</span>
+							<else/>
+								<select name="issue_type">
+									<volist name="_issue_type_val" id="vo">
+										<option value="{$key}" <if condition="$key eq $info[issue_type]">selected</if>>{$vo}</option>
+									</volist>
+								</select>
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">认购说明</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.buy_description}</span>
+							<else/>
+								<input type="text" name="buy_description" class="text " value="{$info.buy_description}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">产品介绍</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.detail}</span>
+							<else/>
+								<input type="text" name="detail" class="text " value="{$info.detail}">
+							</if>
+						</div>
+					</div>
+				</div>
+
+				<!-- 交易信息 -->
+				<div id="tab2" class="tab-pane tab2">
+					<div class="form-item">
+						<label class="item-label">发行价格</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.issue_price}</span>
+							<else/>
+								<input type="text" name="issue_price" class="text " value="{$info.issue_price}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">发行数量</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.issue_number}</span>
+							<else/>
+								<input type="text" name="issue_number" class="text " value="{$info.issue_number}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">单笔申购最低数量</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.once_min}</span>
+							<else/>
+								<input type="text" name="once_min" class="text " value="{$info.once_min}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">单笔申购最高数量</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.once_max}</span>
+							<else/>
+								<input type="text" name="once_max" class="text " value="{$info.once_max}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">申购单位数量</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.unit}</span>
+							<else/>
+								<input type="text" name="unit" class="text " value="{$info.unit}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">客户最高申购数量</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.customer_max}</span>
+							<else/>
+								<input type="text" name="customer_max" class="text " value="{$info.customer_max}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">认购结束时间</label>
+						<div class="controls">
+							<if condition="$is_view">
+								<span>{$info.sub_end_time|date='Y-m-d H:i:s',###}</span>
+							<else/>
+								<input type="text" name="sub_end_time" class="text time" value="{$info.sub_end_time|date='Y-m-d H:i:s',###}">
+							</if>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-item">
+					<if condition="$is_edit">
+						<input type="hidden" name="id" value="{$info.id}">
+					</if>
+					<if condition="$is_view">
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					<else/>
+						<button type="submit" id="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					</if>
+					
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+	<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+	<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+		$('.time').datetimepicker({
+	        format: 'yyyy-mm-dd hh:ii:ss',
+	        language:"zh-CN",
+	        minView:'0',
+	        autoclose:true
+	    });
+		$(function(){
+			showTab();
+			$("input[name=reply]").change(function(){
+				var $reply = $(".form-item.reply");
+				parseInt(this.value) ? $reply.show() : $reply.hide();
+			}).filter(":checked").change();
+		});
+		//导航高亮
+		highlight_subnav('{:U('Product/index')}');
+	</script>
+</block>

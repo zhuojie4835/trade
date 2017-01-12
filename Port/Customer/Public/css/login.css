@@ -1,0 +1,67 @@
+/*全局*/
+html{ overflow-x:auto; overflow-y:auto;}
+.bgwhite{background:#fff;}
+.bgblack{background:#000;}
+.bgorange{background:#D5A74F;}
+.bgdescription{background:#e6e6e6;}
+*{ padding:0; margin:0;}
+ul, ol,li{ list-style-type:none;}
+body, button, input, select, textarea{ font-family:'microsoft yahei'; font-size:12px;background:#fff;}
+code, kbd, pre, samp { font-family:'microsoft yahei';}
+a{ text-decoration:none; color:#333;
+    /*-webkit-transition: all 0.2s ease-out 0s;  -moz-transition: all 0.2s ease-out 0s;  -o-transition: all 0.2s ease-out 0s;  transition: all 0.2s ease-out 0s;*/
+}
+a:hover{ cursor:pointer;}
+a:active{color:#333;}
+img{border:0; max-width:100%;}
+li { line-height:normal; }
+table { border-collapse: collapse; border-spacing: 0; }
+h1,h2,h3,h4,h5,h6{margin:0; font-weight:normal; font-family:'microsoft yahei',Arial; }
+input,table,tr,td{ margin:0; padding:0; border:none;}
+button,table{ border:none; background:none; margin:0; padding:0;}
+body{ position:relative;overflow-x:hidden;}
+select{ margin:0; padding:0; font-family:'microsoft yahei',Arial;}
+input{ outline:none;}
+textarea{ resize:none; outline:none;  }
+em{ font-style: normal; }
+.fl{float:left;}
+.fr{float:right;}
+.clear{clear:both;}
+*,*:before,*:after {  -webkit-box-sizing: border-box;  -moz-box-sizing: border-box;  box-sizing: border-box;}
+/*登录页面*/
+.form_box {  width: auto;  height: auto;  margin: 15px 10px;  padding: 30px 0 40px;   }
+.logo_box {  width: auto;  height: auto;  text-align: center;margin: 25px 10%;   }
+.login_box{ margin:50px 15% 0;}
+.type_box{ width:auto; height:auto; margin-bottom:22px;}
+.type_box input{color:#131313; width:100%; height:40px; background:#fff; border:1px solid #c2c2c2;padding-left:10px; line-height:40px;}
+.type_box input.type_checkbox{    border: 1px solid #131313;  border-radius: 2px;  width: 15px;  height: 15px;  float: left;  margin: 8px 3px;  position: relative;}
+.type_box label{height:30px; line-height:30px;}
+.type_btn, .type_word{width:auto; height:auto;}
+.type_btn input{ background:#f8bb43; border:1px solid #7e6129;width:100%; height:40px; line-height:40px; font-size:14px;}
+.type_word span{ line-height:40px; height:40px;}
+.type_word span a{ color:#f38400;}
+.paytitle {  width: 80%;  height: 21px;  border-bottom: 1px solid #a9a9a9;  margin: 10px auto 8px;  text-align: center;  }
+.paytitle span {  color: #202020; font-size:14px;  display: inline-block;  text-align: center;  background: #fff;line-height:40px; padding: 0 10px;  }
+.weixinBg {  width: 100%;  margin: 15px auto 0 auto;  text-align: center;  }
+/*注册页面*/
+.code_type input.input_box{  width:30%; float:right; padding-left:5px; background:#f8bb43; border:1px solid #7e6129; color:#000;}
+.code_type input{float:left; width:60%;}
+
+.bgregister{background:#f3f3f3;}
+.registertop{width:100%;height:35px; background:#da2f35; text-align: center; color:#fff; line-height:35px;}
+.registercon{width:auto; height:auto; padding:0 20px;}
+.reg_con{margin:20px auto; padding:30px 0; text-align: center;  background:#fff;}
+.reg_con p{height:35px; line-height:35px;font-size:14px;}
+.reg_con a{  color:#fff; background:#f8bb43;margin:20px auto 0; padding:10px 0; display:block; width:80%;  border-radius: 5px;}
+
+.white_content {  display: none;  position: absolute;  top: 2%;  left: 4%;  width: 92%;  height: auto;  z-index: 1002;  }
+.clause_word .close {  color: #fff;  position: absolute; top: -2px;  right: -2px;  padding: 4px 6px 6px;  -webkit-border-radius: 0 5px 0 5px;  -moz-border-radius: 0 5px 0 5px;  -o-border-radius: 0 5px 0 5px;  border-radius: 0 5px 0 5px;  background: #ffb328;  }
+.clause_detail {padding:0 15px; width: auto;  height: 380px;  overflow-y: auto;  overflow-x: hidden;  }
+.clause_word {  width: auto;  height: 400px;  margin: 0 auto;  position: relative;  padding: 15px 0;  border: 2px solid #999;  -webkit-border-radius: 5px;  -moz-border-radius: 5px;  -o-border-radius: 5px;  border-radius: 5px;  background: #fff;  }
+.clause_word p {text-indent:2em; width: auto;  color: #111111;  text-align: left;  line-height: 24px;  padding: 0 10px;  margin: 0 0 5px 0;  }
+.clause_detail p.notice_butn {  text-align: center;  }
+.clause_detail b{font-size:14px; line-height:40px;}
+.clause_detail h2{ text-align: right; font-size:12px;}
+.clause_detail h3{font-size:14px; text-align: center; font-weight:bold;}
+.clause_detail p input {  width: 44%;  height: 30px;  color: #101010;  margin-top: 10px;  -webkit-border-radius: 5px;  -moz-border-radius: 5px;  -o-border-radius: 5px;  border-radius: 5px;  border: none;  font-size: 14px;  padding: 0 8px 3px;  font-family: microsoft yahei;  background: #ffb328;  }
+.black_overlay {  display: none;  position: fixed;  top: 0%;  left: 0%;  width: 100%;  height: 100%;  background-color: black;  z-index: 1001;  -moz-opacity: 0.6;  opacity: .60;  filter: alpha(opacity=60);  }

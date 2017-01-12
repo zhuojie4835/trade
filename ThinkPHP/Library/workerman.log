@@ -1,0 +1,19 @@
+2017-01-10 20:14:49 pid:4407 Workerman[index.php] start in DAEMON mode
+2017-01-10 20:15:56 pid:4423 Workerman[index.php] status 
+2017-01-10 20:30:14 pid:4599 Workerman[index.php] status 
+<<<<<<< HEAD
+<<<<<<< HEAD
+2017-01-12 16:02:38 pid:8564 Workerman[admin.php] start in DAEMON mode
+2017-01-12 16:02:43 pid:8568 Workerman[admin.php] status 
+2017-01-12 17:21:43 pid:9392 Workerman[admin.php] stop 
+2017-01-12 17:21:43 pid:9392 Workerman[admin.php] is stoping ...
+2017-01-12 17:21:43 pid:8566 Workerman[admin.php] Stopping ...
+2017-01-12 17:21:43 pid:8566 Workerman[admin.php] has been stopped
+2017-01-12 17:21:43 pid:9392 Workerman[admin.php] stop success
+2017-01-12 17:22:29 pid:9403 Workerman[admin.php] status 
+2017-01-12 17:22:29 pid:9403 Workerman[admin.php] not run
+=======
+>>>>>>> master
+=======
+>>>>>>> master
+2017-01-12 18:01:32 pid:9434 Workerman[admin.php] start in DAEMON mode

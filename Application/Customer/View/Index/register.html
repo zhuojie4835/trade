@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+    <title>用户注册</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/login.css" />
+	<script language="JavaScript" src="__JS__/jquery.js"></script>
+</head>
+<body>
+<div class="form_box">
+    <!---------- logo内容 ---------->
+    <div class="logo_box">
+        <img src="__IMG__/logo.jpg" />
+    </div>
+    <!---------- 表单内容 ---------->
+    <form action="" id="login_form">
+        <div class="login_box">
+
+            <div class="type_box login_type">
+                <input type="text" placeholder="请输入您的真实姓名" name="name" />
+            </div>
+
+            <div class="type_box login_type">
+                <input type="text" placeholder="请输入您的身份证号码" name="id_card_number" />
+            </div>
+
+            <div class="type_box login_type code_type">
+               <input type="text" placeholder="请输入手机号" name="login_name" id="mobile" value=""><input class="input_box" type="button" value="发送验证码" /><div class="clear"></div>
+            </div>
+
+            <div class="type_box login_type">
+               <input type="text" placeholder="请输入手机验证码" name="sms_code" />
+            </div>
+
+            <div class="type_box login_type">
+               <input type="password" placeholder="请输入6-20位密码，可输入字母、数字、下划线" name="password" />
+            </div>
+
+            <div class="type_box login_type">
+                <input type="text" placeholder="请输入服务商编号（必填）" name="agent_number" value="500010"/>
+            </div>
+
+            <div class="type_box login_type">
+                <input type="text" placeholder="请输入介绍人账号（非必填）" name="parent1" />
+                <label><input class="type_checkbox" type="checkbox" checked />我已阅读并同意</label><a onclick="ShowDiv('MyDiv','fade')" href="#">《风险揭示书》</a>
+            </div>
+
+            <div class="type_btn">
+                <input type="button" id="okBtn" value="立即注册" />
+            </div>
+            <div class="type_word">
+                <span class="blue fr"><a href="{:U('login')}">已有账号？立即登录</a></span>
+                <div class="clear"></div>
+            </div>
+            <div class="type_word" style="text-align: center">
+                <span class="blue">没有邀请人编号？请联系您的服务商，或联系<br/><a href="#">在线客服</a></span>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--风险提示书-->
+<div id="fade" class="black_overlay"></div>
+<div id="MyDiv" class="white_content">
+    <div class="clause_word">
+        <div class="close" onclick="closeDiv('MyDiv','fade')">关闭</div>
+        <div class="clause_detail">
+            <h3>一带一路国际文化艺术品交易平台艺术品投资风险揭示书 （暂行）</h3>
+            <b>尊敬的投资人：</b>
+            <p> 艺术品转让交易同其他投资一样，风险和收益并存。为了使您充分了解投资风险，特提供《一带一路国际文化艺术品交易平台艺术品投资风险揭示书》（以下简称“本风险揭示书”），在投资人选择进入一带一路国际文化艺术品交易平台（以下简称“交易平台”）进行转让交易后，则视为已仔细阅读本风险揭示书并自愿承担投资风险。</p>
+            <p> 投资人进行艺术品转让交易存在的风险可能导致投资人亏损，投资人应自行承担。风险包括但不限于：</p>
+            <b> 一. 政策及市场风险</b>
+            <p> 因国家宏观经济形势变化、艺术品市场价值走向变化，以及相关法律、法规政策等变化，均可能导致艺术品价格上下波动。</p>
+            <b> 二. 艺术品确真鉴定与价值评估风险</b>
+            <p> 艺术品投资具有其特性和独特的风险，其中包括艺术品真伪鉴定和价值评估的风险。</p>
+            <p> 艺术品的艺术价值和市场价值可能发生变化及争议并由此可能造成艺术品的价格变化和波动。</p>
+            <b> 三. 艺术品存管、物流、保险风险艺术品在存管、运输、展示等过程中，可能出现破损、遗失等情况，由此可能导致艺术品贬值、交易停牌及艺术品退出交易平台。</b>
+            <b> 四. 艺术品交易市场风险</b>
+            <p> 艺术品交易市场的相关风险包括如投资人会员盲目从众投资的问题，转让价格与艺术品的市场价值严重脱钩等等问题。艺术品交易市场仍然是一个新型的交易模式，相关政策和交易规范要求的变化也可能带来投资风险。</p>
+            <b> 五. 艺术品差异的风险</b>
+            <p> 不同的艺术品具有不同的投资特点和投资风险，影响因素包括艺术家的学术地位和市场认可程度、艺术品的市场价值、艺术品的交易方式等因素所带来的差异性，投资人需详细阅读转让方提供的相关文件的内容。</p>
+            <b> 六. 软件应用风险</b>
+            <p> (一)因转让成交、清算交收及资金转账是通过电子通讯技术和电脑技术实现，在交易平台已采取相关防护措施的情况下仍存在交易网络戒数据库被攻击与病毒感染的可能，同时，通讯技术、电脑技术和相关软件本身具有存在缺陷的可能。</p>
+            <p> (二)交易平台无法控制和不可预测的系统故障、设备故障、通讯故障、电力故障等可能导致艺术品交易系统和银行结算系统不能正常运行甚至瘫痪，可能使您的转让申请和资金转账受到影响。</p>
+
+            <p> (三)因互联网故障等原因可能使交易指令出现中断、中止、延迟等情况，导致交易申报无法成交、无法全部成交戒延迟成交。</p>
+            <p>
+            <p> (四)因网络故障，可能出现：</p>
+            <p> 1. 投资人电脑界面已经显示申报提交，而交易平台主机未接到其申请指令，从而投资人实际未能实现转让和受让的风险；</p>
+            <p> 2. 投资人因电脑界面申请显示转让交易未成功而再次发出申请指令，交易平台服务器因此可能收到两次申请指令并按其指令进行交易，由此给投资人带来重复买卖的风险。</p>
+
+            <p> (五)因投资人使用的计算机被病毒侵入、黑客攻击等导致的密码泄露、账号泄露及投资人身份被冒用，导致无法正确下达申请指令、恶意虚假申请及申请失败、延迟、错误等。</p>
+
+            <p> (六)投资人电脑设备及软件系统与交易平台提供的网上交易系统不匹配，可能导致无法下达申请指令及申请失败、延迟等。</p>
+
+            <b> 七. 不可抗力因素导致的风险</b>
+            <p> 诸如地震、台风、火灾、水灾、战争、瘟疫、社会动乱等不可抗力因素可能带来的风险；</p>
+            <p> 上述风险可能会导致投资人艺术品收藏投资的损失。投资人应确保已对上述风险有客观理性的认识。</p>
+
+            <b> 特别提示：</b>
+            <p> 本风险揭示书并不能揭示从事艺术品转让交易的全部风险及艺术品交易市场的全部情形。交易平台敬告投资人，应当根据自身的经济条件、风险偏好和心理承受能力认真制定投资策略。</p>
+            <p> 在投资人参与艺术品转让交易之时，交易平台郑重提醒投资人，认真阅读并谨记以下条款：</p>
+
+            <p> 1. 请合理配置个人资产投资的比例和配置，不要将个人全部资产投入到艺术品。</p>
+            <p> 2. 请理性管理个人财富，不要将生活必需资金、自用住房抵押贷款及其他借款投入到艺术品，应留有适当资金以备不时之需。</p>
+            <p> 3. 请客观评估自己投资抗风险能力，正确运用投资策略。</p>
+            <p> 4. 请认真了解所投资的艺术品的相关信息，不能仅凭市场传言盲目操作。</p>
+            <p> 5. 请认真了解艺术品投资的投资模式和特点，了解不同艺术品的差异和特点。</p>
+            <p> 6. 请认真了解并掌握艺术品投资所需的必要知识和相关法规，积极参与交易平台举办的讲座，提高自身的投资能力和自我保护的能力。</p>
+            <p> 7. 请认真了解交易平台相关艺术品转让的管理规则和交易制度，随时关注交易平台的调整、公告和补充规定。</p>
+            <p> 交易平台未授权任何个人与组织进行艺术品转让交易委托业务。为保护投资人的合法权益，请不要与任何人签订艺术品转让交易委托代理协议。交易平台的所有交易资金划拨均是通过交易平台指定的银行账户实现，请不要把艺术品投资资金支付给任何其他账户，否则由此引发的一切后果将由投资人自行承担。</p>
+            <p> 本交易平台郑重提醒投资人，艺术品投资是一种带有投资风险的投资行为，请分清投资不投机、收益与风险之间的关系，树立正确的投资理念和投资回报期望值。投资有风险，决策应理智。</p>
+
+            <h2> 一带一路国际文化艺术品交易平台</h2>
+            <h2>二 O 一六年十一月</h2>
+
+            <p class="notice_butn"><input type="button" value="不同意" onclick="closeDiv('MyDiv', 'fade')">&nbsp;&nbsp;<input type="button" value="同意" onclick="closeDiv('MyDiv', 'fade')"></p>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script>
+    var oBtn = document.getElementById("okBtn");
+    oBtn.onclick = function(){
+		var query  = $("#login_form").serialize();
+		$.post("{:U('register')}",query,function(data){
+			if(data.status == 1){
+				window.location.href = "{:U('Index/registerOk')}";
+			}else {
+				alert(data.msg);
+				return false;
+			}
+	   },'json');
+    }
+	
+    //弹出隐藏层
+    function ShowDiv(show_div, bg_div) {
+        document.getElementById(show_div).style.display = 'block';
+        document.getElementById(bg_div).style.display = 'block';
+        var bgdiv = document.getElementById(bg_div);
+        bgdiv.style.width = document.body.scrollWidth;
+        $("#"+bg_div).height($(document).height());
+    }
+    ;
+    //关闭弹出层
+    function closeDiv(show_div, bg_div)
+    {
+        document.getElementById(show_div).style.display = 'none';
+        document.getElementById(bg_div).style.display = 'none';
+    }
+    ;
+
+</script>
+</body>
+</html>
+=======
+</html>

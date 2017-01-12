@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>充值</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"  />
+    <link rel="stylesheet" href="__CSS__/home.css" />
+</head>
+<body class="trade_wrapper">
+<div class="art_top">
+    <div class="art_t_l fl">
+        <div class="arrow-left arrow-box" >
+            <a onclick="javascript:history.go(-1);"> <b class="aleft"><i class="left-arrow1"></i><i class="left-arrow2"></i></b></a>
+        </div>
+    </div>
+    <div class="art_t_c fl"><span>充值</span></div>
+</div>
+
+<div class="deposit_topall">
+    <div class="deposit_top deposit_price"><span>账户:</span><em>18898752300</em></div>
+    <div class="deposit_top deposit_price"><span>可用:</span><em>1000,00</em></div>
+</div>
+
+<div class="deposit_type">
+    <p>存入金额:</p>
+    <!--<ul class="num_ul">-->
+        <!--<li data-id="20000" class="on"><a href="javascript:;">20,000</a></li>-->
+        <!--<li data-id="10000"><a href="javascript:;">10,000</a></li>-->
+        <!--<li data-id="5000"><a href="javascript:;">5,000</a></li>-->
+        <!--<li data-id="2000"><a href="javascript:;">2,000</a></li>-->
+        <!--<li data-id="1000"><a href="javascript:;">1,000</a></li>-->
+        <!--<li data-id="newNum"><a href="javascript:;">其他金额</a></li>-->
+        <!--<div class="clear"></div>-->
+    <!--</ul>-->
+    <input class="num_input" id="numVal" type="text" />
+    <p>存入方式:</p>
+    <ul class="bank_ul">
+        <li data-id="1" class="on"><a href="javascript:;">银联支付</a></li>
+        <li data-id="2"><a href="javascript:;">微信支付</a></li>
+        <div class="clear"></div>
+    </ul>
+    <p>请选择支付银行</p>
+    <ul class="bank_ul">
+        <li>
+            <select>
+                <option>请选择支付银行</option>
+                <option>光大银行</option>
+                <option>招商银行</option>
+            </select>
+        </li>
+        <div class="clear"></div>
+    </ul>
+    <div class="clear"></div>
+    <input class="ok_input" type="button" id="okBtn" value="提&nbsp;&nbsp;交" />
+</div>
+
+<div class="deposit_about">
+    <p>温馨提示：</p>
+    <p>1）请注意所有入金出金款项均会实时更新显示在账户中，本公司不会另行发出</p>
+    <p>入账通知书。若支付超过5分钟还未到账，请及时联系客服热线400-829-3199进行处理；</p>
+    <p>2）请在支付之前确认您的银行卡已开通银联无卡支付功能，否则会提示“您的银行卡未开通网上支付权限”；</p>
+    <p>3）请确认在支付之前您的银行卡有对应的网上支付额度，入金额度由您所持银行卡的网上支付额度和银行配置给第三方支付平台的额度来决定；</p>
+    <p>4）客户充值不收取任何手续费；</p>
+    <p>5）若您有任何问题，欢迎致电400-829-3199客服中心。</p>
+
+</div>
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#okBtn").on("click",function(){
+            var bank ="",num="";
+            var banktype = $(".bank_ul").find("li.on").attr("data-id");
+
+            var numtype = $(".num_ul").find("li.on").attr("data-id");
+            if(numtype == "newNum"){
+                if($("#numVal").val() == ""){
+                    alert("请输入值");
+                    return;
+                }
+                num = $("#numVal").val();
+            }else{
+                num = numtype;
+            }
+
+            if(banktype == "1"){
+                bank = "银联支付";
+            }else{
+                bank = "微信支付";
+            }
+            alert("入金金额:"+num+",选择入金方式:"+bank+"");
+        });
+
+
+        var nums = $(".num_ul").find("li");
+        nums.on("click",function(){
+            $(".num_ul").find("li").removeClass("on");
+            $(this).addClass("on");
+            if($(this).attr("data-id") == "newNum"){
+                $(".num_input").show();
+            }else{
+                $(".num_input").hide();
+            }
+        });
+
+        var bank = $(".bank_ul").find("li");
+        bank.on("click",function(){
+            $(".bank_ul").find("li").removeClass("on");
+            $(this).addClass("on");
+        });
+
+    });
+</script>
+</body>
+</html>

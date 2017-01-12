@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>挂单记录</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"  />
+    <link rel="stylesheet" href="__CSS__/home.css" />
+</head>
+<body class="trade_wrapper">
+<div class="art_top">
+    <div class="art_t_l fl">
+        <div class="arrow-left arrow-box" >
+            <a onclick="javascript:history.go(-1);"> <b class="aleft"><i class="left-arrow1"></i><i class="left-arrow2"></i></b></a>
+        </div>
+    </div>
+    <div class="art_t_c fl"><span>挂单记录</span></div>
+    <div class="art_t_r paddingb fl">
+        <a id="search_time" href="javascript:;"><img src="__IMG__/search.png" /></a>
+        <ul class="show_ul" id="show_ul">
+            <li><a href="javascript:;" onclick="showThis(this)">一周内</a></li>
+            <li><a href="javascript:;" onclick="showThis(this)">一月内</a></li>
+            <li><a href="javascript:;" onclick="showThis(this)">三月内</a></li>
+        </ul>
+    </div>
+</div>
+<!--<div class="art_pro_content">-->
+    <!--<div class="records_time">-->
+        <!--<input type="text" placeholder="开始时间" />-->
+        <!--<input type="text" placeholder="结束时间" />-->
+        <!--<div class="clear"></div>-->
+        <!--<input type="button" value="查&nbsp;询" class="btn_input" />-->
+        <!--<div class="clear"></div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="sub_content">
+    <div class="user_box">
+        <div class="user_box_tit">
+            <ul>
+                <li>产品</li>
+                <li>数量@价格</li>
+                <li>订单状态</li>
+                <li>时间</li>
+            </ul>
+        </div>
+        <div class="user_box_table">
+            <ul>
+                <volist name="list" id="vo">
+                    <li>
+                        <dl>
+                            <dd class="lhdd"><span>{$vo.direct_text} {$vo.short_name} <br/>{$vo.product_number}</span></dd>
+                            <dd class="lhdd">{$vo.volume_p}@<br/>{$vo.price}</dd>
+                            <dd>{$vo.gd_status_text}</dd>
+                            <dd  class="lhdd">{$vo.create_time|date='H:i:s',###}<br/>{$vo.create_time|date='Y/m/d',###}</dd>
+                            <div class="clear"></div>
+                        </dl>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+    window.onload = function(){
+        var isOut = true;
+        var dom = document.getElementById('search_time');
+        var showUl = document.getElementById("show_ul");
+        var other = window.document;
+        other.onclick = function(){
+            if(isOut){
+                showUl.className = "show_ul";
+            }
+            isOut = true;
+        }
+        dom.onclick = function(){
+            isOut = false;
+            showUl.className = "show_ul on";
+        }
+    }
+
+    function showThis(e){
+        alert(e.innerHTML);
+    }
+
+</script>
+
+
+
+
+</body>
+</html>

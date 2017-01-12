@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"  />
+    <link rel="stylesheet" href="__CSS__/home.css" />
+</head>
+<body class="trade_wrapper">
+<div class="art_top">
+    <div class="art_t_l fl">
+        <div class="arrow-left arrow-box" >
+            <a onclick="javascript:history.go(-1);"> <b class="aleft"><i class="left-arrow1"></i><i class="left-arrow2"></i></b></a>
+        </div>
+    </div>
+    <div class="art_t_c fl"><span>个人信息</span></div>
+</div>
+
+<div class="deposit_topall">
+    <div class="deposit_top"><span>账户:</span><em>{$userinfo.mobile}</em></div>
+    <div class="deposit_top"><span>可用:</span><em>{$userinfo.free_money}</em></div>
+</div>
+
+<div class="deposit_topall">
+    <div class="deposit_top"><span>登录手机号:</span><em>{$userinfo.mobile}</em></div>
+    <div class="deposit_top"><span>服务商编号:</span><em>{$userinfo.agent_number}</em></div>
+    <div class="deposit_top"><span>客户类型:</span><em>{$userinfo.user_type_text}</em></div>
+    <div class="deposit_top"><span>姓名:</span><em>{$userinfo.name}</em></div>
+    <div class="deposit_top"><span>身份证号:</span><em>{$userinfo.id_card_number}</em></div>
+    <div class="deposit_top"><span>注册时间:</span><em>{$userinfo.register_time|date='Y-m-d H:i',###}</em></div>
+    <!-- <div class="deposit_btn"><input id="okBtn" type="button" value="保&nbsp;&nbsp;存" /></div> -->
+</div>
+</body>
+<script language="JavaScript" src="__JS__/jquery.js"></script>
+</html>

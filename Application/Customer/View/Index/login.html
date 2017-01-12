@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+    <title>用户登录</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/login.css" />
+	<script language="JavaScript" src="__JS__/jquery.js"></script>
+</head>
+
+<body>
+<div class="form_box">
+    <!---------- logo内容 ---------->
+    <div class="logo_box">
+        <img src="__IMG__/logo.jpg" />
+    </div>
+
+    <!---------- 表单内容 ---------->
+    <form action="" id="login_form">
+        <div class="login_box">
+            <div class="type_box login_type">
+               <input type="text" placeholder="请输入手机号" name="login_name" id="mobile" value="" />
+            </div>
+
+            <div class="type_box login_type">
+               <input type="password" placeholder="请输入密码" name="password" id="password" />
+            </div>
+
+            <!--<div class="type_box login_type">-->
+                <!--<div class="type_name">验证码</div>-->
+                <!--<div class="input_box"><input type="text" placeholder="请输入验证码" name="" id="vcode"></div>-->
+                <!--<div class="check_pic"><img id='code_click' src="App/Common/Common/vcode.php? height=40 & width=100" onclick="this.src = 'App/Common/Common/vcode.php?height=40&width=100&time=' + Math.random()"></div>-->
+            <!--</div>-->
+            <div class="type_btn">
+                <input type="button" id="okBtn" value="登&nbsp;&nbsp;录" />
+            </div>
+            <div class="type_word">
+                <span class="fl"><a href="{:U('getPwd')}">忘记密码？</a></span>
+                <span class="fr">还没有账号？<a href="{:U('register')}">立即注册</a></span>
+                <div class="clear"></div>
+            </div>
+            <div class="type_butn1">
+                <div class="paytitle">
+                    <span>授权登录</span>
+                </div>
+                <div class="weixinBg"><a href="#"  id="weixinID"><img src="__IMG__/wxlogin.png" /></a></div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var oBtn = document.getElementById("okBtn");
+    oBtn.onclick = function(){
+		var query  = $("#login_form").serialize();
+		$.post("{:U('')}",query,function(data){
+			if(data.status == 1){
+				window.location.href = "{:U('index')}";
+			}else {
+				alert(data.msg);
+				return false;
+			}
+	   },'json');
+    }
+</script>
+</body>
+</html>

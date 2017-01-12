@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>艺术品应价交易</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"  />
+    <link rel="stylesheet" href="__CSS__/home.css" />
+    <link rel="stylesheet" href="__CSS__/idangerous.swiper.css" />
+</head>
+<body class="trade_wrapper">
+<div class="art_top">
+    <div class="art_t_l fl"><span>&nbsp;</span></div>
+    <div class="art_t_c fl"><span>艺术品应价交易</span></div>
+    <div class="art_t_r fr">
+        <!--<img src="__IMG__/arrownav.png" />-->
+        &nbsp;
+    </div>
+</div>
+<div class="art_banner">
+    <img src="__IMG__/banner.jpg" />
+</div>
+
+<div class="art_pro_list">
+    <div class="tabs">
+        <ul>
+            <li class="active"><a href="javascript:;">艺术品</a></li>
+            <!--<li><a href="javascript:;" >消费品</a></li>-->
+        </ul>
+    </div>
+    <div id="tabs-container" class="swiper-container margin-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="content-slide">
+                    <ul>
+                        <volist name="list" id="vo">
+                            <li>
+								<if condition="$vo[status] eq 3">
+									<a href="{:U('transaction',array('id'=>$vo[id]))}">
+								<else/>
+									<a href="{:U('product',array('id'=>$vo[id]))}">
+								</if>
+                                    <div class="slide_list">
+                                        <!--<div class="slist_l fl">-->
+                                            <!--<img src="__IMG__/banquan3.png" />-->
+                                        <!--</div>-->
+                                        <div class="slist_c fl">
+                                            <p><b>{$vo.product_name}</b></p>
+                                            <p>藏品代码：{$vo.number}</p>
+                                            <p>截止时间：{$vo.sub_end_time|date='Y-m-d',###}</p>
+                                        </div>
+                                        <div class="slist_rc fr">
+                                            <p>认购报价</p>
+                                            <p class="plus red">{$vo.issue_price}</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </a>
+                                <div class="slist_type type_bg_red"><span>{$vo.status_text}</span></div>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+            <!--<div class="swiper-slide">-->
+                <!--<div class="content-slide">-->
+                    <!--<ul>-->
+                        <!--<li>-->
+                            <!--<a href="subscription.html">-->
+                                <!--<div class="slide_list">-->
+                                    <!--<div class="slist_l fl">-->
+                                        <!--<img src="__IMG__/prolist.jpg" />-->
+                                    <!--</div>-->
+                                    <!--<div class="slist_c fl">-->
+                                        <!--<p><b>油画A</b></p>-->
+                                        <!--<p>编号：0000001</p>-->
+                                        <!--<p>发行时间：2016-11-12</p>-->
+                                    <!--</div>-->
+                                    <!--<div class="slist_r fr">-->
+                                        <!--<p>最新报价</p>-->
+                                        <!--<p class="plus red">123.12</p>-->
+                                        <!--<p class="hs"><span>涨跌</span><span>涨幅</span></p>-->
+                                        <!--<p><span class="red">+0.11</span><span class="red">+0.01%</span></p>-->
+                                    <!--</div>-->
+                                    <!--<div class="clear"></div>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                            <!--<div class="slist_type type_bg_red"><span>认购期</span></div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="trade.html">-->
+                                <!--<div class="slide_list">-->
+                                    <!--<div class="slist_l fl">-->
+                                        <!--<img src="__IMG__/prolist.jpg" />-->
+                                    <!--</div>-->
+                                    <!--<div class="slist_c fl">-->
+                                        <!--<p><b>油画A</b></p>-->
+                                        <!--<p>编号：0000001</p>-->
+                                        <!--<p>发行时间：2016-11-12</p>-->
+                                    <!--</div>-->
+                                    <!--<div class="slist_r fr">-->
+                                        <!--<p>最新报价</p>-->
+                                        <!--<p class="plus red">123.12</p>-->
+                                        <!--<p class="hs"><span>涨跌</span><span>涨幅</span></p>-->
+                                        <!--<p><span class="red">+0.11</span><span class="red">+0.01%</span></p>-->
+                                    <!--</div>-->
+                                    <!--<div class="clear"></div>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                            <!--<div class="slist_type type_bg_red"><span>交易期</span></div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="trade.html">-->
+                                <!--<div class="slide_list">-->
+                                    <!--<div class="slist_l fl">-->
+                                        <!--<img src="__IMG__/prolist.jpg" />-->
+                                    <!--</div>-->
+                                    <!--<div class="slist_c fl">-->
+                                        <!--<p><b>油画A</b></p>-->
+                                        <!--<p>编号：0000001</p>-->
+                                        <!--<p>发行时间：2016-11-12</p>-->
+                                    <!--</div>-->
+                                    <!--<div class="slist_r fr">-->
+                                        <!--<p>最新报价</p>-->
+                                        <!--<p class="plus green">123.12</p>-->
+                                        <!--<p class="hs"><span>涨跌</span><span>涨幅</span></p>-->
+                                        <!--<p><span class="green">+0.11</span><span class="green">+0.01%</span></p>-->
+                                    <!--</div>-->
+                                    <!--<div class="clear"></div>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                            <!--<div class="slist_type type_bg_gray"><span>已停止</span></div>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                 <!--</div>-->
+            <!--</div>-->
+    </div>
+</div>
+
+</div>
+
+<include file="Common/footer"/>
+
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript" src="__JS__/idangerous.swiper.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var tabsSwiper = new Swiper('#tabs-container',{
+            speed:500,
+            onSlideChangeStart: function(){
+                $(".tabs .active").removeClass('active');
+                $(".tabs li").eq(tabsSwiper.activeIndex).addClass('active');
+            }
+        })
+        $(".tabs li").on('touchstart mousedown',function(e){
+            e.preventDefault();
+            $(".tabs .active").removeClass('active');
+            $(this).addClass('active');
+            tabsSwiper.swipeTo( $(this).index() );
+        })
+        $(".tabs li").click(function(e){
+            e.preventDefault();
+        })
+    });
+</script>
+</body>
+</html>

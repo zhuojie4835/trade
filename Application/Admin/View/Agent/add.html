@@ -1,0 +1,124 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>{$meta_title}</h2>
+	</div>
+	<div class="tab-wrap">
+		<ul class="tab-nav nav">
+			<li data-tab="tab1" class="current"><a href="javascript:void(0);">账号资料</a></li>
+			<li data-tab="tab2"><a href="javascript:void(0);">基本资料</a></li>
+		</ul>
+		<div class="tab-content">
+			<form action="{:U()}" method="post" class="form-horizontal">
+				<!-- 基础 -->
+				<div id="tab1" class="tab-pane in tab1">
+					<div class="form-item">
+						<label class="item-label">代理类型<span class="check-tips"></span></label>
+						<div class="controls">
+							<if condition="$is_view OR $is_edit">
+								<span>{$info.agent_type_text}</span>
+							<else/>
+								<select name="agent_type">
+								<volist name="agent_type" id="vo">
+									<option value="{$key}">{$vo}</option>
+								</volist>
+							</select>
+							</if>
+							
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">
+							直属上级编号<span class="check-tips"></span>
+						</label>
+						<div class="controls">
+							<if condition="$is_view OR $is_edit">
+								<span>{$info.parent_number}</span>
+							<else/>
+								<input type="text" name="parent_number" class="text " value="{$info.parent_number}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">代理编号</label>
+						<div class="controls">
+							<if condition="$is_view OR $is_edit">
+								<span>{$info.agent_number}</span>
+							<else/>
+								<input type="text" name="agent_number" class="text " value="{$info.agent_number}">
+							</if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">代理名称</label>
+						<div class="controls">
+							<if condition="$is_view"><span>{$info.agent_name}</span><else/><input type="text" name="agent_name" class="text " value="{$info.agent_name}"></if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">交易分成</label>
+						<div class="controls">
+							<if condition="$is_view"><span>{$info.ratio_jiaoyi}</span><else/><input type="text" name="ratio_jiaoyi" class="text " value="{$info.ratio_jiaoyi}"></if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">发售分成</label>
+						<div class="controls">
+							<if condition="$is_view"><span>{$info.ratio_fashou}</span><else/><input type="text" name="ratio_fashou" class="text " value="{$info.ratio_fashou}"></if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">提货分成</label>
+						<div class="controls">
+							<if condition="$is_view"><span>{$info.ratio_tihuo}</span><else/><input type="text" name="ratio_tihuo" class="text " value="{$info.ratio_tihuo}"></if>
+						</div>
+					</div>
+					
+				</div>
+
+				<!-- 高级 -->
+				<div id="tab2" class="tab-pane tab2">
+					<div class="form-item">
+						<label class="item-label">联络人姓名</label>
+						<div class="controls">
+							<if condition="$is_view"><span>{$info.name}</span><else/><input type="text" name="name" class="text " value="{$info.name}"></if>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">联络人手机号码</label>
+						<div class="controls">
+							<if condition="$is_view"><span>{$info.mobile}</span><else/><input type="text" name="mobile" class="text " value="{$info.mobile}"></if>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-item">
+					<input type="hidden" name="id" value="{$info.id|default=''}">
+					<if condition="$is_view">
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					<else/>
+						<button type="submit" id="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					</if>
+					
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		$(function(){
+			showTab();
+			$("input[name=reply]").change(function(){
+				var $reply = $(".form-item.reply");
+				parseInt(this.value) ? $reply.show() : $reply.hide();
+			}).filter(":checked").change();
+		});
+		//导航高亮
+		highlight_subnav('{:U('agent/index')}');
+	</script>
+</block>

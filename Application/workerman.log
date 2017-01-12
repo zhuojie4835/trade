@@ -1,0 +1,42 @@
+2017-01-10 16:08:59 pid:7257 Workerman[index.php] start in DEBUG mode
+2017-01-10 16:09:07 pid:7257 Workerman[index.php] Stopping ...
+2017-01-10 16:09:07 pid:7257 Workerman[index.php] has been stopped
+2017-01-10 16:10:15 pid:7271 Workerman[index.php] start in DEBUG mode
+2017-01-10 16:10:17 pid:7272 WORKER EXIT UNEXPECTED 
+2017-01-10 16:10:20 pid:7273 WORKER EXIT UNEXPECTED 
+2017-01-10 16:10:22 pid:7274 WORKER EXIT UNEXPECTED 
+2017-01-10 16:10:25 pid:7275 WORKER EXIT UNEXPECTED 
+2017-01-10 16:10:26 pid:7271 Workerman[index.php] Stopping ...
+2017-01-10 16:10:26 pid:7271 Workerman[index.php] has been stopped
+2017-01-10 16:12:24 pid:7289 Workerman[index.php] start in DEBUG mode
+2017-01-10 16:12:29 pid:7289 Workerman[index.php] Stopping ...
+2017-01-10 16:12:29 pid:7289 Workerman[index.php] has been stopped
+2017-01-10 16:13:06 pid:7298 Workerman[index.php] start in DEBUG mode
+2017-01-10 16:17:05 pid:7298 Workerman[index.php] Stopping ...
+2017-01-10 16:17:05 pid:7298 Workerman[index.php] has been stopped
+2017-01-10 16:17:28 pid:7327 Workerman[index.php] status 
+2017-01-10 16:17:28 pid:7327 Workerman[index.php] not run
+2017-01-10 16:17:36 pid:7328 Workerman[index.php] status 
+2017-01-10 16:17:36 pid:7328 Workerman[index.php] not run
+2017-01-10 16:17:40 pid:7329 Workerman[index.php] start in DAEMON mode
+2017-01-10 16:17:48 pid:7333 Workerman[index.php] status 
+2017-01-10 16:17:55 pid:7334 Workerman[index.php] stop 
+2017-01-10 16:17:55 pid:7334 Workerman[index.php] is stoping ...
+2017-01-10 16:17:55 pid:7331 Workerman[index.php] Stopping ...
+2017-01-10 16:17:55 pid:7331 Workerman[index.php] has been stopped
+2017-01-10 16:17:55 pid:7334 Workerman[index.php] stop success
+2017-01-10 16:17:57 pid:7335 Workerman[index.php] status 
+2017-01-10 16:17:57 pid:7335 Workerman[index.php] not run
+2017-01-10 16:23:16 pid:7381 Workerman[index.php] start in DAEMON mode
+2017-01-10 16:24:31 pid:7396 Workerman[index.php] status 
+2017-01-10 16:27:50 pid:7426 Workerman[index.php] status 
+2017-01-10 16:28:38 pid:7437 Workerman[index.php] stop 
+2017-01-10 16:28:38 pid:7437 Workerman[index.php] is stoping ...
+2017-01-10 16:28:38 pid:7383 Workerman[index.php] Stopping ...
+2017-01-10 16:28:38 pid:7383 Workerman[index.php] has been stopped
+2017-01-10 16:28:38 pid:7437 Workerman[index.php] stop success
+2017-01-10 16:28:43 pid:7438 Workerman[index.php] start in DAEMON mode
+2017-01-10 16:32:16 pid:7441 WORKER EXIT UNEXPECTED 
+2017-01-10 16:44:22 pid:7607 Workerman[index.php] start in DEBUG mode
+2017-01-10 16:44:22 pid:7607 Workerman[index.php] already running
+2017-01-10 16:58:34 pid:7484 WORKER EXIT UNEXPECTED 

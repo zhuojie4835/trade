@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>资金流水</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"  />
+    <link rel="stylesheet" href="__CSS__/home.css" />
+</head>
+<body class="trade_wrapper">
+<div class="art_top">
+    <div class="art_t_l fl">
+        <div class="arrow-left arrow-box" >
+            <a onclick="javascript:history.go(-1);"> <b class="aleft"><i class="left-arrow1"></i><i class="left-arrow2"></i></b></a>
+        </div>
+    </div>
+    <div class="art_t_c fl"><span>资金流水</span></div>
+</div>
+<!-- <div class="art_pro_content">
+    <div class="records_time">
+        <input type="text" placeholder="开始时间" />
+        <input type="text" placeholder="结束时间" />
+        <div class="clear"></div>
+        <input type="button" value="查&nbsp;询" class="btn_input" />
+        <div class="clear"></div>
+    </div>
+</div> -->
+
+<div class="sub_content">
+    <div class="user_box">
+        <div class="user_box_tit">
+            <ul>
+                <li>项目</li>
+                <li>变动金额</li>
+                <li>变动后金额</li>
+                <li>时间</li>
+            </ul>
+        </div>
+        <div class="user_box_table">
+            <ul>
+            <volist name="list" id="vo">
+                <li>
+                    <dl>
+                        <dd class="lhdd"><span>{$vo.bussiness_desciption}</span></dd>
+                        <dd><if condition="$vo.money gt 0">+</if>{$vo.money}</dd>
+                        <dd>{$vo[new_money]+$vo[freeze_money]}</dd>
+                        <dd  class="lhdd">{$vo.time}<br/>{$vo.date}</dd>
+                        <div class="clear"></div>
+                    </dl>
+                </li>
+            </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+</body>
+</html>

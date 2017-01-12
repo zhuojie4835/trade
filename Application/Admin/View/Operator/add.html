@@ -1,0 +1,65 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{$meta_title}</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">运营中心编号<span class="check-tips"></span></label>
+            <div class="controls">
+                <if condition="$is_view OR $is_edit">
+                    <span>{$info.operator_number}</span>
+                <else/>
+                    <input type="text" class="text input-large" name="operator_number" value="{$info.operator_number}"><em>*</em>
+                </if>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">联络人姓名<span class="check-tips"></span></label>
+            <div class="controls">
+                <if condition="$is_view">
+                    <span>{$info.name}</span>
+                <else/>
+                    <input type="text" class="text input-large" name="name" value="{$info.name}"><em>*</em>
+                </if>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">联络人手机号码</label>
+            <div class="controls">
+                <if condition="$is_view">
+                    <span>{$info.mobile}</span>
+                <else/>
+                    <input type="text" class="text input-large" name="mobile" value="{$info.mobile}"><em>*</em>
+                </if>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">公司名称<span class="check-tips"></span></label>
+            <div class="controls">
+                <if condition="$is_view">
+                    <span>{$info.company_name}</span>
+                <else/>
+                    <input type="text" class="text input-large" name="company_name" value="{$info.company_name}"><em>*</em>
+                </if>
+            </div>
+        </div>
+        <div class="form-item">
+            <if condition="!$is_view">
+                <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            </if>
+            <if condition="$is_edit">
+                <input type="hidden" name="id" value="{$info.id}">
+            </if>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('operator/index')}');
+    </script>
+</block>

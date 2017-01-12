@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+    <title>找回密码</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/login.css" />
+	<script language="JavaScript" src="__JS__/jquery.js"></script>
+</head>
+
+<body>
+<div class="form_box">
+    <!---------- logo内容 ---------->
+    <div class="logo_box">
+        <img src="images/logo.jpg" />
+    </div>
+    <!---------- 表单内容 ---------->
+    <form action="" id="getpwd_form">
+        <div class="login_box">
+            <div class="type_box login_type code_type">
+                <input type="text" placeholder="请输入手机号" name="login_name" id="mobile" value=""><input class="input_box" type="button" value="发送验证码" /><div class="clear"></div>
+            </div>
+
+            <div class="type_box login_type">
+                <input type="text" placeholder="请输入手机验证码" name="sms_code" />
+            </div>
+
+            <div class="type_box login_type">
+                <input type="password" placeholder="请设置新密码" name="password" />
+            </div>
+
+
+            <div class="type_btn">
+                <input type="button" id="okBtn" value="提&nbsp;&nbsp;交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var oBtn = document.getElementById("okBtn");
+    oBtn.onclick = function(){
+		var query  = $("#getpwd_form").serialize();
+		$.post("{:U('')}",query,function(data){
+			if(data.status == 1){
+				var url = "{:U('getPwdOk',array('mobile'=>'getPwdOkUrl'))}";
+				url = url.replace('getPwdOkUrl',data.mobile,url);
+				window.location.href = url;
+			}else {
+				alert(data.msg);
+				return false;
+			}
+	   },'json');
+    }
+</script>
+</body>
+</html>
