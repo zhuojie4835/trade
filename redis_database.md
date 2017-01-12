@@ -1,3 +1,19 @@
+* 用户表  user:uid (hash)
+
+|字段名称    |类型     |备注|
+| --------   | -----: | ----:  |
+| uid     | int  | 用户id|
+| mobile     | int  |     客户手机号码|
+| name     | int  |       客户姓名|
+| id_card_number     | varchar  |      身份证号码|
+| agent_number     | varchar  |       代理编号|
+| user_type     | int  |     客户类型|
+| operator_number     | varchar  |       运营中心编号|
+| agent_member_number     | varchar  |       所属会员编号|
+| register_time     | int  |       创建时间|
+| free_money     | float  |       可用资金|
+| freeze_money     | float  |       冻结资金|
+
 * 资金流水  follow (list)
 
 |字段名称    |类型     |备注|
@@ -9,6 +25,7 @@
 | follow_type     | int  |       流水类型|
 | business_description     | varchar  |     交易描述|
 | money     | float  |       交易金额|
+| freeze_money     | float  |       冻结金额|
 | new_money     | float  |       变动后的金额|
 | create_time     | int  |       创建时间|
 
