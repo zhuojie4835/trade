@@ -477,4 +477,50 @@ class TradeController extends BaseController {
 			}
 		}
 	}
+
+	#撤销挂单
+	public function cancelGd() {
+		$gid = I('post.gid',0,'int');
+		$redis = getRedis();
+		$gid_key = 'gd_record:'.$gid;
+		if(!$gd_info = $redis->hgetall($gid_key)) {
+			$this->ajaxReturn(array('status'=>0,'msg'=>'挂单不存在'));
+		}
+		if(!in_array($gd_info['gd_status'],array(1,2))) {
+			$this->ajaxReturn(array('status'=>0,'msg'=>'挂单状态不符'));
+		}
+
+		$redis->hmset($gid_key,array('gd_status'=>4,'cancel_time'=>time(),'volume'=>0));//修改状态、撤单时间
+		if($gd_info['direct'] == 's') {
+			$redis->zrem('gid_out_by_price:'.$gd_info['pid'].':'.$gd_info['price'],$gid);//删除有序集合中的gid
+			$gd_detail_key = 'gd_out_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];
+			$gd_volume_by_price = $redis->hget($gd_detail_key,'volume');
+			if($gd_info['volume']>=$gd_volume_by_price) {
+				$redis->del($gd_detail_key);
+				$redis->srem('gd_out_price:'.$gd_info['pid'],$gd_info['price']);
+			} else {
+				$redis->hincrby($gd_detail_key,'volume',-$gd_info['volume']);
+				$redis->hincrby($gd_detail_key,'count',-1);
+			}
+			$this->generatePosition($gd_info['pid'],$gd_info['uid'],$gd_info['volume'],0,'gd_out_cancel');//修改持仓
+		} else {
+			$redis->zrem('gid_in_by_price:'.$gd_info['pid'].':'.$gd_info['price'],$gid);//删除有序集合中的gid
+			$gd_detail_key = 'gd_in_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];
+			$gd_volume_by_price = $redis->hget($gd_detail_key,'volume');
+			if($gd_info['volume']>=$gd_volume_by_price) {
+				$redis->del($gd_detail_key);
+				$redis->srem('gd_in_price:'.$gd_info['pid'],$gd_info['price']);
+			} else {
+				$redis->hincrby($gd_detail_key,'volume',-$gd_info['volume']);
+				$redis->hincrby($gd_detail_key,'count',-1);
+			}
+			$user_money = $redis->hmget('user:'.$gd_info['uid'],'free_money','freeze_money');
+			$gd_freeze_money = getFloat($gd_info['volume']*$gd_info['price']);
+			$new_free_money = getFloat($user_money[0]+$gd_freeze_money);
+			$new_freeze_money = getFloat($user_money[1]-$gd_freeze_money);
+			$redis->hmset('user:'.$gd_info['uid'],array('free_money'=>$new_free_money,'freeze_money'=>$new_freeze_money));
+		}
+
+		$this->ajaxReturn(array('status'=>1,'msg'=>'撤单成功'));
+	}
 }

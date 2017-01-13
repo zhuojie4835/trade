@@ -48,7 +48,7 @@ return array(
     'DOCUMENT_MODEL_TYPE' => array(2 => '主题', 1 => '目录', 3 => '段落'),
 	
 	'REDIS_CONFIG' => array(
-		'host' => '192.168.33.18',
+		'host' => '127.0.0.1',
 		'port' => 6379,
 	),
 );

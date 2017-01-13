@@ -19,7 +19,6 @@ class UserController extends BaseController {
 	public function center() {
 		$redis = getRedis();
 		$position_keys = $redis->keys('position:'.$this->_userinfo['uid'].'*');
-		$list = array();
 		
 		if(I('post.act') == 'position') {
 			$position_keys = $redis->keys('position:'.$this->_userinfo['uid'].':*');
@@ -40,10 +39,27 @@ class UserController extends BaseController {
 				}
 			}
 			
+			$gd_today_list = array();
+			$today_gids = $redis->zrevrangebyscore('gid_by_person:'.$this->_userinfo['uid'],strtotime(date('Y-m-d').' 23:59:59'),strtotime(date('Y-m-d').' 00:00:00'));
+			$gd_status_val = array(1=>'等待成交',2=>'部分成交',3=>'全部成交',4=>'已撤销');
+			$direct_val = array('s'=>'卖','b'=>'买');
+			foreach($today_gids as $k=>$v) {
+				$item = $redis->hgetall('gd_record:'.$v);
+				$item['create_time'] = date('H:i:s',$item['create_time']);
+				$item['direct_text'] = $direct_val[$item['direct']];
+				$item['gd_status_text'] = $gd_status_val[$item['gd_status']];
+				$item['gd_detail'] = $item['volume'].'@'.$item['price'];
+				$item['direct'] == 'b' && $item['cancel_msg'] = '委托买入 '.$item['short_name'].' '.$item['product_number'];
+				$item['direct'] == 's' && $item['cancel_msg'] = '委托卖出 '.$item['short_name'].' '.$item['product_number'];
+				$item['url'] = U('index/transaction',array('id'=>$item['pid']));
+				$gd_today_list[] = $item;
+			}
+
 			$this->ajaxReturn(
 				array(
 					'status'=>1,
 					'p_list'=>$p_list,
+					'gd_list'=>$gd_today_list,
 					'total_profit'=>getFloat($total_profit),
 					'total_market_value'=>getFloat($total_market_value),
 					'user_info'=>$this->_userinfo
@@ -51,17 +67,7 @@ class UserController extends BaseController {
 			);
 		}
 		
-		$gd_today_list = array();
-		$today_gids = $redis->zrevrangebyscore('gid_by_person:'.$this->_userinfo['uid'],strtotime(date('Y-m-d').' 23:59:59'),strtotime(date('Y-m-d').' 00:00:00'));
-		foreach($today_gids as $k=>$v) {
-			$gd_today_list[] = $redis->hgetall('gd_record:'.$v);
-			
-		}
-		
-		int_to_string($gd_today_list,array('gd_status'=>array(1=>'等待成交',2=>'部分成交',3=>'全部成交',4=>'已撤销')));
 		$this->assign('active',2);
-		$this->assign('list',$list);
-		$this->assign('gd_today_list',$gd_today_list);
 		$this->display();
 	}
 

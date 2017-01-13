@@ -93,6 +93,7 @@
 | direct     | varchar  |       挂单方向|
 | product_number     | varchar  |       商品代码|
 | short_name     | varchar  |       商品简称|
+| cancel_time     | int  |       撤单时间|
 
 * 挂单买入价格集合表 gd_in_price : pid (set)
 

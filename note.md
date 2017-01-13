@@ -86,20 +86,18 @@ yj_out_yj 应价卖出应价方  volume - can_sell -
 	12.把gid从 gid_in_by_price:pid:price 中删除（如果需要）
 	13.挂单方、应价方成交记录 deals (list)
 
-<<<<<<< HEAD
-
 撤销买入挂单
-	1.修改gd_record:gid 状态，数量
-	2.从挂单每口价格集合表中删除 gid_in_by_price:pid:price
-	3.更新每口价格的数量、笔数 gd_in_price_detail:pid:price (hash)
-	4.把gid从 gid_in_by_price:pid:price 中删除（如果需要）
-	5.冻结资金划入到可用 position:pid:uid
+	1.修改gd_record:gid 状态，数量   (hash)
+	2.从挂单每口价格集合表中删除   gid_in_by_price:pid:price (zset)
+	3.更新每口价格的数量、笔数    gd_in_price_detail:pid:price (hash)
+	4.把gid从 gd_in_price:pid   中删除(set 如果需要)
+	5.扣除冻结资金 user:uid
 
 撤销卖出挂单
-	1.修改gd_record:gid 状态，数量
-	2.从挂单每口价格集合表中删除 gid_in_by_price:pid:price
-	3.更新每口价格的数量、笔数 gd_in_price_detail:pid:price (hash)
-	4.把gid从 gid_in_by_price:pid:price 中删除（如果需要）
+	1.修改gd_record:gid 状态，数量  (hash)
+	2.从挂单每口价格集合表中删除 gid_out_by_price:pid:price (zset)
+	3.更新每口价格的数量、笔数 gd_out_price_detail:pid:price (hash) 如果volume为0时，撤销记录
+	4.把gid从 gd_out_price:pid 中删除 (set 如果需要)
 	5.冻结商品划入到可卖 position:pid:uid
 
 
