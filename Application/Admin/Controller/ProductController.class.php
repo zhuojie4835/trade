@@ -11,10 +11,14 @@ class ProductController extends AdminController {
 		$map = array();
 		$model = D('Common/Product');		
         $list   = $this->lists($model,$map);
+        $redis = getRedis();
 		foreach($list as $k=>$v) {
+			$product_trade = getProductTradeInfo($v['id']);
 			$list[$k]['status_text'] = $model->_status_val[$v['status']];
 			$list[$k]['issue_type_text'] = $model->_issue_type_val[$v['issue_type']];
 			$list[$k]['industry_text'] = $model->_industry_val[$v['industry']];
+			$list[$k]['subscribe_number'] = (int)($v['issue_number']-$product_trade['left_number']);
+			$list[$k]['th_number'] = (int)$product_trade['th_number'];
 		}
 		
 		$this->meta_title = '运营中心列表';

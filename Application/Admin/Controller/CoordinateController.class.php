@@ -18,7 +18,7 @@ class CoordinateController {
 		$task->count = 1;
 		$task->onWorkerStart = function($task)
 		{
-			$time_interval = 2.5;
+			$time_interval = 5;
 			Timer::add($time_interval, function()
 			{
 				try {

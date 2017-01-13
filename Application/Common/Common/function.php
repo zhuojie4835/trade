@@ -1197,6 +1197,7 @@ function getProductTradeInfo($pid='') {
 			'close_price'=>$close_price,
 			'total_number'=>$total_number,
 			'left_number'=>$total_number,
+            'th_number'=>0,
             'status'=>$product['status']
 		);
 		

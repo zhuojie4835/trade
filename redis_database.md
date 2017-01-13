@@ -43,7 +43,8 @@
 | open_price     | float  |       开盘价|
 | close_price     | float  |       收盘价|
 | total_number     | int  |      商品数量|
-| left_number     | int  |       剩余数量|
+| left_number     | int  |       认购剩余数量|
+| th_number     | int  |       提货数量|
 | status     | int  |     状态|
 
 * 认购记录  subscribe_record (list)

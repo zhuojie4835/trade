@@ -84,13 +84,15 @@ class UserController extends BaseController {
 			if($num<=0) {
 				$this->ajaxReturn(array('status'=>0,'msg'=>'认购数量需大于0！'));
 			}
-			
+			$left_number = $redis->hget('product_trade:'.$id,'left_number');
+			if($left_number<=$num) {
+				$num = $left_number;
+			}
 			$subscribe_money = $info['issue_price']*$num;
 			if($subscribe_money>$this->_userinfo['free_money']) {
 				$this->ajaxReturn(array('status'=>0,'msg'=>'余额不足！'));
 			}
 			$customer_money = array(
-				// 'total_money'=>$this->_userinfo['total_money']-$subscribe_money,
 				'free_money'=>$this->_userinfo['free_money']-$subscribe_money,
 			);
 			$follow_info = array(

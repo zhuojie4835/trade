@@ -8,9 +8,11 @@ namespace Admin\Controller;
 class FollowController extends AdminController {
 	#列表
 	public function index() {
-		$map = array();
+		$map = array('id'=>array('gt',0));
+		I('customer_mobile') && $map['customer_mobile'] = I('customer_mobile');
+		
 		$model = D('Common/Follow');		
-        $list   = $this->lists($model,array('id'=>array('egt',0)));
+        $list   = $this->lists($model,$map);
 		foreach($list as $k=>$v) {
 			$list[$k]['follow_type_text'] = $model->_follow_type_val[$list[$k]['follow_type']];
 		}

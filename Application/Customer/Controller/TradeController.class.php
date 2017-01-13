@@ -123,7 +123,7 @@ class TradeController extends BaseController {
 							"customer_id"=>$gd_info['uid'],
 							"customer_mobile"=>$gd_info['mobile'],
 							"customer_name"=>$gd_info['name'],
-							"follow_type"=>3,
+							"follow_type"=>6,
 							"bussiness_desciption"=>'挂单卖出成交 '.$this->product['product_number'],
 							"money"=>$cost,
 							"new_money"=>$gd_free_money+$cost,
@@ -165,7 +165,7 @@ class TradeController extends BaseController {
 							"customer_id"=>$gd_info['uid'],
 							"customer_mobile"=>$gd_info['mobile'],
 							"customer_name"=>$gd_info['name'],
-							"follow_type"=>3,
+							"follow_type"=>6,
 							"bussiness_desciption"=>'挂单卖出成交 '.$this->product['product_number'],
 							"money"=>$cost,
 							"new_money"=>$gd_free_money+$cost,
@@ -206,7 +206,7 @@ class TradeController extends BaseController {
 					"customer_id"=>$this->_userinfo['uid'],
 					"customer_mobile"=>$this->_userinfo['mobile'],
 					"customer_name"=>$this->_userinfo['name'],
-					"follow_type"=>4,
+					"follow_type"=>7,
 					"bussiness_desciption"=>'应价买入成交 '.$this->product['product_number'],
 					"money"=>-$yj_cost,
 					"new_money"=>$new_free_money-$yj_cost,
@@ -319,7 +319,7 @@ class TradeController extends BaseController {
 							'price'=>$gd_info['price'],
 							'volume'=>$last_volume,
 							'pid'=>$gd_info['pid'],
-							'trade_money'=>getFloat($gd_info['volume']*$gd_info['price']),
+							'trade_money'=>getFloat($last_volume*$gd_info['price']),
 							'create_time'=>time()
 						);
 

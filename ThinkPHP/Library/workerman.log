@@ -17,3 +17,11 @@
 =======
 >>>>>>> master
 2017-01-12 18:01:32 pid:9434 Workerman[admin.php] start in DAEMON mode
+2017-01-13 17:38:39 pid:4346 Workerman[admin.php] status 
+2017-01-13 22:38:40 pid:4551 Workerman[admin.php] status 
+2017-01-13 22:38:48 pid:4552 Workerman[admin.php] stop 
+2017-01-13 22:38:48 pid:4552 Workerman[admin.php] is stoping ...
+2017-01-13 22:38:48 pid:4126 Workerman[admin.php] Stopping ...
+2017-01-13 22:38:48 pid:4126 Workerman[admin.php] has been stopped
+2017-01-13 22:38:48 pid:4552 Workerman[admin.php] stop success
+2017-01-13 22:42:09 pid:4557 Workerman[admin.php] start in DAEMON mode
