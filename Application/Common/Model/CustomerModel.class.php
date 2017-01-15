@@ -29,10 +29,12 @@ class CustomerModel extends TradeModel {
 		array('id_card_number', 'checkID', '',1,'callback',4),
 		array('login_name', 'require', '手机号码必须',1,'',4),
 		array('login_name', '/^1[34578]\d{9}$/', '手机号码格式错误',1,'',4),
+		array('id_card_number','','身份证码已经存在！',1,'unique',4),
 		array('login_name','','手机号码已经存在！',1,'unique',4),
 		array('sms_code', 'checkSmsCode', '',1,'callback',4),
 		array('password', '/^\w{6,20}$/', '密码由6~20位字符组成，可以是字母、数字、下划线',1,'',4),
 		array('agent_number', 'checkAgent', '',1,'callback',4),
+		array('parent1', 'checkParent1', '',2,'callback',4),
 		//5登录
 		array('password', 'checkLogin', '',1,'callback',5),
 		//6找回密码
@@ -94,6 +96,16 @@ class CustomerModel extends TradeModel {
 		if(!$this->where(array('login_name'=>$mobile))->find()) {
 			throw new \Exception('用户不存在');
 		}
+	}
+
+	protected function checkParent1($parent_login_name) {
+		$parent1 = $parent2 = 0;
+		if($parent = D('Common/Customer')->field('id,parent1')->where(array('login_name'=>$parent_login_name))->find()) {
+			$parent1 = $parent['id'];
+			$parent2 = $parent['parent1'];
+		}
+		$_POST['parent1'] = $parent1;
+		$_POST['parent2'] = $parent2;
 	}
 	
 	static function generatePassword($password) {

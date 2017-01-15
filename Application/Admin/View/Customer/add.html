@@ -1,57 +1,116 @@
 <extend name="Public/base"/>
 
 <block name="body">
+    <style type="text/css">
+        .data-table thead th {
+            color:green;
+            background-color: #fff;
+        }
+    </style>
     <div class="main-title">
         <h2>{$meta_title}</h2>
     </div>
-    <form action="{:U()}" method="post" class="form-horizontal">
-        <div class="form-item">
-            <label class="item-label">手机号码<span class="check-tips"></span></label>
-            <div class="controls">
-                <if condition="$is_view OR $is_edit">
-                    <span>{$info.login_name}</span>
-                <else/>
-                    <input type="text" class="text input-large" name="customer_mobile" value="">
-                </if>
-            </div>
+    <div class="tab-wrap">
+        <ul class="tab-nav nav">
+            <li data-tab="tab1" class="current"><a href="javascript:void(0);">资金</a></li>
+            <li data-tab="tab2"><a href="javascript:void(0);">持仓</a></li>
+        </ul>
+        <div class="tab-content">
+            <form action="{:U()}" method="post" class="form-horizontal">
+                <div id="tab1" class="tab-pane in tab1">
+                    <div class="form-item">
+                        <label class="item-label">手机号码<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <if condition="$is_view OR $is_edit">
+                                <span>{$info.login_name}</span>
+                            <else/>
+                                <input type="text" class="text input-large" name="customer_mobile" value="">
+                            </if>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="item-label">姓名<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <if condition="$is_view OR $is_edit">
+                                <span>{$info.name}</span>
+                            <else/>
+                                <input type="text" class="text input-large" name="name" value="">
+                            </if>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="item-label">绑定代理编号<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <if condition="$info.bind_agent_number gt 0">
+                                <input type="hidden" class="text input-mid" name="bind_agent_number" value="{$info.bind_agent_number}">
+                                <span>{$info.bind_agent_number}</span>&nbsp;&nbsp;&nbsp;<input type="button" class="btn bind_agent_btn" id="" data-uid="{$info.id}" data-act="cancel" value="解除绑定">
+                            <else/>
+                                <input type="text" class="text input-mid" name="bind_agent_number" value=""> &nbsp;<input type="button" class="btn bind_agent_btn" data-uid="{$info.id}" data-act="bind" value="绑定">
+                            </if>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="item-label">可用金额<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <span>{$asset.free_money}</span>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="item-label">冻结金额<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <span>{$asset.freeze_money}</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-pane tab2">
+                    <div class="data-table table-striped">
+                        <form class="ids">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>产品/市值</th>
+                                        <th>现价/均价</th>
+                                        <th>数量/可卖</th>
+                                        <th>盈亏</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <notempty name="position">
+                                <volist name="position" id="vo">
+                                    <tr>
+                                        <td>{$vo.short_name} {$vo.product_number}/{$vo[now_price]*$vo[volume]}</td>
+                                        <td>{$vo.now_price}/{$vo.average_price}</td>
+                                        <td>{$vo.volume}/{$vo.can_sell}</td>
+                                        <td>{$vo.profit}</td>
+                                    </tr>
+                                </volist>
+                                <else/>
+                                <td colspan="4" class="text-center"> aOh! 暂时还没有内容! </td>
+                                </notempty>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <!-- <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button> -->
+                    <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+                </div>
+            </form>
         </div>
-        <div class="form-item">
-            <label class="item-label">姓名<span class="check-tips"></span></label>
-            <div class="controls">
-                <if condition="$is_view OR $is_edit">
-                    <span>{$info.name}</span>
-                <else/>
-                    <input type="text" class="text input-large" name="name" value="">
-                </if>
-            </div>
-        </div>
-        <!-- <div class="form-item">
-            <label class="item-label">总资产</label>
-            <div class="controls">
-                <span>{$asset[free_money]+$asset[freeze_money]}</span>
-            </div>
-        </div> -->
-        <div class="form-item">
-            <label class="item-label">可用金额<span class="check-tips"></span></label>
-            <div class="controls">
-                <span>{$asset.free_money}</span>
-            </div>
-        </div>
-        <div class="form-item">
-            <label class="item-label">冻结金额<span class="check-tips"></span></label>
-            <div class="controls">
-                <span>{$asset.freeze_money}</span>
-            </div>
-        </div>
-        <div class="form-item">
-            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
-            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
-        </div>
-    </form>
+    </div>
+    
 </block>
 
 <block name="script">
     <script type="text/javascript">
+        $(function(){
+            showTab();
+            $("input[name=reply]").change(function(){
+                var $reply = $(".form-item.reply");
+                parseInt(this.value) ? $reply.show() : $reply.hide();
+            }).filter(":checked").change();
+        });
         //导航高亮
         highlight_subnav('{:U('customer/index')}');
 
@@ -63,6 +122,17 @@
             } else {
                 $("#amount").val();
             }
+        });
+        $(".bind_agent_btn").on('click',function(){
+            var uid = parseInt($(this).data("uid"));
+            var act = $(this).data('act');
+            var bind_agent_number = parseInt($("form").find("input[name='bind_agent_number']").val());
+            $.post('{:U("bind")}',{id:uid,bind_agent_number:bind_agent_number,act:act},function(data){
+                alert(data.msg);
+                if(data.status == 1) {
+                    history.go(0);
+                }
+            },'json');
         });
     </script>
 </block>

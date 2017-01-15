@@ -13,6 +13,8 @@
 | register_time     | int  |       创建时间|
 | free_money     | float  |       可用资金|
 | freeze_money     | float  |       冻结资金|
+| parent1     | int  |       直接介绍人|
+| parent2     | int  |       间接介绍人|
 
 * 资金流水  follow (list)
 

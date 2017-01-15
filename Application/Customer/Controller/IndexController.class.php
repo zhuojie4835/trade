@@ -82,6 +82,8 @@ class IndexController extends BaseController {
 					throw new \Exception($model->getError());
 				}
 				$agent = D('Common/Agent')->field('agent_number,operator_number,agent_member_number')->where(array('agent_number'=>$post['agent_number']))->find();
+				$model->parent1 = I('post.parent1');
+				$model->parent2 = I('post.parent2');
 				$model->create_time = time();
 				$model->password = $model::generatePassword($post['password']);
 				$model->operator_number = $agent['operator_number'];
@@ -99,9 +101,10 @@ class IndexController extends BaseController {
 					'operator_number'=>$agent['operator_number'],
 					'agent_member_number'=>$agent['agent_member_number'],
 					'register_time'=>time(),
-					// 'total_money'=>0,
 					'free_money'=>50000,
-					'freeze_money'=>0
+					'freeze_money'=>0,
+					'parent1'=>I('post.parent1'),
+					'parent2'=>I('post.parent2'),
 				);
 				$follow_info = array(
 					"follow_number"=>generateFollowNumber('R'),//注册奖励
