@@ -7,12 +7,11 @@ class UserController extends BaseController {
 	
 	public function __construct() {
     	parent::__construct();
-    	$userinfo = session('userinfo');
-    	if(empty($userinfo['id'])) {
+    	if(!$this->isLogin()) {
     		$this->redirect('Index/login');
     	}
     	$redis = getRedis();
-    	$userinfo_in_redis = $redis->hgetall("user:" . $userinfo['id']);
+    	$userinfo_in_redis = $redis->hgetall("user:".session('uid'));
     	$this->_userinfo = $userinfo_in_redis;
     }
 	

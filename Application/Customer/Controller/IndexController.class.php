@@ -152,9 +152,9 @@ class IndexController extends BaseController {
 				}
 				$userinfo = $model->where(array('login_name'=>$post['login_name']))->find();
 				$model->where(array('login_name'=>$userinfo['login_name']))->save(array('login_time'=>time()));//更新登录时间
-				session('userinfo',$userinfo);
 				$redis = getRedis();
-				$redis->sadd('login_user',$userinfo['id']);//记录登录用户在redis
+				session('uid',$userinfo['id']);
+				$redis->setex('expire_'.$userinfo['id'],C('LOGIN_TIMEOUT'),session_id());
 				$this->ajaxReturn(array('status'=>1,'msg'=>'登录成功'));
 			} catch (\Exception $e) {
 				$this->ajaxReturn(array('status'=>0,'msg'=>$e->getMessage()));
@@ -166,8 +166,9 @@ class IndexController extends BaseController {
 	#退出
 	public function logout() {
 		$redis = getRedis();
-		$redis->srem('login_user',session('userinfo')['id']);
-		session('userinfo',null);
+		$uid = session('uid');
+		$redis->del('expire_'.$uid);
+		session('uid',null);
    		$this->redirect('index/login');
 	}
 	

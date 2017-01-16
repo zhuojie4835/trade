@@ -1,3 +1,10 @@
+* 登录维护表表  expire_uid (str)
+
+|字段名称    |类型     |备注|
+| --------   | -----: | ----:  |
+| session_id     | varchar  | session_id|
+
+
 * 用户表  user:uid (hash)
 
 |字段名称    |类型     |备注|

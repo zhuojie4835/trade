@@ -7,12 +7,23 @@ use Predis\Client;
 
 class BaseController extends Controller {
 	public function isLogin() {
-		return session('userinfo');
+		$redis = getRedis();
+		if(($uid = session('uid')) && $redis->get('expire_'.$uid)) {
+			return true;
+		}
+
+		return false;
 	}
 	
-	public function getRedis() {
-		Autoloader::register();
-		return new Client();
+	public function __construct() {
+		parent::__construct();
+		$uid = session('uid');
+		$redis = getRedis();
+		if($redis->get('expire_'.$uid)) {
+			$redis->setex('expire_'.$uid,C('LOGIN_TIMEOUT'),session_id());
+		} else {
+			session('uid',null);
+		}
 	}
 
 	#重新均价
