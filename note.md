@@ -102,22 +102,16 @@ yj_out_yj 应价卖出应价方  volume - can_sell -
 	5.冻结商品划入到可卖 position:pid:uid
 
 
-TRUNCATE TABLE trade_recharge_admin
--- TRUNCATE TABLE trade_customer
--- TRUNCATE TABLE trade_follow
--- TRUNCATE TABLE trade_recharge_admin
-
 定时任务
-*/1 * * * *  /usr/local/bin/php7 /vagrant/site/wwwroot/cli.php index/coordinateFollow
-*/1 * * * *  /usr/local/bin/php7 /vagrant/site/wwwroot/cli.php index/coordinateSubscribe
+workerman 每3秒同步至Mysql Admin/Coordinate/coordinateRedis
 
 
 今日任务：完成应价
-1.数据库名称修改 gd_out_detail:pid:price,gd_in_detail:pid:price,gd_today:date:uid
-2.数据库重新设计 gd_today:date:uid 由list改为zset
+
+note:
 3.应价逻辑代码
 4.挂单买入成交时，可用余额优化
-5.应价方法太长，都是如果需要优化，必须十分谨慎
+5.应价方法太长，但是如果需要优化，必须十分谨慎
 6.成交记录、资金流水冗余customer_type
 bug
 1.后台修改状态时没有同步到redis
