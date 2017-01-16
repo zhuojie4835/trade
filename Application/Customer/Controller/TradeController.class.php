@@ -17,7 +17,7 @@ class TradeController extends BaseController {
     		$this->redirect('Index/login');
     	}
     	$redis = getRedis();
-    	$userinfo_in_redis = $redis->hgetall("user:" session('uid'));
+    	$userinfo_in_redis = $redis->hgetall("user:".session('uid'));
     	$this->_userinfo = $userinfo_in_redis;
     }
 	
@@ -336,6 +336,7 @@ class TradeController extends BaseController {
 					}
 				}
 
+				$new_freeze_money = $redis->hget('user:'.$this->_userinfo['uid'],'freeze_money');//重新查询一次，防止同一用户挂单应价时数据错误
 				$yj_follow_info = array(
 					"follow_number"=>generateFollowNumber('Y'),//Y应价成交
 				    "customer_id"=>$this->_userinfo['uid'],
@@ -345,7 +346,7 @@ class TradeController extends BaseController {
 					"bussiness_desciption"=>'应价卖出成交 '.$this->product['product_number'],
 				    "money"=>$yj_cost,
 				    "new_money"=>$this->_userinfo['free_money']+$yj_cost,
-					"freeze_money"=>$this->_userinfo['freeze_money'],
+					"freeze_money"=>$new_freeze_money,
 				    "create_time"=>time(),
 				);
 				$yj_deals_info = array(

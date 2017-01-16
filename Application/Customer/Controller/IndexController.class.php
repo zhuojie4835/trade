@@ -64,7 +64,7 @@ class IndexController extends BaseController {
 		if($info['status'] != 3) {
 			$this->redirect('index');
 		}
-		$is_login = session('userinfo') ? 1 : 0;
+		$is_login = session('uid') ? 1 : 0;
 		$this->assign('is_login',$is_login);
 		$this->display();
 	}

@@ -18,7 +18,7 @@ class CustomerController extends AdminController {
 			$list[$k]['user_type_text'] = $model->_user_type_val[$list[$k]['user_type']];
 			$list[$k]['is_balance_text'] = $model->_balance_val[$list[$k]['is_balance']];
 			$list[$k]['funds_status_text'] = $model->_funds_status_val[$list[$k]['funds_status']];
-			$online = $redis->sismember('login_user',$v['id']) ? 1 : 2;
+			$online = $redis->get('expire_'.$v['id']) ? 1 : 2;
 			$list[$k]['online'] = $model->_online_val[$online];
 		}
 		
