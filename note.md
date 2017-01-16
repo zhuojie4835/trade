@@ -120,6 +120,7 @@ TRUNCATE TABLE trade_recharge_admin
 5.应价方法太长，都是如果需要优化，必须十分谨慎
 6.成交记录、资金流水冗余customer_type
 bug
-
+1.后台修改状态时没有同步到redis
+2.绑定代理提示客户类型错误
 
 ```

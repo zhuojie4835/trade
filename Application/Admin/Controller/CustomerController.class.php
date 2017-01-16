@@ -63,8 +63,9 @@ class CustomerController extends AdminController {
 		if(!$agent) {
 			$this->ajaxReturn(array('status'=>0,'msg'=>'代理不存在'));
 		}
+		
 		if(I('post.act') == 'bind') {
-			if(!$customer['user_type'] != 1) {
+			if($customer['user_type'] != 1) {
 				$this->ajaxReturn(array('status'=>0,'msg'=>'用户类型错误'));
 			}
 			if($customer['bind_agent_number']) {

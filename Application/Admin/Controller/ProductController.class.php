@@ -84,10 +84,10 @@ class ProductController extends AdminController {
 				$model->update_time = time();
 				$model->sub_end_time = strtotime($model->sub_end_time);
 				$model->save();
-				$product_info = $model->find($model->id);
+				$product_info = $model->find(I('post.id'));
 				
 				$product_in_redis = array(
-					'id'=>$model->id,
+					'id'=>$product_info['id'],
 					'product_info'=>serialize($product_info)
 				);
 				$redis = getRedis();
