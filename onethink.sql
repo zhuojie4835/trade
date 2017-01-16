@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50632
 File Encoding         : 65001
 
-Date: 2017-01-12 20:24:26
+Date: 2017-01-16 15:28:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,7 +65,7 @@ CREATE TABLE `onethink_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of onethink_action_log
@@ -108,6 +108,17 @@ INSERT INTO `onethink_action_log` VALUES ('35', '1', '1', '3232243969', 'member'
 INSERT INTO `onethink_action_log` VALUES ('36', '1', '1', '3232243969', 'member', '1', 'admin在2017-01-10 12:25登录了后台', '1', '1484022358');
 INSERT INTO `onethink_action_log` VALUES ('37', '1', '1', '3232243969', 'member', '1', 'admin在2017-01-10 16:12登录了后台', '1', '1484035972');
 INSERT INTO `onethink_action_log` VALUES ('38', '1', '1', '3232243969', 'member', '1', 'admin在2017-01-12 15:15登录了后台', '1', '1484205305');
+INSERT INTO `onethink_action_log` VALUES ('39', '1', '1', '3232243969', 'member', '1', 'admin在2017-01-16 09:34登录了后台', '1', '1484530445');
+INSERT INTO `onethink_action_log` VALUES ('40', '10', '1', '3232243969', 'Menu', '131', '操作url：/admin.php?s=/Menu/add.html', '1', '1484550950');
+INSERT INTO `onethink_action_log` VALUES ('41', '10', '1', '3232243969', 'Menu', '0', '操作url：/admin.php?s=/Menu/del/id/125.html', '1', '1484550973');
+INSERT INTO `onethink_action_log` VALUES ('42', '10', '1', '3232243969', 'Menu', '132', '操作url：/admin.php?s=/Menu/add.html', '1', '1484551021');
+INSERT INTO `onethink_action_log` VALUES ('43', '10', '1', '3232243969', 'Menu', '0', '操作url：/admin.php?s=/Menu/del/id/126.html', '1', '1484551038');
+INSERT INTO `onethink_action_log` VALUES ('44', '10', '1', '3232243969', 'Menu', '133', '操作url：/admin.php?s=/Menu/add.html', '1', '1484551224');
+INSERT INTO `onethink_action_log` VALUES ('45', '10', '1', '3232243969', 'Menu', '0', '操作url：/admin.php?s=/Menu/del/id/127.html', '1', '1484551260');
+INSERT INTO `onethink_action_log` VALUES ('46', '10', '1', '3232243969', 'Menu', '133', '操作url：/admin.php?s=/Menu/edit.html', '1', '1484551274');
+INSERT INTO `onethink_action_log` VALUES ('47', '10', '1', '3232243969', 'Menu', '132', '操作url：/admin.php?s=/Menu/edit.html', '1', '1484551284');
+INSERT INTO `onethink_action_log` VALUES ('48', '10', '1', '3232243969', 'Menu', '134', '操作url：/admin.php?s=/Menu/add.html', '1', '1484551358');
+INSERT INTO `onethink_action_log` VALUES ('49', '10', '1', '3232243969', 'Menu', '135', '操作url：/admin.php?s=/Menu/add.html', '1', '1484551412');
 
 -- ----------------------------
 -- Table structure for onethink_addons
@@ -125,7 +136,7 @@ CREATE TABLE `onethink_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of onethink_addons
@@ -137,6 +148,7 @@ INSERT INTO `onethink_addons` VALUES ('4', 'SystemInfo', '系统环境信息', '
 INSERT INTO `onethink_addons` VALUES ('5', 'Editor', '前台编辑器', '用于增强整站长文本的输入和显示', '1', '{\"editor_type\":\"2\",\"editor_wysiwyg\":\"1\",\"editor_height\":\"300px\",\"editor_resize_type\":\"1\"}', 'thinkphp', '0.1', '1379830910', '0');
 INSERT INTO `onethink_addons` VALUES ('6', 'Attachment', '附件', '用于文档模型上传附件', '1', 'null', 'thinkphp', '0.1', '1379842319', '1');
 INSERT INTO `onethink_addons` VALUES ('9', 'SocialComment', '通用社交化评论', '集成了各种社交化评论插件，轻松集成到系统中。', '1', '{\"comment_type\":\"1\",\"comment_uid_youyan\":\"\",\"comment_short_name_duoshuo\":\"\",\"comment_data_list_duoshuo\":\"\"}', 'thinkphp', '0.1', '1380273962', '0');
+INSERT INTO `onethink_addons` VALUES ('16', 'QiuBai', '糗事百科', '读别人的糗事，娱乐自己', '1', '{\"title\":\"\\u7cd7\\u4e8b\\u767e\\u79d1\",\"width\":\"2\",\"display\":\"1\",\"cache_time\":\"60\"}', 'thinkphp', '0.1', '1484546942', '0');
 
 -- ----------------------------
 -- Table structure for onethink_attachment
@@ -776,7 +788,7 @@ INSERT INTO `onethink_hooks` VALUES ('5', 'documentDetailBefore', '页面内容�
 INSERT INTO `onethink_hooks` VALUES ('6', 'documentSaveComplete', '保存文档数据后的扩展钩子', '2', '0', 'Attachment', '1');
 INSERT INTO `onethink_hooks` VALUES ('7', 'documentEditFormContent', '添加编辑表单的内容显示钩子', '1', '0', 'Editor', '1');
 INSERT INTO `onethink_hooks` VALUES ('8', 'adminArticleEdit', '后台内容编辑页编辑器', '1', '1378982734', 'EditorForAdmin', '1');
-INSERT INTO `onethink_hooks` VALUES ('13', 'AdminIndex', '首页小格子个性化显示', '1', '1382596073', 'SiteStat,SystemInfo,DevTeam', '1');
+INSERT INTO `onethink_hooks` VALUES ('13', 'AdminIndex', '首页小格子个性化显示', '1', '1382596073', 'SiteStat,SystemInfo,DevTeam,QiuBai', '1');
 INSERT INTO `onethink_hooks` VALUES ('14', 'topicComment', '评论提交方式扩展钩子。', '1', '1380163518', 'Editor', '1');
 INSERT INTO `onethink_hooks` VALUES ('16', 'app_begin', '应用开始', '2', '1384481614', '', '1');
 
@@ -804,7 +816,7 @@ CREATE TABLE `onethink_member` (
 -- ----------------------------
 -- Records of onethink_member
 -- ----------------------------
-INSERT INTO `onethink_member` VALUES ('1', 'admin', '0', '0000-00-00', '', '90', '22', '0', '1481298712', '3232243969', '1484205305', '1');
+INSERT INTO `onethink_member` VALUES ('1', 'admin', '0', '0000-00-00', '', '100', '23', '0', '1481298712', '3232243969', '1484530445', '1');
 INSERT INTO `onethink_member` VALUES ('2', 'zhuojie', '0', '0000-00-00', '', '0', '0', '0', '0', '0', '0', '1');
 
 -- ----------------------------
@@ -825,7 +837,7 @@ CREATE TABLE `onethink_menu` (
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`),
   KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of onethink_menu
@@ -942,12 +954,14 @@ INSERT INTO `onethink_menu` VALUES ('121', '排序', '76', '0', 'Channel/sort', 
 INSERT INTO `onethink_menu` VALUES ('122', '数据列表', '58', '0', 'think/lists', '1', '', '', '0', '1');
 INSERT INTO `onethink_menu` VALUES ('123', '审核列表', '3', '0', 'Article/examine', '1', '', '', '0', '1');
 INSERT INTO `onethink_menu` VALUES ('124', '交易系统', '0', '0', 'customer/index', '0', '', '', '0', '1');
-INSERT INTO `onethink_menu` VALUES ('125', '客户列表', '124', '2', 'customer/index', '0', '', '客户管理', '0', '1');
-INSERT INTO `onethink_menu` VALUES ('126', '运营中心列表', '124', '3', 'operator/index', '0', '', '运营中心管理', '0', '1');
-INSERT INTO `onethink_menu` VALUES ('127', '代理商列表', '124', '1', 'agent/index', '0', '', '代理商管理', '0', '1');
+INSERT INTO `onethink_menu` VALUES ('132', '运营中心列表', '124', '0', 'operator/index', '0', '', '账号管理', '0', '1');
+INSERT INTO `onethink_menu` VALUES ('133', '代理商列表', '124', '0', 'agent/index', '0', '', '账号管理', '0', '1');
+INSERT INTO `onethink_menu` VALUES ('134', '认购记录', '124', '0', 'record/subscribe', '0', '', '客户报表', '0', '1');
 INSERT INTO `onethink_menu` VALUES ('128', '后台充值', '124', '4', 'AdminRecharge/index', '0', '', '资金管理', '0', '1');
 INSERT INTO `onethink_menu` VALUES ('129', '资金流水', '124', '0', 'follow/index', '0', '', '资金管理', '0', '1');
 INSERT INTO `onethink_menu` VALUES ('130', '商品列表', '124', '0', 'Product/index', '0', '', '商品管理', '0', '1');
+INSERT INTO `onethink_menu` VALUES ('131', '客户列表', '124', '0', 'customer/index', '0', '', '账号管理', '0', '1');
+INSERT INTO `onethink_menu` VALUES ('135', '成交记录', '124', '0', 'record/deals', '0', '', '客户报表', '0', '1');
 
 -- ----------------------------
 -- Table structure for onethink_model
@@ -1067,7 +1081,7 @@ CREATE TABLE `onethink_ucenter_member` (
 -- ----------------------------
 -- Records of onethink_ucenter_member
 -- ----------------------------
-INSERT INTO `onethink_ucenter_member` VALUES ('1', 'admin', 'e5edc271c5cb88af47aca190c1beaf50', 'zhuojie4835@163.com', '', '1481298712', '3232243969', '1484205305', '3232243969', '1481298712', '1');
+INSERT INTO `onethink_ucenter_member` VALUES ('1', 'admin', 'e5edc271c5cb88af47aca190c1beaf50', 'zhuojie4835@163.com', '', '1481298712', '3232243969', '1484530445', '3232243969', '1481298712', '1');
 INSERT INTO `onethink_ucenter_member` VALUES ('2', 'zhuojie', 'e5edc271c5cb88af47aca190c1beaf50', 'qq@q.com', '', '1482480122', '3232243969', '0', '0', '1482480122', '1');
 
 -- ----------------------------
@@ -1165,12 +1179,14 @@ CREATE TABLE `trade_agent` (
   `company_certificate` varchar(150) NOT NULL DEFAULT '' COMMENT '公司注册证书',
   `agent_member_number` int(10) NOT NULL DEFAULT '0' COMMENT '所属会员编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='代理商表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='代理商表';
 
 -- ----------------------------
 -- Records of trade_agent
 -- ----------------------------
 INSERT INTO `trade_agent` VALUES ('7', '100003', '1', '500010', '100003', '0', '0', '0', '', '会员AA', '65.00', '65.00', '65.00', '', '1482992324', '0', '胡集', '0', '0', '0', '', '15212356856', '', '', '', '0', '', '', '', '1', '0', '1', '', '', '', '0', '', '', '1', '', '500010');
+INSERT INTO `trade_agent` VALUES ('8', '100003', '2', '600010', '500010', '7', '0', '0', '7', '高级代理', '20.00', '20.00', '20.00', '', '1484542139', '0', '忽悠', '0', '0', '0', '', '15265874569', '', '', '', '0', '', '', '', '1', '0', '1', '', '', '', '0', '', '', '1', '', '500010');
+INSERT INTO `trade_agent` VALUES ('9', '100003', '3', '700010', '600010', '8', '0', '0', '7,8', '代理DD', '20.00', '20.00', '20.00', '', '1484542171', '0', '小忽悠', '0', '0', '0', '', '14856254865', '', '', '', '0', '', '', '', '1', '0', '1', '', '', '', '0', '', '', '1', '', '500010');
 
 -- ----------------------------
 -- Table structure for trade_customer
@@ -1213,12 +1229,12 @@ CREATE TABLE `trade_customer` (
   `login_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `agent_member_number` int(10) NOT NULL DEFAULT '0' COMMENT '所属会员编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8000027 DEFAULT CHARSET=utf8 COMMENT='客户表';
+) ENGINE=InnoDB AUTO_INCREMENT=8000002 DEFAULT CHARSET=utf8 COMMENT='客户表';
 
 -- ----------------------------
 -- Records of trade_customer
 -- ----------------------------
-INSERT INTO `trade_customer` VALUES ('8000026', '1', '18627540136', '38bf9e203296babf7225bc4087d6a429', '100003', '0', '500010', '0', 'jko', '430821198912144835', '0', '0', '0.00', '1', '1', '0', '1', '1', '', '', '', '', '0', '0', '', '192.168.33.1', '', '', '0', '0', '1', '1484210576', '0', '1484210579', '500010');
+INSERT INTO `trade_customer` VALUES ('8000001', '1', '18627540136', '38bf9e203296babf7225bc4087d6a429', '100003', '0', '500010', '0', 'koi', '430821198912144835', '0', '0', '0.00', '1', '1', '0', '1', '1', '', '', '', '', '0', '0', '', '192.168.33.1', '', '', '0', '0', '1', '1484541982', '0', '1484541984', '500010');
 
 -- ----------------------------
 -- Table structure for trade_deals
@@ -1239,31 +1255,11 @@ CREATE TABLE `trade_deals` (
   `remark` varchar(300) NOT NULL DEFAULT '',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COMMENT='成交记录';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='成交记录';
 
 -- ----------------------------
 -- Records of trade_deals
 -- ----------------------------
-INSERT INTO `trade_deals` VALUES ('55', '1', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '500.00', '2', '', '1484210719');
-INSERT INTO `trade_deals` VALUES ('56', '4', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484210719');
-INSERT INTO `trade_deals` VALUES ('57', '1', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '300.00', '3', '', '1484211170');
-INSERT INTO `trade_deals` VALUES ('58', '4', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '300.00', '3', '', '1484211170');
-INSERT INTO `trade_deals` VALUES ('59', '2', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '300.00', '3', '', '1484211524');
-INSERT INTO `trade_deals` VALUES ('60', '3', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '300.00', '3', '', '1484211524');
-INSERT INTO `trade_deals` VALUES ('61', '2', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484211559');
-INSERT INTO `trade_deals` VALUES ('62', '3', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484211559');
-INSERT INTO `trade_deals` VALUES ('63', '1', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484211630');
-INSERT INTO `trade_deals` VALUES ('64', '4', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484211630');
-INSERT INTO `trade_deals` VALUES ('65', '1', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484214795');
-INSERT INTO `trade_deals` VALUES ('66', '4', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484214795');
-INSERT INTO `trade_deals` VALUES ('67', '1', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '300.00', '2', '', '1484214947');
-INSERT INTO `trade_deals` VALUES ('68', '4', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484214947');
-INSERT INTO `trade_deals` VALUES ('69', '1', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '100.00', '1', '', '1484215082');
-INSERT INTO `trade_deals` VALUES ('70', '4', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '100.00', '1', '', '1484215082');
-INSERT INTO `trade_deals` VALUES ('71', '1', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484215103');
-INSERT INTO `trade_deals` VALUES ('72', '4', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '2', '', '1484215103');
-INSERT INTO `trade_deals` VALUES ('73', '2', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '200.00', '1', '', '1484215264');
-INSERT INTO `trade_deals` VALUES ('74', '3', '8000026', 'jko', '18627540136', '650010', '艺术品A', '100.00', '1', '100.00', '1', '', '1484215264');
 
 -- ----------------------------
 -- Table structure for trade_follow
@@ -1282,33 +1278,11 @@ CREATE TABLE `trade_follow` (
   `bussiness_desciption` varchar(64) NOT NULL DEFAULT '' COMMENT '交易描述',
   `freeze_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '冻结资金',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=268 DEFAULT CHARSET=utf8 COMMENT='资金流水表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='资金流水表';
 
 -- ----------------------------
 -- Records of trade_follow
 -- ----------------------------
-INSERT INTO `trade_follow` VALUES ('246', 'R14842105764171', '8000026', '18627540136', '5', '50000.00', '50000.00', '1484210576', 'jko', '注册奖励', '0.00');
-INSERT INTO `trade_follow` VALUES ('247', 'S14842106079023', '8000026', '18627540136', '2', '-10000.00', '40000.00', '1484210607', 'jko', '认购 650010', '0.00');
-INSERT INTO `trade_follow` VALUES ('248', 'G14842107197599', '8000026', '18627540136', '3', '-200.00', '39500.00', '1484210719', 'jko', '挂单买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('249', 'Y14842107199112', '8000026', '18627540136', '4', '200.00', '39700.00', '1484210719', 'jko', '应价卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('250', 'G14842111708867', '8000026', '18627540136', '3', '-300.00', '39700.00', '1484211170', 'jko', '挂单买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('251', 'Y14842111701191', '8000026', '18627540136', '4', '300.00', '40000.00', '1484211170', 'jko', '应价卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('252', 'G14842115245876', '8000026', '18627540136', '3', '300.00', '40300.00', '1484211524', 'jko', '挂单卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('253', 'Y14842115242942', '8000026', '18627540136', '4', '-300.00', '40000.00', '1484211524', 'jko', '应价买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('254', 'G14842115594816', '8000026', '18627540136', '3', '200.00', '40200.00', '1484211559', 'jko', '挂单卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('255', 'Y14842115599379', '8000026', '18627540136', '4', '-200.00', '40000.00', '1484211559', 'jko', '应价买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('256', 'G14842116304346', '8000026', '18627540136', '3', '-200.00', '39800.00', '1484211630', 'jko', '挂单买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('257', 'Y14842116303971', '8000026', '18627540136', '4', '200.00', '40000.00', '1484211630', 'jko', '应价卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('258', 'G14842147955805', '8000026', '18627540136', '3', '-200.00', '39800.00', '1484214795', 'jko', '挂单买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('259', 'Y14842147952267', '8000026', '18627540136', '4', '200.00', '40000.00', '1484214795', 'jko', '应价卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('260', 'G14842149475536', '8000026', '18627540136', '3', '-200.00', '39700.00', '1484214947', 'jko', '挂单买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('261', 'Y14842149475641', '8000026', '18627540136', '4', '200.00', '39900.00', '1484214947', 'jko', '应价卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('262', 'G14842150828694', '8000026', '18627540136', '3', '-100.00', '39900.00', '1484215082', 'jko', '挂单买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('263', 'Y14842150825339', '8000026', '18627540136', '4', '100.00', '40000.00', '1484215082', 'jko', '应价卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('264', 'G14842151031952', '8000026', '18627540136', '3', '-200.00', '39800.00', '1484215103', 'jko', '挂单买入成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('265', 'Y14842151031572', '8000026', '18627540136', '4', '200.00', '40000.00', '1484215103', 'jko', '应价卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('266', 'G14842152647386', '8000026', '18627540136', '3', '100.00', '40100.00', '1484215264', 'jko', '挂单卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('267', 'Y14842152649613', '8000026', '18627540136', '4', '-100.00', '40000.00', '1484215264', 'jko', '应价买入成交 ', '0.00');
 
 -- ----------------------------
 -- Table structure for trade_operator
@@ -1369,12 +1343,13 @@ CREATE TABLE `trade_product` (
   `buy_description` text COMMENT '认购说明',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_number` (`number`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='产品表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='产品表';
 
 -- ----------------------------
 -- Records of trade_product
 -- ----------------------------
-INSERT INTO `trade_product` VALUES ('1', '650010', '艺术品A', '艺术品A', '1', '100.00', '1', '500', '0', '0', '0', '0', '0', '0', '1482387043', '', '3', '1482668572', '1484210682', '');
+INSERT INTO `trade_product` VALUES ('1', '650010', '艺术品A', '艺术品A', '1', '100.00', '1', '500', '0', '0', '0', '0', '0', '0', '1482387043', '', '2', '1482668572', '1484536848', '');
+INSERT INTO `trade_product` VALUES ('2', '600012', '版画敦煌壁画', '版画敦煌', '1', '200.00', '1', '500', '0', '1', '200', '1', '500', '0', '1484874022', '', '2', '1484530547', '1484536819', '');
 
 -- ----------------------------
 -- Table structure for trade_product_order
@@ -1400,12 +1375,11 @@ CREATE TABLE `trade_product_order` (
   `remark` varchar(300) NOT NULL DEFAULT '',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='产品认购记录';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='产品认购记录';
 
 -- ----------------------------
 -- Records of trade_product_order
 -- ----------------------------
-INSERT INTO `trade_product_order` VALUES ('4', '100003', '8000026', '500010', '1', 'jko', '500010', '', '18627540136', '650010', '艺术品A', '艺术品A', '100.00', '1', '10000.00', '100', '', '1484210607');
 
 -- ----------------------------
 -- Table structure for trade_recharge
@@ -1463,7 +1437,7 @@ CREATE TABLE `trade_recharge_admin` (
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `customer_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户姓名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台充值表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='后台充值表';
 
 -- ----------------------------
 -- Records of trade_recharge_admin

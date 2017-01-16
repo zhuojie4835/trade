@@ -9,10 +9,7 @@ class IndexController extends Controller {
 	public function clearData() {
 		$redis = getRedis();
 		$redis->flushdb();
-		M('customer','trade_')->where('1')->delete();
-		M('follow','trade_')->where('1')->delete();
-		M('ProductOrder','trade_')->where('1')->delete();
-		M('RechargeAdmin','trade_')->where('1')->delete();
-		M('deals','trade_')->where('1')->delete();
+		$sql = file_get_contents(APP_PATH.'../mysql.sql');
+		M('')->execute($sql);
 	}
 }
