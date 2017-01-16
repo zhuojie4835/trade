@@ -42,10 +42,16 @@ class CustomerController extends AdminController {
 				$position[] = $item;
 			}
 		}
+		$follow_model = D('Common/Follow');		
+        $list = $this->lists($follow_model,array('customer_id'=>$id));
+		foreach($list as $k=>$v) {
+			$list[$k]['follow_type_text'] = $follow_model->_follow_type_val[$list[$k]['follow_type']];
+		}
 		
 		$this->assign('info',$info);
 		$this->assign('asset',$asset);
 		$this->assign('position',$position);
+		$this->assign('follow',$list);
 		$this->is_view = 1;
 		$this->meta_title = '查看客户';
 		$this->display('add');
