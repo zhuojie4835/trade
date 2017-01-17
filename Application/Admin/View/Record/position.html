@@ -1,0 +1,95 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{$meta_title}</h2>
+    </div>
+
+    <div class="cf">
+        <a class="btn" href="{:U('')}">刷新</a>
+        <!-- 高级搜索 -->
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="customer_mobile" class="search-input" value="{:I('customer_mobile')}" placeholder="手机号码">
+            </div>
+            <div class="sleft">
+                <input type="text" name="product_number" class="search-input" value="{:I('product_number')}" placeholder="产品编号">
+                <a class="sch-btn" href="javascript:;" id="search" url="__SELF__"><i class="btn-search"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="data-table table-striped">
+        <form class="ids">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="">产品编号</th>
+                        <th class="">产品简称</th>
+                        <th class="">产品状态</th>
+                        <th class="">手机号码</th>
+                        <th class="">客户姓名</th>
+                        <th class="">持仓数量</th>
+                        <th class="">可卖数量</th>
+                        <th class="">最新价格/平均价格</th>
+                        <th class="">盈亏</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <notempty name="list">
+                <volist name="list" id="vo">
+                    <tr>
+                        <td>{$vo.product_number} </td>
+                        <td>{$vo.short_name}</td>
+                        <td>{$vo.status_text}</td>
+                        <td>{$vo.customer_mobile}</td>
+                        <td>{$vo.customer_name}</td>
+                        <td>{$vo.volume}</td>
+                        <td>{$vo.can_sell}</td>
+                        <td>{$vo.now_price}/{$vo.average_price}</td>
+                        <td>{$vo.profit}</td>
+                    </tr>
+                </volist>
+               <!--  <tr><td colspan="10" class="text-center">小计:成交数量{$tj[0]}，成交金额{$tj[1]}</td></tr>
+                <tr><td colspan="10" class="text-center">总计:成交数量{$tj[2]}，成交金额{$tj[3]}</td></tr> -->
+                <else/>
+                <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+                </notempty>
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+			{$_page}
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('record/position')}');
+        });
+    </script>
+</block>

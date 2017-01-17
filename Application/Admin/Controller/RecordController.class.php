@@ -59,4 +59,23 @@ class RecordController extends AdminController {
 		$this->meta_title = '成交记录';
 		$this->display();
 	}
+
+	#更新持仓记录
+	public function position() {
+		R('Cli/index/updatePosition');
+		$map = array('id'=>array('gt',0));
+		I('customer_mobile') && $map['customer_mobile'] = I('customer_mobile');
+		I('product_number') && $map['product_number'] = I('product_number');
+
+		$model = D('Common/Position');
+		$product_status = D('Common/Product')->_status_val;
+		$list = $this->lists($model,$map);
+		foreach ($list as $k=>$v) {
+			$list[$k]['status_text'] = $product_status[$v['status']];
+			$list[$k]['profit'] = getFloat($v['volume']*($v['now_price']-$v['average_price']));
+		}
+		$this->assign('list',$list);
+		$this->meta_title = '持仓记录';
+		$this->display();
+	}
 }

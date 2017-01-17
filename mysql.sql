@@ -170,3 +170,22 @@ CREATE TABLE `trade_recharge_admin` (
 -- Records of trade_recharge_admin
 -- ----------------------------
 
+DROP TABLE IF EXISTS `trade_position`;
+CREATE TABLE `trade_position` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(10) NOT NULL DEFAULT '0' COMMENT '产品id',
+  `product_number` varchar(50) NOT NULL DEFAULT '' COMMENT '产品id',
+  `short_name` varchar(128) NOT NULL DEFAULT '' COMMENT '产品简称',
+  `customer_id` int(11) NOT NULL DEFAULT '0' COMMENT '客户uid',
+  `customer_name` varchar(64) NOT NULL DEFAULT '' COMMENT '用户姓名',
+  `customer_mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '客户手机号',
+  `agent_number` varchar(50) NOT NULL DEFAULT '' COMMENT '代理编号',
+  `volume` int(11) NOT NULL DEFAULT '0' COMMENT '持仓数量',
+  `can_sell` int(11) NOT NULL DEFAULT '0' COMMENT '可卖数量',
+  `now_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '当前价格',
+  `average_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '平均价格',
+  `last_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '产品状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户持仓表';
+
