@@ -153,6 +153,9 @@
 | customer_id     | int  |       客户id|
 | customer_mobile     | int  |       客户手机号码|
 | customer_name     | varchar  |       客户姓名|
+| other_id     | int  |       对方客户id|
+| other_mobile     | int  |       对方客户手机号码|
+| other_name     | varchar  |       对方客户姓名|
 | product_number     | varchar  |       商品代码|
 | short_name     | varchar  |       商品简称|
 | create_time     | int  |       创建时间|

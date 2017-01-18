@@ -103,6 +103,7 @@ class TradeController extends BaseController {
 
 			//s代表应价买入 b代表应价卖出
 			if($this->direct == 's') {
+				$gd_gid = $gd_id = $gd_name = $gd_mobile = array();//应价时所有挂单方gid、uid、name、mobile
 				foreach($all_gid as $k=>$v) {
 					$gid = 'gd_record:'.$v;
 					$gd_info = $redis->hgetall($gid);
@@ -113,7 +114,12 @@ class TradeController extends BaseController {
 					$consume += $gd_info['volume'];
 					$gd_free_money = $redis->hget('user:'.$gd_info['uid'],'free_money');//可用资金
 					$gd_freeze_money = $redis->hget('user:'.$gd_info['uid'],'freeze_money');//冻结资金
+					
 					if($yj_volume>=0) {
+						$gd_gid[] = $gid;
+						$gd_id[] = $gd_info['uid'];
+						$gd_name[] = $gd_info['name'];
+						$gd_mobile[] = $gd_info['mobile'];
 						$cost = $gd_info['volume']*$gd_info['price'];
 						$yj_cost += $cost;
 						$yj_count++;
@@ -140,7 +146,11 @@ class TradeController extends BaseController {
 							'volume'=>$gd_info['volume'],
 							'pid'=>$gd_info['pid'],
 							'trade_money'=>getFloat($gd_info['volume']*$gd_info['price']),
-							'create_time'=>time()
+							'create_time'=>time(),
+							'other_id'=>$this->_userinfo['uid'],
+							'other_name'=>$this->_userinfo['name'],
+							'other_mobile'=>$this->_userinfo['mobile'],
+							'gid'=>$gid,
 						);
 						
 						$redis->hmset($gid,array(
@@ -154,6 +164,10 @@ class TradeController extends BaseController {
 						$this->generatePosition($this->pid,$gd_info['uid'],$gd_info['volume'],$gd_info['price'],'yj_in_gd');//挂单方库存
 						$redis->zrem('gid_'.$gd_flag.'_by_price:'.$this->pid.':'.$this->price,$gd_info['gid']);//把gid从gid_out_by_price:pid:price表中删除
 					} else {
+						$gd_gid[] = $gid;
+						$gd_id[] = $gd_info['uid'];
+						$gd_name[] = $gd_info['name'];
+						$gd_mobile[] = $gd_info['mobile'];
 						$last_volume = $gd_info['volume']-($consume-$this->volume);//成交数量
 						$cost = $last_volume*$gd_info['price'];
 						$yj_cost += $cost;
@@ -182,9 +196,13 @@ class TradeController extends BaseController {
 							'volume'=>$last_volume,
 							'pid'=>$gd_info['pid'],
 							'trade_money'=>getFloat($yj_cost),
-							'create_time'=>time()
+							'create_time'=>time(),
+							'other_id'=>$this->_userinfo['uid'],
+							'other_name'=>$this->_userinfo['name'],
+							'other_mobile'=>$this->_userinfo['mobile'],
+							'gid'=>$gid,
 						);
-						dump_log();
+						
 						$redis->hmset($gid,array(
 							'gd_status'=>2,//挂单状态，部分成交
 							'volume'=>$consume_all-$this->volume,//挂单数量
@@ -223,7 +241,11 @@ class TradeController extends BaseController {
 					'volume'=>$consume,
 					'pid'=>$gd_info['pid'],
 					'trade_money'=>getFloat($yj_cost),
-					'create_time'=>time()
+					'create_time'=>time(),
+					'other_id'=>json_encode($gd_id),
+					'other_name'=>json_encode($gd_name),
+					'other_mobile'=>json_encode($gd_mobile),
+					'gid'=>json_encode($gd_gid),
 				);
 				
 				$redis->lpush('deals',json_encode($yj_deals_info));
@@ -241,6 +263,7 @@ class TradeController extends BaseController {
 					$redis->hincrby($gd_price_detail_key,'count',-$yj_count);
 				}
 			} else {
+				$gd_gid = $gd_id = $gd_name = $gd_mobile = array();//应价时所有挂单方gid、uid、name、mobile
 				foreach($all_gid as $k=>$v) {
 					$gid = 'gd_record:'.$v;
 					$gd_info = $redis->hgetall($gid);
@@ -252,6 +275,10 @@ class TradeController extends BaseController {
 					$gd_user_money = $redis->hmget('user:'.$gd_info['uid'],'freeze_money','free_money');
 					
 					if($yj_volume>=0) {
+						$gd_gid[] = $gid;
+						$gd_id[] = $gd_info['uid'];
+						$gd_name[] = $gd_info['name'];
+						$gd_mobile[] = $gd_info['mobile'];
 						$cost = $gd_info['volume']*$gd_info['price'];
 						$yj_cost += $cost;
 						$yj_count++;
@@ -278,7 +305,11 @@ class TradeController extends BaseController {
 							'volume'=>$gd_info['volume'],
 							'pid'=>$gd_info['pid'],
 							'trade_money'=>getFloat($gd_info['volume']*$gd_info['price']),
-							'create_time'=>time()
+							'create_time'=>time(),
+							'other_id'=>$this->_userinfo['uid'],
+							'other_name'=>$this->_userinfo['name'],
+							'other_mobile'=>$this->_userinfo['mobile'],
+							'gid'=>$gid,
 						);
 						
 						$redis->hmset($gid,array(
@@ -292,6 +323,10 @@ class TradeController extends BaseController {
 						$this->generatePosition($this->pid,$gd_info['uid'],$gd_info['volume'],$gd_info['price'],'yj_out_gd');//挂单方库存
 						$redis->zrem('gid_'.$gd_flag.'_by_price:'.$this->pid.':'.$this->price,$gd_info['gid']);//把gid从gid_in_by_price:pid:price表中删除
 					} else {
+						$gd_gid[] = $gid;
+						$gd_id[] = $gd_info['uid'];
+						$gd_name[] = $gd_info['name'];
+						$gd_mobile[] = $gd_info['mobile'];
 						$last_volume = $gd_info['volume']-($consume-$this->volume);
 						$cost = $last_volume*$gd_info['price'];
 						$yj_cost += $cost;
@@ -319,7 +354,11 @@ class TradeController extends BaseController {
 							'volume'=>$last_volume,
 							'pid'=>$gd_info['pid'],
 							'trade_money'=>getFloat($last_volume*$gd_info['price']),
-							'create_time'=>time()
+							'create_time'=>time(),
+							'other_id'=>$this->_userinfo['uid'],
+							'other_name'=>$this->_userinfo['name'],
+							'other_mobile'=>$this->_userinfo['mobile'],
+							'gid'=>$gid,
 						);
 
 						$redis->hmset($gid,array(
@@ -360,7 +399,11 @@ class TradeController extends BaseController {
 					'volume'=>$consume,
 					'pid'=>$gd_info['pid'],
 					'trade_money'=>getFloat($yj_cost),
-					'create_time'=>time()
+					'create_time'=>time(),
+					'other_id'=>json_encode($gd_id),
+					'other_name'=>json_encode($gd_name),
+					'other_mobile'=>json_encode($gd_mobile),
+					'gid'=>json_encode($gd_gid),
 				);
 
 				$redis->lpush('deals',json_encode($yj_deals_info));//成交记录

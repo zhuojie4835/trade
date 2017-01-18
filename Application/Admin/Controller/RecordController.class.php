@@ -59,6 +59,34 @@ class RecordController extends AdminController {
 		$this->meta_title = '成交记录';
 		$this->display();
 	}
+	
+	#查看成交详情
+	public function viewdeals($id=null) {
+		!$id && $this->error('wrong request');
+		if(!$deals = D('Common/Deals')->find($id)) {
+			$this->error('no record');
+		}
+		
+		$redis = getRedis();
+		$gd_detail = array();
+		if(in_array($deals['deals_type'],array(1,2))) {//挂单
+			$gd_detail[] = $redis->hgetall($deals['gid']);
+		} else {//应价
+			$deals['other_id'] = json_decode($deals['other_id'],true);
+			$deals['other_name'] = json_decode($deals['other_name'],true);
+			$deals['other_mobile'] = json_decode($deals['other_mobile'],true);
+			$deals['gid'] = json_decode($deals['gid'],true);
+			
+			$deals['other_id'] = implode(',',$deals['other_id']);
+			$deals['other_name'] = implode(',',$deals['other_name']);
+			$deals['other_mobile'] = implode(',',$deals['other_mobile']);
+		}
+		
+		$this->meta_title = '成交详情';
+		$this->assign('info',$deals);
+		$this->assign('gd_detail',$gd_detail);
+		$this->display();
+	}
 
 	#更新持仓记录
 	public function position() {

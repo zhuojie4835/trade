@@ -29,6 +29,7 @@
             <table>
                 <thead>
                     <tr>
+						<th class="">操作</th>
                         <th class="">产品编号</th>
                         <th class="">产品简称</th>
                         <th class="">手机号码</th>
@@ -45,6 +46,9 @@
                 <notempty name="list">
                 <volist name="list" id="vo">
                     <tr>
+						<td>
+                            <a href="{:U('viewdeals',array('id'=>$vo[id]))}">查看</a>
+                        </td>
                         <td>{$vo.product_number} </td>
                         <td>{$vo.short_name}</td>
                         <td>{$vo.customer_mobile}</td>
