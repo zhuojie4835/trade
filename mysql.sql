@@ -189,3 +189,26 @@ CREATE TABLE `trade_position` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户持仓表';
 
+
+DROP TABLE IF EXISTS `trade_deals`;
+CREATE TABLE `trade_deals` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `deals_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '成交类型',
+  `customer_id` int(11) NOT NULL DEFAULT '0' COMMENT '交易账号',
+  `customer_name` varchar(128) NOT NULL DEFAULT '',
+  `customer_mobile` varchar(32) NOT NULL DEFAULT '0' COMMENT '会员手机号码',
+  `product_number` varchar(30) NOT NULL DEFAULT '' COMMENT '产品编号',
+  `short_name` varchar(30) NOT NULL DEFAULT '' COMMENT '产品简称',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '售价',
+  `pid` int(10) NOT NULL DEFAULT '0' COMMENT '产品id',
+  `trade_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '交易金额',
+  `volume` int(11) NOT NULL DEFAULT '0' COMMENT '成交数量',
+  `remark` varchar(300) NOT NULL DEFAULT '',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `other_id` varchar(6000) NOT NULL DEFAULT '0' COMMENT '对方客户id',
+  `other_mobile` varchar(6000) NOT NULL DEFAULT '' COMMENT '对方客户手机号码',
+  `other_name` varchar(6000) NOT NULL DEFAULT '' COMMENT '对方客户姓名',
+  `gid` varchar(3000) NOT NULL DEFAULT '' COMMENT '挂单gid',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='成交记录';
+
