@@ -159,3 +159,7 @@
 | product_number     | varchar  |       商品代码|
 | short_name     | varchar  |       商品简称|
 | create_time     | int  |       创建时间|
+| other_id     | varchar  |       对方客户id|
+| other_mobile     | varchar  |       对方客户手机号码|
+| other_name     | varchar  |       对方客户姓名|
+| gid     | varchar  |       挂单gid|

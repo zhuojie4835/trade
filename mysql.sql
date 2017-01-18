@@ -209,6 +209,12 @@ CREATE TABLE `trade_deals` (
   `other_mobile` varchar(6000) NOT NULL DEFAULT '' COMMENT '对方客户手机号码',
   `other_name` varchar(6000) NOT NULL DEFAULT '' COMMENT '对方客户姓名',
   `gid` varchar(3000) NOT NULL DEFAULT '' COMMENT '挂单gid',
+  `agent_number` varchar(32) NOT NULL DEFAULT '' COMMENT '代理编号',
+  `operator_number` varchar(32) NOT NULL DEFAULT '' COMMENT '所属运营中心',
+  `agent_member_number` varchar(32) NOT NULL DEFAULT '' COMMENT '所属会员',
+  `user_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '客户类型',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='成交记录';
+
+
 
