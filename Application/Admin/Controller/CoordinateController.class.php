@@ -68,14 +68,18 @@ class CoordinateController {
 					$addList3 = array();
 					for($i=0; $i<5000; $i++) {
 						if($deals = $redis->rpop('deals')) {
-							$addList3[] = json_decode($deals,true);
+							$item = json_decode($deals,true);
+							$userinfo = $redis->hgetall('user:'.$item['customer_id']);
+							$item['agent_number'] = $userinfo['agent_number'];
+							$item['user_type'] = $userinfo['user_type'];
+							$item['operator_number'] = $userinfo['operator_number'];
+							$item['agent_member_number'] = $userinfo['agent_member_number'];
+							$addList3[] = $item;
 						} else {
 							break;
 						}
 					}
 					M('deals','trade_')->addAll($addList3);
-					
-					// $this->pushData();
 				} catch (\Exception $e) {
 					dump_log($e->getMessage());
 				}

@@ -96,7 +96,7 @@ class TradeController extends BaseController {
 			$redis = getRedis();
 			$gd_price_key = 'gid_'.$gd_flag.'_by_price:'.$this->pid.':'.$this->price;
 			$all_gid = $redis->zrange($gd_price_key,0,100000);//当前价格所有挂单记录gid
-			$yj_volume = $this->volume;
+			$yj_volume = $this->volume;//此次打算应价的数量
 			$consume = 0;//此次应价消耗的数量
 			$yj_cost = 0;//此次应价消耗资金
 			$yj_count = 0;//此次应价的笔数
@@ -259,7 +259,7 @@ class TradeController extends BaseController {
 					$redis->srem('gd_'.$gd_flag.'_price:'.$this->pid,$this->price);
 					$redis->del($gd_price_detail_key);
 				} else {
-					$redis->hincrby($gd_price_detail_key,'volume',-$this->volume);
+					$redis->hincrby($gd_price_detail_key,'volume',-$consume);
 					$redis->hincrby($gd_price_detail_key,'count',-$yj_count);
 				}
 			} else {
@@ -330,7 +330,8 @@ class TradeController extends BaseController {
 						$last_volume = $gd_info['volume']-($consume-$this->volume);
 						$cost = $last_volume*$gd_info['price'];
 						$yj_cost += $cost;
-						$consume = $this->volume;
+						$consume_all = $consume;//本来打算的数量
+						$consume = $this->volume;//实际应价的数量
 						$gd_follow_info = array(
 							"follow_number"=>generateFollowNumber('G'),//G挂单成交
 							"customer_id"=>$gd_info['uid'],
@@ -353,7 +354,7 @@ class TradeController extends BaseController {
 							'price'=>$gd_info['price'],
 							'volume'=>$last_volume,
 							'pid'=>$gd_info['pid'],
-							'trade_money'=>getFloat($last_volume*$gd_info['price']),
+							'trade_money'=>getFloat($cost),
 							'create_time'=>time(),
 							'other_id'=>$this->_userinfo['uid'],
 							'other_name'=>$this->_userinfo['name'],
@@ -363,7 +364,7 @@ class TradeController extends BaseController {
 
 						$redis->hmset($gid,array(
 							'gd_status'=>2,//挂单状态，部分成交
-							'volume'=>$gd_info['volume']-$consume,//挂单数量
+							'volume'=>$consume_all-$this->volume,//挂单数量
 							'yj_time'=>time()//应价时间
 						));//修改状态记录状态、数量
 						$redis->lpush('deals',json_encode($gd_deals_info));//成交记录

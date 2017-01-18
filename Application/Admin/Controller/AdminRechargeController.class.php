@@ -47,6 +47,7 @@ class AdminRechargeController extends AdminController {
 			}
 		}
 
+		$this->meta_title = '后台充值';
 		$this->display();
 	}
 
@@ -77,6 +78,7 @@ class AdminRechargeController extends AdminController {
 				"bussiness_desciption"=>'后台入金',
 			    "money"=>$info['amount'],
 			    "new_money"=>$new_free_money,
+			    "freeze_money"=>$customer_in_redis['freeze_money'],
 			    "create_time"=>time(),
 			);
 			$redis->lpush("follow",json_encode($follow_arr));

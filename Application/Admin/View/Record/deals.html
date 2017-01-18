@@ -12,7 +12,7 @@
                 <input type="text" name="agent_number" class="search-input" value="{:I('agent_number')}" placeholder="代理编号">
             </div>
             <div class="sleft">
-                <input type="text" name="member_agent_number" class="search-input" value="{:I('member_agent_number')}" placeholder="所属会员">
+                <input type="text" name="agent_member_number" class="search-input" value="{:I('agent_member_number')}" placeholder="所属会员">
             </div>
             <div class="sleft">
                 <input type="text" name="customer_mobile" class="search-input" value="{:I('customer_mobile')}" placeholder="手机号码">
@@ -34,7 +34,9 @@
                         <th class="">产品简称</th>
                         <th class="">手机号码</th>
                         <th class="">客户姓名</th>
-                       <!--  <th class="">客户类型</th> -->
+                        <th class="">客户类型</th>
+                        <th class="">代理编号</th>
+                        <th class="">所属会员</th>
                         <th class="">成交类型</th>
                         <th class="">成交数量</th>
                         <th class="">成交价格</th>
@@ -53,7 +55,9 @@
                         <td>{$vo.short_name}</td>
                         <td>{$vo.customer_mobile}</td>
                         <td>{$vo.customer_name}</td>
-                       <!--  <td>{$vo.customer_type_text}</td> -->
+                        <td>{$vo.customer_type_text}</td>
+                        <td>{$vo.agent_number}</td>
+                        <td>{$vo.agent_member_number}</td>
                         <td>{$vo.deals_type_text}</td>
                         <td>{$vo.volume}</td>
                         <td>{$vo.price}</td>
@@ -61,8 +65,8 @@
                         <td>{$vo.create_time|date='Y-m-d H:i',###}</td>
                     </tr>
                 </volist>
-                <tr><td colspan="10" class="text-center">小计:成交数量{$tj[0]}，成交金额{$tj[1]}</td></tr>
-                <tr><td colspan="10" class="text-center">总计:成交数量{$tj[2]}，成交金额{$tj[3]}</td></tr>
+                <tr><td colspan="13" class="text-center">小计:成交数量{$tj[0]}，成交金额{$tj[1]}</td></tr>
+                <tr><td colspan="13" class="text-center">总计:成交数量{$tj[2]}，成交金额{$tj[3]}</td></tr>
                 <else/>
                 <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
                 </notempty>

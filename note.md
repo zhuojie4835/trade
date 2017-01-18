@@ -109,6 +109,8 @@ workerman 每3秒同步至Mysql Admin/Coordinate/coordinateRedis
 今日任务：完成应价
 
 note:
+1.
+2.用户产品信息如果修改需要同步到redis
 3.应价逻辑代码
 4.挂单买入成交时，可用余额优化
 5.应价方法太长，但是如果需要优化，必须十分谨慎
