@@ -181,10 +181,10 @@ class TradeController extends BaseController {
 							'price'=>$gd_info['price'],
 							'volume'=>$last_volume,
 							'pid'=>$gd_info['pid'],
-							'trade_money'=>getFloat($gd_info['volume']*$gd_info['price']),
+							'trade_money'=>getFloat($yj_cost),
 							'create_time'=>time()
 						);
-						
+						dump_log();
 						$redis->hmset($gid,array(
 							'gd_status'=>2,//挂单状态，部分成交
 							'volume'=>$consume_all-$this->volume,//挂单数量

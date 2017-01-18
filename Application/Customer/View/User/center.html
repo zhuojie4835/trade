@@ -337,7 +337,7 @@
         $.ajax({
             type:'post',
             url:'{:U("")}',
-            data:{act:'position'},
+            data:{act:'position',ignore:1},
             dataType:'json',
             success:function(data){
                 if(data.status == 1) {

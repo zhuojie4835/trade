@@ -19,10 +19,13 @@ class BaseController extends Controller {
 		parent::__construct();
 		$uid = session('uid');
 		$redis = getRedis();
-		if($redis->get('expire_'.$uid)) {
-			$redis->setex('expire_'.$uid,C('LOGIN_TIMEOUT'),session_id());
-		} else {
-			session('uid',null);
+		$ignore = I('ignore',0);
+		if(!$ignore) {
+			if($redis->get('expire_'.$uid)) {
+				$redis->setex('expire_'.$uid,C('LOGIN_TIMEOUT'),session_id());
+			} else {
+				session('uid',null);
+			}
 		}
 	}
 
@@ -32,8 +35,8 @@ class BaseController extends Controller {
 	protected function generatePosition($pid,$uid,$volume,$price,$scene='subscribe') {
 		$redis = getRedis();
 		$position_key = 'position:'.$uid.':'.$pid;
+		$product_trade_info = $redis->hgetall('product_trade:'.$pid);
 		if((!$position = $redis->hgetall($position_key)) && $volume>0) {//持仓不能为负
-			$product_trade_info = $redis->hgetall('product_trade:'.$pid);
 			$position_info = array(
 				'pid'=>$pid,
 				'short_name'=>$product_trade_info['short_name'],
@@ -80,6 +83,7 @@ class BaseController extends Controller {
 			}
 
 			$redis->hset($position_key,'average_price',getFloat($new_average_price));
+			$redis->hset($position_key,'status',$product_trade_info['status']);
 		}
 	}
 }

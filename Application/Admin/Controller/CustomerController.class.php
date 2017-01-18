@@ -35,23 +35,39 @@ class CustomerController extends AdminController {
 		$asset = $redis->hgetall('user:' . $info['id']);
 		$position = array();
 		if($position_keys = $redis->keys('position:'.$info['id'].':*')) {
+			$product_status_val = D('Common/Product')->_status_val;
+			$total_market_value = $total_profit = 0;
 			foreach($position_keys as $v) {
 				$item = $redis->hgetall($v);
 				$item['now_price'] = $redis->hget('product_trade:'.$item['pid'],'now_price');
 				$item['profit'] = getFloat(($item['now_price']-$item['average_price'])*$item['volume']);
+				$item['status_text'] = $product_status_val[$item['status']];
+				$total_market_value += getFloat($item['now_price']*$item['volume']);
+				$total_profit += $item['profit'];
 				$position[] = $item;
 			}
+			$this->total_market_value = $total_market_value;
+			$this->total_profit = $total_profit;
 		}
 		$follow_model = D('Common/Follow');		
         $list = $this->lists($follow_model,array('customer_id'=>$id));
+		$follow_type_val = $follow_model->_follow_type_val;
 		foreach($list as $k=>$v) {
-			$list[$k]['follow_type_text'] = $follow_model->_follow_type_val[$list[$k]['follow_type']];
+			$list[$k]['follow_type_text'] = $follow_type_val[$v['follow_type']];
+		}
+		
+		$deals_model = D('Common/Deals');
+		$deals_list = $deals_model->where(array('customer_id'=>$id))->order('id desc')->limit(100)->select();
+		$deals_type_val = $deals_model->_deals_type_val;
+		foreach($deals_list as $k=>$v) {
+			$deals_list[$k]['deals_type_text'] = $deals_type_val[$v['deals_type']];
 		}
 		
 		$this->assign('info',$info);
 		$this->assign('asset',$asset);
 		$this->assign('position',$position);
 		$this->assign('follow',$list);
+		$this->assign('deals',$deals_list);
 		$this->is_view = 1;
 		$this->meta_title = '查看客户';
 		$this->display('add');
