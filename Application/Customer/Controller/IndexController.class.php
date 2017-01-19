@@ -246,4 +246,13 @@ class IndexController extends BaseController {
 		
 		return $result;
 	}
+	
+	#登录验证
+	public function checkLogin() {
+		if(IS_AJAX && $this->isLogin()) {
+			return $this->ajaxReturn(array('status'=>1,'msg'=>'已登录'));
+		}
+		
+		return $this->ajaxReturn(array('status'=>0,'msg'=>'未登录'));
+	}
 }
