@@ -29,8 +29,7 @@
                         <th class="">产品状态</th>
                         <th class="">手机号码</th>
                         <th class="">客户姓名</th>
-                        <th class="">持仓数量</th>
-                        <th class="">可卖数量</th>
+                        <th class="">持仓/可卖</th>
                         <th class="">最新价格/平均价格</th>
                         <th class="">盈亏</th>
                     </tr>
@@ -44,8 +43,7 @@
                         <td>{$vo.status_text}</td>
                         <td>{$vo.customer_mobile}</td>
                         <td>{$vo.customer_name}</td>
-                        <td>{$vo.volume}</td>
-                        <td>{$vo.can_sell}</td>
+                        <td>{$vo.volume}/{$vo.can_sell}</td>
                         <td>{$vo.now_price}/{$vo.average_price}</td>
                         <td>{$vo.profit}</td>
                     </tr>

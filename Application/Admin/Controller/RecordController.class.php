@@ -87,7 +87,7 @@ class RecordController extends AdminController {
 		
 		$gd_status_val = array(1=>'等待成交',2=>'部分成交',3=>'全部成交',4=>'撤单',5=>'系统撤单');
 		foreach($gd_detail as $k=>$v) {
-			$gd_detail[$k]['status_text'] = $gd_status_val[$v['status']];
+			$gd_detail[$k]['status_text'] = $gd_status_val[$v['gd_status']];
 		}
 
 		$this->meta_title = '成交详情';

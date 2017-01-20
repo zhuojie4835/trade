@@ -195,5 +195,8 @@ $(function(){
     	});
 	}
 	getQuota();
-	setInterval(getQuota,5000);
+	setInterval(getQuota,30000);
+	$("#refresh").on('click',function(){
+		getQuota();
+	});
 });

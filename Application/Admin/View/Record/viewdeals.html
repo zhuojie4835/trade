@@ -11,67 +11,78 @@
         <h2>{$meta_title}</h2>
     </div>
     <form action="{:U()}" method="post" class="form-horizontal">
-        <!-- <div class="form-item">
-            <label class="item-label">对方账号<span class="check-tips"></span></label>
-            <div class="controls">
-                <span>{$info.other_id}</span>
-            </div>
-        </div>
-        <div class="form-item">
-            <label class="item-label">对方手机号码<span class="check-tips"></span></label>
-            <div class="controls">
-                <span>{$info.other_mobile}</span>
-            </div>
-        </div>
-        <div class="form-item">
-            <label class="item-label">对方姓名</label>
-            <div class="controls">
-                <span>{$info.other_name}</span>
-            </div>
-        </div> -->
-        <div class="form-item">
-            <label class="item-label">对手挂单详情<span class="check-tips"></span></label>
-            <div class="controls">
-                <div class="data-table table-striped">
-					<form class="ids">
-						<table>
-							<thead>
-								<tr>
-									<th>产品编号</th>
-                                    <th>产品简称</th>
-									<th>挂单数量/剩余数量</th>
-                                    <th>挂单价格</th>
-									<th>挂单状态</th>
-									<th>挂单时间</th>
-                                    <th>帐号</th>
-                                    <th>手机号码</th>
-                                    <th>姓名</th>
-								</tr>
-							</thead>
-							<tbody>
-							<notempty name="gd_detail">
-							<volist name="gd_detail" id="vo">
-								<tr>
-									<td>{$vo.product_number}</td>
-                                    <td>{$vo.short_name}</td>
-									<td>{$vo.volume_p}/{$vo.volume}</td>
-                                    <td>{$vo.price}</td>
-									<td>{$vo.status_text}</td>
-									<td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
-                                    <td>{$vo.uid}</td>
-                                    <td>{$vo.mobile}</td>
-                                    <td>{$vo.name}</td>
-								</tr>
-							</volist>
-							<else/>
-							<td colspan="12" class="text-center"> aOh! 暂时还没有内容! </td>
-							</notempty>
-							</tbody>
-						</table>
-					</form>
+		<if condition="in_array($info['deals_type'],array(3,4))">
+			<div class="form-item">
+				<label class="item-label">对手挂单详情<span class="check-tips"></span></label>
+				<div class="controls">
+					<div class="data-table table-striped">
+						<form class="ids">
+							<table>
+								<thead>
+									<tr>
+										<th>产品编号</th>
+										<th>产品简称</th>
+										<th>挂单数量/剩余数量</th>
+										<th>挂单价格</th>
+										<th>挂单状态</th>
+										<th>挂单时间</th>
+										<th>最后一笔成交时间</th>
+										<th>帐号</th>
+										<th>手机号码</th>
+										<th>姓名</th>
+									</tr>
+								</thead>
+								<tbody>
+								<notempty name="gd_detail">
+								<volist name="gd_detail" id="vo">
+									<tr>
+										<td>{$vo.product_number}</td>
+										<td>{$vo.short_name}</td>
+										<td>{$vo.volume_p}/{$vo.volume}</td>
+										<td>{$vo.price}</td>
+										<td>{$vo.status_text}</td>
+										<td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
+										<td>{$vo.yj_time|date='Y-m-d H:i:s',###}</td>
+										<td>{$vo.uid}</td>
+										<td>{$vo.mobile}</td>
+										<td>{$vo.name}</td>
+									</tr>
+								</volist>
+								<else/>
+								<td colspan="12" class="text-center"> aOh! 暂时还没有内容! </td>
+								</notempty>
+								</tbody>
+							</table>
+						</form>
+					</div>
 				</div>
-            </div>
-        </div>
+			</div>
+		<else/>
+			<div class="form-item">
+				<label class="item-label">对方账号<span class="check-tips"></span></label>
+				<div class="controls">
+					<span>{$info.other_id}</span>
+				</div>
+			</div>
+			<div class="form-item">
+				<label class="item-label">对方手机号码<span class="check-tips"></span></label>
+				<div class="controls">
+					<span>{$info.other_mobile}</span>
+				</div>
+			</div>
+			<div class="form-item">
+				<label class="item-label">对方姓名</label>
+				<div class="controls">
+					<span>{$info.other_name}</span>
+				</div>
+			</div>
+			<div class="form-item">
+				<label class="item-label">成交时间</label>
+				<div class="controls">
+					<span>{$info.create_time|date='Y-m-d H:i:s',###}</span>
+				</div>
+			</div>
+		</if>
         <div class="form-item">
             <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
         </div>

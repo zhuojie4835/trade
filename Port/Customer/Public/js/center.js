@@ -7,6 +7,8 @@ $(function(){
 			$(".tabs li").eq(tabsSwiper.activeIndex).addClass('active')
 		}
 	})
+	$(".swiper-wrapper").height();
+	$(".user_box_one").find(".hide_ul").eq(0).css("height",'34px');
 	$(".tabs li").on('touchstart mousedown',function(e){
 		e.preventDefault()
 		$(".tabs .active").removeClass('active')
@@ -130,12 +132,12 @@ $(function(){
                                         '<dd class="lhdd">'+info.volume+'<br/>'+info.can_sell+'</dd>'+
                                         '<dd><a href="javascript:;">'+info.profit+'</a></dd>'+
                                         '<div class="clear"></div>'+
-                                        // '<div class="hide_ul">'+
+                                        '<div class="hide_ul">'+
                                         //     '<a href="javascript:;">行情</a>'+
                                         //     '<a class="bgw" href="{:U('delivery')}">提货</a>'+
                                         //     '<a href="javascript:;"  data-uid="1">挂单买入</a>'+
                                         //     '<a href="javascript:;"  data-uid="2">挂单卖出</a>'+
-                                        // '</div>'+
+                                        '</div>'+
                                     '</dl>'+
                                 '</li>';
                     }
@@ -178,7 +180,7 @@ $(function(){
             error:function(){}
         });
     }
-    setInterval(update,5000);
+    setInterval(update,30000);
 });
 
     

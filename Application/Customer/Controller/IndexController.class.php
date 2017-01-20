@@ -81,7 +81,17 @@ class IndexController extends BaseController {
 				if(!$model->create($post,4)) {
 					throw new \Exception($model->getError());
 				}
-				$agent = D('Common/Agent')->field('agent_number,operator_number,agent_member_number')->where(array('agent_number'=>$post['agent_number']))->find();
+				$agent = D('Common/Agent')->field('agent_number,operator_number,agent_member_number,parent_number,agent_type')->where(array('agent_number'=>$post['agent_number']))->find();
+				$agent2 = 0;//所属高级代理
+				if($agent['agent_type'] == 1) {
+					$agent2 = 0;//会员没有高级代理
+				} elseif ($agent['agent_type'] == 2) {
+					$agent2 = $post['agent_number'];
+				} elseif ($agent['agent_type'] == 3) {
+					$agent2 = $agent['parent_number'];
+				}
+				
+				$model->agent2 = $agent2;
 				$model->parent1 = I('post.parent1');
 				$model->parent2 = I('post.parent2');
 				$model->create_time = time();
@@ -103,6 +113,7 @@ class IndexController extends BaseController {
 					'register_time'=>time(),
 					'free_money'=>50000,
 					'freeze_money'=>0,
+					'agent2'=>$agent2,
 					'parent1'=>I('post.parent1'),
 					'parent2'=>I('post.parent2'),
 				);

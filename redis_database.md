@@ -17,6 +17,7 @@
 | user_type     | int  |     客户类型|
 | operator_number     | varchar  |       运营中心编号|
 | agent_member_number     | varchar  |       所属会员编号|
+| agent2     | varchar  |       所属高级代理编号|
 | register_time     | int  |       创建时间|
 | free_money     | float  |       可用资金|
 | freeze_money     | float  |       冻结资金|

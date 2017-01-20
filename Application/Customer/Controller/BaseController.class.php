@@ -53,37 +53,51 @@ class BaseController extends Controller {
 				$redis->hincrby($position_key,'can_sell',$volume);
 				$redis->hincrby($position_key,'volume',$volume);
 				$new_average_price = ($position['volume']*$position['average_price']+$volume*$price)/($position['volume']+$volume);
+				
+				$redis->hset($position_key,'average_price',getFloat($new_average_price));
+				$redis->hset($position_key,'status',$product_trade_info['status']);
 			} elseif($scene == 'yj_in_gd') {//应价买入挂单方
 				$redis->hincrby($position_key,'volume',-$volume);
 				if($position['volume']-$volume>0) {
 					$new_average_price = $price-($price-$position['average_price'])*$position['volume']/($position['volume']-$volume);
+					$redis->hset($position_key,'average_price',getFloat($new_average_price));
 				} else {
 					$new_average_price = 0;//全部卖出
+					$redis->del($position_key);
 				}
 			} elseif($scene == 'yj_in_yj') {//应价买入应价方
 				$redis->hincrby($position_key,'volume',$volume);
 				$redis->hincrby($position_key,'can_sell',$volume);
 				$new_average_price = ($position['volume']*$position['average_price']+$volume*$price)/($position['volume']+$volume);
+				
+				$redis->hset($position_key,'average_price',getFloat($new_average_price));
+				$redis->hset($position_key,'status',$product_trade_info['status']);
 			} elseif($scene == 'yj_out_gd') {//应价卖出挂单方
 				$redis->hincrby($position_key,'can_sell',$volume);
 				$redis->hincrby($position_key,'volume',$volume);
-				
 				$new_average_price = ($position['volume']*$position['average_price']+$volume*$price)/($position['volume']+$volume);
+				
+				$redis->hset($position_key,'average_price',getFloat($new_average_price));
+				$redis->hset($position_key,'status',$product_trade_info['status']);
 			} elseif($scene == 'yj_out_yj') {//应价卖出应价方
 				$redis->hincrby($position_key,'can_sell',-$volume);
 				$redis->hincrby($position_key,'volume',-$volume);
 				if($position['volume']-$volume>0) {
 					$new_average_price = $price-($price-$position['average_price'])*$position['volume']/($position['volume']-$volume);
+					
+					$redis->hset($position_key,'average_price',getFloat($new_average_price));
+					$redis->hset($position_key,'status',$product_trade_info['status']);
 				} else {
 					$new_average_price = 0;//全部卖出
+					$redis->del($position_key);
 				}
 			} elseif ($scene == 'gd_out_cancel') {//挂单卖出撤销
 				$redis->hincrby($position_key,'can_sell',$volume);
 				$new_average_price = $position['average_price'];
+				
+				$redis->hset($position_key,'average_price',getFloat($new_average_price));
+				$redis->hset($position_key,'status',$product_trade_info['status']);
 			}
-
-			$redis->hset($position_key,'average_price',getFloat($new_average_price));
-			$redis->hset($position_key,'status',$product_trade_info['status']);
 		}
 	}
 }
