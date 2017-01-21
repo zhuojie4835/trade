@@ -9,8 +9,12 @@ class IndexController extends Controller {
 	public function clearData() {
 		$redis = getRedis();
 		$redis->flushdb();
-		$sql = file_get_contents(APP_PATH.'../mysql.sql');
-		M('')->execute($sql);
+		M('')->execute('TRUNCATE TABLE trade_recharge_admin');
+		M('')->execute('TRUNCATE TABLE trade_product_order');
+		M('')->execute('TRUNCATE TABLE trade_position');
+		M('')->execute('TRUNCATE TABLE trade_follow');
+		M('')->execute('TRUNCATE TABLE trade_deals');
+		M('')->execute('TRUNCATE TABLE trade_customer');
 	}
 
 	#更新持仓
