@@ -23,6 +23,7 @@
 | freeze_money     | float  |       冻结资金|
 | parent1     | int  |       直接介绍人|
 | parent2     | int  |       间接介绍人|
+| bind_agent_number     | varchar  |       绑定代理|
 
 * 资金流水  follow (list)
 

@@ -32,7 +32,7 @@ class IndexController extends BaseController {
 		$info = unserialize($info['product_info']);
 		$product_trade_info = getProductTradeInfo($id);
 		$info['left_number'] = $product_trade_info['left_number'];
-		// var_dump($info[status]);die;
+		
 		$this->assign('info',$info);
 		$this->display();
 	}
@@ -114,6 +114,7 @@ class IndexController extends BaseController {
 					'free_money'=>50000,
 					'freeze_money'=>0,
 					'agent2'=>$agent2,
+					'status'=>1,
 					'parent1'=>I('post.parent1'),
 					'parent2'=>I('post.parent2'),
 				);

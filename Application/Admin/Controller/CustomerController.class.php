@@ -63,6 +63,8 @@ class CustomerController extends AdminController {
 			$deals_list[$k]['deals_type_text'] = $deals_type_val[$v['deals_type']];
 		}
 		
+		$status_val = D('Common/Customer')->_status_val;
+		$this->assign('status',$status_val);
 		$this->assign('info',$info);
 		$this->assign('asset',$asset);
 		$this->assign('position',$position);
@@ -86,6 +88,7 @@ class CustomerController extends AdminController {
 			$this->ajaxReturn(array('status'=>0,'msg'=>'代理不存在'));
 		}
 		
+		$redis = getRedis();
 		if(I('post.act') == 'bind') {
 			if($customer['user_type'] != 1) {
 				$this->ajaxReturn(array('status'=>0,'msg'=>'用户类型错误'));
@@ -98,11 +101,28 @@ class CustomerController extends AdminController {
 			}
 			D('Common/Customer')->where(array('id'=>$customer['id']))->save(array('user_type'=>$agent['agent_type']+1,'bind_agent_number'=>$bind_agent_number));
 			D('Common/Agent')->where(array('id'=>$agent['id']))->save(array('bind_customer_id'=>$customer['id']));
+			$redis->hset('user:'.$customer['id'],'bind_agent_number',$bind_agent_number);
 		} elseif(I('post.act') == 'cancel') {
 			D('Common/Customer')->where(array('id'=>$customer['id']))->save(array('user_type'=>1,'bind_agent_number'=>0));
 			D('Common/Agent')->where(array('id'=>$agent['id']))->save(array('bind_customer_id'=>0));
-			
+			$redis->hdel('user:'.$customer['id'],'bind_agent_number');
 		}
+		$this->ajaxReturn(array('status'=>1,'msg'=>'操作成功'));
+	}
+	
+	#设置用户状态
+	public function setstatus() {
+		$id = I('post.id',0);
+		$status = I('post.status');
+		$customer = D('Common/Customer')->find($id);
+		if(!$customer) {
+			$this->ajaxReturn(array('status'=>0,'msg'=>'用户不存在'));
+		}
+		
+		$redis = getRedis();
+		D('Common/Customer')->where(array('id'=>$customer['id']))->save(array('status'=>$status));
+		$redis->hset('user:'.$customer['id'],'status',$status);
+		
 		$this->ajaxReturn(array('status'=>1,'msg'=>'操作成功'));
 	}
 }

@@ -16,7 +16,7 @@ class CustomerModel extends TradeModel {
 	
 	public $_funds_status_val = array(1=>'可存可取', 2=>'可存不取', 3=>'不存可取', 4=>'不存不取');
 	
-	public $_status_val = array(1=>'预批',2=>'已启用',3=>'已禁用',4=>'已注销');//账号状态
+	public $_status_val = array(1=>'启用',2=>'禁用');//账号状态
 	
 	public $_user_from_val = array(1=>'前台注册',2=>'后台添加');//用户来源
 	
@@ -80,6 +80,9 @@ class CustomerModel extends TradeModel {
 		}
 		if(!$customer = $this->where(array('login_name'=>$login_name))->find()) {
 			throw new \Exception('手机号码或密码错误');
+		}
+		if($customer['status'] == 2) {
+			throw new \Exception('您的账号已被禁用，请与客服联系！');
 		}
 		if(self::generatePassword($password) != $customer['password']) {
 			throw new \Exception('手机号或密码错误');

@@ -51,6 +51,17 @@
                             </if>
                         </div>
                     </div>
+					<div class="form-item">
+                        <label class="item-label">账户状态<span class="check-tips"></span></label>
+                        <div class="controls">
+							<select name="status">
+								<volist name="status" id="vo">
+									<option value="{$key}" <if condition="$info[status] eq $key">selected</if>>{$vo}</option>
+								</volist>
+							</select>
+							<input type="button" class="btn status_set_btn" data-uid="{$info.id}" value="设置">
+                        </div>
+                    </div>
                     <div class="form-item">
                         <label class="item-label">可用金额<span class="check-tips"></span></label>
                         <div class="controls">
@@ -224,6 +235,17 @@
             var act = $(this).data('act');
             var bind_agent_number = parseInt($("form").find("input[name='bind_agent_number']").val());
             $.post('{:U("bind")}',{id:uid,bind_agent_number:bind_agent_number,act:act},function(data){
+                alert(data.msg);
+                if(data.status == 1) {
+                    history.go(0);
+                }
+            },'json');
+        });
+		$(".status_set_btn").on('click',function(){
+			var uid = '{$Think.get.id}';
+            var status = $("form").find("select[name='status']").val();
+			console.log(status);
+            $.post('{:U("setstatus")}',{id:uid,status:status},function(data){
                 alert(data.msg);
                 if(data.status == 1) {
                     history.go(0);

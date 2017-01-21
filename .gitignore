@@ -4,3 +4,7 @@ Application/log.txt
 .htaccess
 nbproject/
 Port/Customer/Runtime/
+Application/Common/Conf/config.php
+ThinkPHP/Library/_vagrant_site_trade_admin.php.pid
+ThinkPHP/Library/workerman.log
+ThinkPHP/Library/_vagrant_trade_admin.php.pid
