@@ -36,11 +36,23 @@ $(function(){
 	$(document).on('change','.jisuan',function(){
 		var price = parseFloat($("#trade_form").find('input[name="price"]').val());
 		var volume = parseInt($("#trade_form").find('input[name="volume"]').val());
+		price = Math.abs(price);
+		volume = Math.abs(volume);
 		price = price.toFixed(2);
-		$("#trade_form").find('input[name="price"]').val(price);
+		if(isNaN(price)) {
+			$("#trade_form").find('input[name="price"]').val('');
+		} else {
+			$("#trade_form").find('input[name="price"]').val(price);
+		}
+		
+		if(isNaN(volume)) {
+			$("#trade_form").find('input[name="volume"]').val('');
+		} else {
+			$("#trade_form").find('input[name="volume"]').val(volume);
+		}
 		
 		var amount = parseFloat(price*volume).toFixed(2);
-		if(price && volume) {
+		if(isFinite(price) && isFinite(volume)) {
 			$("#jisuan_money").html(amount);
 		} else {
 			$("#jisuan_money").html('');

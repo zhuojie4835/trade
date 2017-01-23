@@ -1,0 +1,106 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{$meta_title}</h2>
+    </div>
+
+    <div class="cf">
+        <!-- <a class="btn" href="{:U('add')}">新 增</a> -->
+        <!-- 高级搜索 -->
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="key" class="search-input" value="{:I('key')}" placeholder="请输入配置键名称">
+                <a class="sch-btn" href="javascript:;" id="search" url="__SELF__"><i class="btn-search"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="data-table table-striped">
+        <form class="ids">
+            <table>
+                <thead>
+                    <tr>
+						<th class="">操作</th>
+						<th class="">配置键</th>
+						<th class="">配置值</th>
+						<th class="">说明</th>
+						<th class="">状态</th>
+						<th class="">创建人</th>
+						<th class="">最后编辑时间</th>
+					</tr>
+                </thead>
+                <tbody>
+				<notempty name="list">
+                <volist name="list" id="vo">
+                    <tr>
+                        <td>
+							<a href="{:U('edit',array('id'=>$vo['id']))}">修改</a>
+							<a href="{:U('del',array('id'=>$vo['id']))}" class="confirm ajax-get">删除</a>
+						</td>
+						<td>{$vo.key} </td>
+						<td>{$vo.value}</td>
+						<td>{$vo.description}</td>
+						<td>{$vo.status_text}</td>
+						<td>{$vo.admin_id|get_nickname}</td>
+						<td><if condition="$vo.last_time gt 0">{$vo.last_time|date='Y-m-d H:i:s',###}</if></td>
+                    </tr>
+                </volist>
+				<else/>
+				<td colspan="12" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('settings/common')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

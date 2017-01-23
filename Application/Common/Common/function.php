@@ -1231,3 +1231,13 @@ function arr_sort($sort_arr,$arr) {
 
     return $arr; 
 }
+
+ /**
+ * 获取redis里的配置
+ * author:zhuojie
+ */
+ function getRedisConfig($key) {
+	$redis = getRedis();
+	return $redis->hget('settings',$key);
+ }
+ 

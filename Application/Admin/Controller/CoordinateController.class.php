@@ -32,7 +32,9 @@ class CoordinateController {
 							break;
 						}
 					}
-					D('Common/Follow')->addAll($addList1);
+					if($addList1) {
+						D('Common/Follow')->addAll($addList1);
+					}
 					
 					//同步认购
 					$addList2 = array();
@@ -62,7 +64,9 @@ class CoordinateController {
 							break;
 						}
 					}
-					D('Common/ProductOrder')->addAll($addList2);
+					if($addList1) {
+						D('Common/ProductOrder')->addAll($addList2);
+					}
 				
 					//同步成交
 					$addList3 = array();
@@ -79,7 +83,9 @@ class CoordinateController {
 							break;
 						}
 					}
-					M('deals','trade_')->addAll($addList3);
+					if($addList3) {
+						M('deals','trade_')->addAll($addList3);
+					}
 				} catch (\Exception $e) {
 					dump_log($e->getMessage());
 				}

@@ -156,6 +156,8 @@ class IndexController extends BaseController {
 			$this->redirect('user/center');
 		}
 		if(IS_POST) {
+			$login_timeout_inredis = getRedisConfig('login_timeout');
+			$login_timeout = $login_timeout_inredis ? $login_timeout_inredis : 1800;
 			$model = D('Common/Customer');
 			$post = I('post.');
 			try {
@@ -166,7 +168,7 @@ class IndexController extends BaseController {
 				$model->where(array('login_name'=>$userinfo['login_name']))->save(array('login_time'=>time()));//更新登录时间
 				$redis = getRedis();
 				session('uid',$userinfo['id']);
-				$redis->setex('expire_'.$userinfo['id'],C('LOGIN_TIMEOUT'),session_id());
+				$redis->setex('expire_'.$userinfo['id'],$login_timeout,session_id());
 				$this->ajaxReturn(array('status'=>1,'msg'=>'登录成功'));
 			} catch (\Exception $e) {
 				$this->ajaxReturn(array('status'=>0,'msg'=>$e->getMessage()));

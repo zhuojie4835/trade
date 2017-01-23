@@ -1,0 +1,67 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{$meta_title}</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+		<if condition="$is_view OR $is_edit">
+			<input type="hidden" class="text input-large" name="id" value="{$info.id}">
+		</if>
+        <div class="form-item">
+            <label class="item-label">配置键<span class="check-tips"></span></label>
+            <div class="controls">
+				<if condition="$is_view">
+                    <span>{$info.key}</span>
+					<input type="hidden" class="text input-mid" name="key" value="{$info.key}">
+                <else/>
+                    <input type="text" class="text input-mid" name="key" value="">
+                </if>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">配置值<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-mid" name="value" value="{$info.value}">
+            </div>
+        </div>
+		<div class="form-item">
+            <label class="item-label">说明<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-mid" name="description" value="{$info.description}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">配置类型<span class="check-tips"></span></label>
+            <div class="controls">
+				<select name="type">
+				<option value="0">请选择</option>
+				<volist name="type_val" id="vo">
+					<option value="{$key}" <if condition="$key eq $info[type]">selected</if>>{$vo}</option>
+				</volist>
+				</select>
+            </div>
+        </div>
+		<div class="form-item">
+            <label class="item-label">状态<span class="check-tips"></span></label>
+            <div class="controls">
+				<select name="status">
+				<volist name="status_val" id="vo">
+					<option value="{$key}" <if condition="$key eq $info[status]">selected</if>>{$vo}</option>
+				</volist>
+				</select>
+            </div>
+        </div>
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('settings/add')}');
+    </script>
+</block>

@@ -462,6 +462,19 @@ class TradeController extends BaseController {
 			throw new \Exception('商品不存在');
 		}
 		
+		$redis = getRedis();
+		$yj_start_time_am = $redis->hget('settings','trade_am_start') ? $redis->hget('settings','trade_am_start') : '9:30';//应价上午开始时间 
+		$yj_start_time_am = strtotime($yj_start_time_am);
+		$yj_end_time_am = $redis->hget('settings','trade_am_end') ? $redis->hget('settings','trade_am_end') : '11:30';//应价上午截止时间 
+		$yj_end_time_am = strtotime($yj_end_time_am);
+		$yj_start_time_pm = $redis->hget('settings','trade_pm_start') ? $redis->hget('settings','trade_pm_start') : '13:30';//应价下午开始时间 
+		$yj_start_time_pm = strtotime($yj_start_time_pm);
+		$yj_end_time_pm = $redis->hget('settings','trade_pm_end') ? $redis->hget('settings','trade_pm_end') : '17:30';//应价下午截止时间 
+		$yj_end_time_pm = strtotime($yj_end_time_pm);
+		if(!($yj_start_time_am<time() && time()<$yj_end_time_am) && !($yj_start_time_pm<time() && time()<$yj_end_time_pm)) {
+			throw new \Exception('现在不是交易时间');
+		}
+		
 		if($this->direct == 's') {
 			$this->trade_money = getFloat($this->volume*$this->price);
 			if($this->trade_money>$this->_userinfo['free_money']) {
@@ -492,6 +505,17 @@ class TradeController extends BaseController {
 		if($data['volume']<=0) {
 			throw new \Exception('参数错误');
 		}
+		
+		$redis = getRedis();
+		$gd_start_time = $redis->hget('settings','trade_am_start') ? $redis->hget('settings','trade_am_start') : '9:30';//挂单开始时间 
+		$gd_start_time = strtotime($gd_start_time);
+		$gd_end_time = $redis->hget('settings','trade_pm_end') ? $redis->hget('settings','trade_pm_end') : '15:00';//挂单截止时间
+		$gd_end_time = strtotime($gd_end_time);
+		if(time()>$gd_end_time || time()<$gd_start_time) {
+			throw new \Exception('现在不是挂单时间');
+		}
+		
+		
 		$this->price = getFloat($data['price']);
 		$this->volume = $data['volume'];
 		$this->pid = $data['pid'];

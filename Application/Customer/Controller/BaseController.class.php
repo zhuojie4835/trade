@@ -19,10 +19,19 @@ class BaseController extends Controller {
 		parent::__construct();
 		$uid = session('uid');
 		$redis = getRedis();
+		$login_timeout_inredis = getRedisConfig('login_timeout');
+		$login_timeout = $login_timeout_inredis ? $login_timeout_inredis : 1800;
 		$ignore = I('ignore',0);
-		if(!$ignore) {
+		if($uid) {
+			$user_status = $redis->hget('user:'.$uid,'status');
+			if($user_status == 2) {//账户被禁用
+				session('uid',null);
+				$redis->del('expire_'.$uid);
+			}
+		}
+		if(!$ignore && $uid) {
 			if($redis->get('expire_'.$uid)) {
-				$redis->setex('expire_'.$uid,C('LOGIN_TIMEOUT'),session_id());
+				$redis->setex('expire_'.$uid,$login_timeout,session_id());
 			} else {
 				session('uid',null);
 			}
