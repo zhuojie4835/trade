@@ -21,7 +21,7 @@ class SettingsController extends AdminController {
 				
 				$model->add($post);
 				$redis->hset('settings',$post['key'],$post['value']);
-				$this->success('添加成功');
+				$this->success('操作成功');
 			} catch (\Exception $e) {
 				$this->error($e->getMessage());
 			}
@@ -54,7 +54,7 @@ class SettingsController extends AdminController {
 				$model->save($post);
 				$redis->hset('settings',$post['key'],$post['value']);
 				$post['status'] == 2 && $redis->hdel('settings',$post['key']);
-				$this->success('添加成功');
+				$this->success('操作成功');
 			} catch (\Exception $e) {
 				$this->error($e->getMessage());
 			}

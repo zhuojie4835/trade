@@ -100,7 +100,7 @@ $(function(){
     		url:updateQuotaUrl,
     		data:{id:id,ignore:1},
     		success:function(data){
-				if(data.status == 1) {
+				if(data.status == 1 || data.status == -1) {
 					var gd_in_quota =  data.gd_in_quota;
 					var gd_out_quota =  data.gd_out_quota;
 					var product_info = data.product_info;
@@ -199,6 +199,9 @@ $(function(){
 					$("#gd_in_html").html(gd_in_html);
 					$("#gd_out_html").html(gd_out_html);
 					$("#trade_price").html('<em>'+product_info.now_price+'</em>跌停:<em>'+product_info.min_price+'</em>涨停:<em>'+product_info.max_price+'</em>');
+				} 
+				if(data.status == -1) {
+					clearInterval(timeticket);
 				}
     		},
     		error:function(){
@@ -207,7 +210,7 @@ $(function(){
     	});
 	}
 	getQuota();
-	setInterval(getQuota,30000);
+	timeticket = setInterval(getQuota,6000);
 	$("#refresh").on('click',function(){
 		getQuota();
 	});

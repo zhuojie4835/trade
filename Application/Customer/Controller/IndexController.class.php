@@ -226,8 +226,15 @@ class IndexController extends BaseController {
 			$this->ajaxReturn(array('status'=>0,'msg'=>'获取数据失败'));
 		}
 		
+		$trade_pm_end = getRedisConfig('trade_pm_end');
+		$trade_pm_end = strtotime($trade_pm_end);
+		
 		$gd_in_quota = $this->getQuota($now_price,'in',$pid);
 		$gd_out_quota = $this->getQuota($now_price,'out',$pid);
+		
+		if(time()>$trade_pm_end) {
+			$this->ajaxReturn(array('status'=>-1,'product_info'=>(array)$product_trade,'gd_in_quota'=>(array)$gd_in_quota,'gd_out_quota'=>(array)$gd_out_quota));
+		}
 		
 		$this->ajaxReturn(array('status'=>1,'product_info'=>(array)$product_trade,'gd_in_quota'=>(array)$gd_in_quota,'gd_out_quota'=>(array)$gd_out_quota));
 	}
