@@ -76,7 +76,7 @@ class SearchController extends BaseController {
 		$list = array();
 		$redis = getRedis();
 		$gids = $redis->zrevrange('gid_by_person:'.$this->_userinfo['uid'],0,100000);
-		$gd_status = array(1=>'等待成交',2=>'部分成交',3=>'全部成交',4=>'已撤销',5=>'系统撤销');
+		$gd_status = array(1=>'等待成交',2=>'部分成交',3=>'全部成交',4=>'已撤销',5=>'系统撤销',6=>'部分撤单');
 		foreach($gids as $v) {
 			$item = $redis->hgetall('gd_record:'.$v);
 			$item['gd_status_text'] = $gd_status[$item['gd_status']];

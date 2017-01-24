@@ -96,20 +96,39 @@ class RecordController extends AdminController {
 		$this->display();
 	}
 
-	#更新持仓记录
+	#持仓记录
 	public function position() {
-		R('Cli/index/updatePosition');
-		$map = array('id'=>array('gt',0));
-		I('customer_mobile') && $map['customer_mobile'] = I('customer_mobile');
-		I('product_number') && $map['product_number'] = I('product_number');
-
-		$model = D('Common/Position');
-		$product_status = D('Common/Product')->_status_val;
-		$list = $this->lists($model,$map);
-		foreach ($list as $k=>$v) {
-			$list[$k]['status_text'] = $product_status[$v['status']];
-			$list[$k]['profit'] = getFloat($v['volume']*($v['now_price']-$v['average_price']));
+		$uid = $pid = '*';
+		if(($mobile = I('customer_mobile')) && ($customer = D('Common/Customer')->where(array('login_name'=>$mobile))->find())) {
+			$uid = $customer['id'];
 		}
+		if(($product_number = I('product_number')) && ($product = D('Common/Product')->where(array('number'=>$product_number))->find())) {
+			$pid = $product['id'];
+		}
+
+		$list = array();
+		if(($uid != '*') || ($pid != '*')) {
+			$redis = getRedis();
+			$model = D('Common/Position');
+			$position_keys = $redis->keys('position:'.$uid.':'.$pid);
+			$product_status_val = D('Common/Product')->_status_val;
+
+			foreach ($position_keys as $k=>$v) {
+				$key_arr = explode(':', $v);
+				$uid = $key_arr[1];
+				$pid = $key_arr[2];
+				$product_trade = $redis->hgetall('product_trade:'.$pid);
+				$customer_inredis = $redis->hgetall('user:'.$uid);
+				$item = $redis->hgetall($v);
+				$item['customer_mobile'] = $customer_inredis['mobile'];
+				$item['customer_name'] = $customer_inredis['name'];
+				$item['now_price'] = $product_trade['now_price'];
+				$item['profit'] = getFloat(($item['now_price']-$item['average_price'])*$item['volume']);
+				$item['status_text'] = $product_status_val[$item['status']];
+				$list[] = $item;
+			}
+		}
+		
 		$this->assign('list',$list);
 		$this->meta_title = '持仓记录';
 		$this->display();

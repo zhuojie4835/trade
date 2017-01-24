@@ -558,7 +558,12 @@ class TradeController extends BaseController {
 			$this->ajaxReturn(array('status'=>0,'msg'=>'挂单状态不符'));
 		}
 
-		$redis->hmset($gid_key,array('gd_status'=>4,'cancel_time'=>time(),'volume'=>0));//修改状态、撤单时间
+		if($gd_info['gd_status'] == 2) {
+			$new_gd_status = 6;//部分撤单
+		} else {
+			$new_gd_status = 4;//撤单
+		}
+		$redis->hmset($gid_key,array('gd_status'=>$new_gd_status,'cancel_time'=>time(),'volume'=>0));//修改状态、撤单时间
 		if($gd_info['direct'] == 's') {
 			$redis->zrem('gid_out_by_price:'.$gd_info['pid'].':'.$gd_info['price'],$gid);//删除有序集合中的gid
 			$gd_detail_key = 'gd_out_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];

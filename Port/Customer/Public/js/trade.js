@@ -210,7 +210,7 @@ $(function(){
     	});
 	}
 	getQuota();
-	timeticket = setInterval(getQuota,6000);
+	timeticket = setInterval(getQuota,60000);
 	$("#refresh").on('click',function(){
 		getQuota();
 	});

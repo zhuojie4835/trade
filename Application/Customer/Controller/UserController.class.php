@@ -40,7 +40,7 @@ class UserController extends BaseController {
 			
 			$gd_today_list = array();
 			$today_gids = $redis->zrevrangebyscore('gid_by_person:'.$this->_userinfo['uid'],strtotime(date('Y-m-d').' 23:59:59'),strtotime(date('Y-m-d').' 00:00:00'));
-			$gd_status_val = array(1=>'等待成交',2=>'部分成交',3=>'全部成交',4=>'已撤销');
+			$gd_status_val = array(1=>'等待成交',2=>'部分成交',3=>'全部成交',4=>'已撤销',5=>'系统撤单',6=>'部分撤单');
 			$direct_val = array('s'=>'卖','b'=>'买');
 			foreach($today_gids as $k=>$v) {
 				$item = $redis->hgetall('gd_record:'.$v);
