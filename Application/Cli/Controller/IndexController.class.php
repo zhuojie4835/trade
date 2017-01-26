@@ -62,59 +62,55 @@ class IndexController extends Controller {
 		$redis = getRedis();
 		$last_handle_gid = $redis->get('last_handle_gid') ? $redis->get('last_handle_gid') : 1;
 		$last_gid = $redis->get('next_gid');
-		$gids = $redis->keys('gd_record:*');
-		foreach ($gids as $k=> $v) {
-			$gid_arr = explode(':', $v);
-			$gid = end($gid_arr);
-			if($gid>=$last_handle_gid && $gid<=$last_gid) {
-				$gd_info = $redis->hgetall('gd_record:'.$gid);
-				if(in_array($gd_info['gd_status'],array(1,2,4))) {
-					if($gd_info['gd_status'] == 2) {
-						$new_gd_status = 6;//部分撤单
-						$redis->hmset('gd_record:'.$gid,array('gd_status'=>$new_gd_status,'cancel_time'=>time(),'volume'=>0));//修改状态、撤单时间
-					} 
-					if($gd_info['direct'] == 's') {
-						if($gd_info['gd_status'] != 4) {
-							$redis->zrem('gid_out_by_price:'.$gd_info['pid'].':'.$gd_info['price'],$gid);//删除有序集合中的gid
-							$gd_detail_key = 'gd_out_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];
-							$gd_volume_by_price = $redis->hget($gd_detail_key,'volume');
-							if($gd_info['volume']>=$gd_volume_by_price) {
-								$redis->del($gd_detail_key);
-								$redis->srem('gd_out_price:'.$gd_info['pid'],$gd_info['price']);
-							} else {
-								$redis->hincrby($gd_detail_key,'volume',-$gd_info['volume']);
-								$redis->hincrby($gd_detail_key,'count',-1);
-							}
-							$this->generatePosition($gd_info['pid'],$gd_info['uid'],$gd_info['volume'],0,'gd_out_cancel');//修改持仓
+		for($gid=$last_handle_gid;$gid<=$last_gid;$gid++) {
+			$gid_key = 'gd_record:'.$gid;
+			$gd_info = $redis->hgetall($gid_key);
+			if(in_array($gd_info['gd_status'],array(1,2,4))) {
+				if($gd_info['gd_status'] == 2) {
+					$new_gd_status = 6;//部分撤单
+					$redis->hmset('gd_record:'.$gid,array('gd_status'=>$new_gd_status,'cancel_time'=>time(),'volume'=>0));//修改状态、撤单时间
+				} 
+				if($gd_info['direct'] == 's') {
+					if($gd_info['gd_status'] != 4) {
+						$redis->zrem('gid_out_by_price:'.$gd_info['pid'].':'.$gd_info['price'],$gid);//删除有序集合中的gid
+						$gd_detail_key = 'gd_out_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];
+						$gd_volume_by_price = $redis->hget($gd_detail_key,'volume');
+						if($gd_info['volume']>=$gd_volume_by_price) {
+							$redis->del($gd_detail_key);
+							$redis->srem('gd_out_price:'.$gd_info['pid'],$gd_info['price']);
+						} else {
+							$redis->hincrby($gd_detail_key,'volume',-$gd_info['volume']);
+							$redis->hincrby($gd_detail_key,'count',-1);
 						}
+						$this->generatePosition($gd_info['pid'],$gd_info['uid'],$gd_info['volume'],0,'gd_out_cancel');//修改持仓
+					}
 
-						if($gd_info['gd_status'] == 1 || $gd_info['gd_status'] == 4) {
-							$redis->del('gd_record:'.$gid);
-							$redis->zrem('gid_by_person:'.$gd_info['uid'],$gid);
+					if($gd_info['gd_status'] == 1 || $gd_info['gd_status'] == 4) {
+						$redis->del('gd_record:'.$gid);
+						$redis->zrem('gid_by_person:'.$gd_info['uid'],$gid);
+					}
+				} else {
+					if($gd_info['gd_status'] != 4) {
+						$redis->zrem('gid_in_by_price:'.$gd_info['pid'].':'.$gd_info['price'],$gid);//删除有序集合中的gid
+						$gd_detail_key = 'gd_in_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];
+						$gd_volume_by_price = $redis->hget($gd_detail_key,'volume');
+						if($gd_info['volume']>=$gd_volume_by_price) {
+							$redis->del($gd_detail_key);
+							$redis->srem('gd_in_price:'.$gd_info['pid'],$gd_info['price']);
+						} else {
+							$redis->hincrby($gd_detail_key,'volume',-$gd_info['volume']);
+							$redis->hincrby($gd_detail_key,'count',-1);
 						}
-					} else {
-						if($gd_info['gd_status'] != 4) {
-							$redis->zrem('gid_in_by_price:'.$gd_info['pid'].':'.$gd_info['price'],$gid);//删除有序集合中的gid
-							$gd_detail_key = 'gd_in_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];
-							$gd_volume_by_price = $redis->hget($gd_detail_key,'volume');
-							if($gd_info['volume']>=$gd_volume_by_price) {
-								$redis->del($gd_detail_key);
-								$redis->srem('gd_in_price:'.$gd_info['pid'],$gd_info['price']);
-							} else {
-								$redis->hincrby($gd_detail_key,'volume',-$gd_info['volume']);
-								$redis->hincrby($gd_detail_key,'count',-1);
-							}
-							$user_money = $redis->hmget('user:'.$gd_info['uid'],'free_money','freeze_money');
-							$gd_freeze_money = getFloat($gd_info['volume']*$gd_info['price']);
-							$new_free_money = getFloat($user_money[0]+$gd_freeze_money);
-							$new_freeze_money = getFloat($user_money[1]-$gd_freeze_money);
-							$redis->hmset('user:'.$gd_info['uid'],array('free_money'=>$new_free_money,'freeze_money'=>$new_freeze_money));
-						}
-						
-						if($gd_info['gd_status'] == 1 || $gd_info['gd_status'] == 4) {
-							$redis->del('gd_record:'.$gid);
-							$redis->zrem('gid_by_person:'.$gd_info['uid'],$gid);
-						}
+						$user_money = $redis->hmget('user:'.$gd_info['uid'],'free_money','freeze_money');
+						$gd_freeze_money = getFloat($gd_info['volume']*$gd_info['price']);
+						$new_free_money = getFloat($user_money[0]+$gd_freeze_money);
+						$new_freeze_money = getFloat($user_money[1]-$gd_freeze_money);
+						$redis->hmset('user:'.$gd_info['uid'],array('free_money'=>$new_free_money,'freeze_money'=>$new_freeze_money));
+					}
+					
+					if($gd_info['gd_status'] == 1 || $gd_info['gd_status'] == 4) {
+						$redis->del('gd_record:'.$gid);
+						$redis->zrem('gid_by_person:'.$gd_info['uid'],$gid);
 					}
 				}
 			}
