@@ -10,7 +10,8 @@
 				  2   部分成交
 				  3   全部成交
 				  4   撤单
-				  5   系统撤单
+				  //5   系统撤单
+				  6   部分撤单
 
 		成交类型：1   挂单买入成交
 				  2   挂单卖出成交
@@ -89,10 +90,7 @@ yj_out_yj 应价卖出应价方  volume - can_sell -
 
 撤销买入挂单
 	1.修改gd_record:gid 状态，数量   (hash)
-	2.从挂单每口价格集合表中删除   gid_in_by_price:pid:price (zset)
-	3.更新每口价格的数量、笔数    gd_in_price_detail:pid:price (hash)
-	4.把gid从 gd_in_price:pid   中删除(set 如果需要)
-	5.扣除冻结资金 user:uid
+	
 
 撤销卖出挂单
 	1.修改gd_record:gid 状态，数量  (hash)
@@ -100,6 +98,15 @@ yj_out_yj 应价卖出应价方  volume - can_sell -
 	3.更新每口价格的数量、笔数 gd_out_price_detail:pid:price (hash) 如果volume为0时，撤销记录
 	4.把gid从 gd_out_price:pid 中删除 (set 如果需要)
 	5.冻结商品划入到可卖 position:pid:uid
+
+日结撤销买入挂单
+	1.挂单状态是等待成交、已撤销、部分成交
+	2.从挂单每口价格集合表中删除   gid_in_by_price:pid:price (zset)
+	3.更新每口价格的数量、笔数    gd_in_price_detail:pid:price (hash)
+	4.把gid从 gd_in_price:pid   中删除(set 如果需要)
+	5.扣除冻结资金 user:uid
+	6.删除等待成交、已撤销的记录 gd_record:gid(hash) gid_by_person:uid(zset)
+	7.部分成交记录的状态改成部分撤销
 
 
 定时任务

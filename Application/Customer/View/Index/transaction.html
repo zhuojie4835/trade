@@ -34,12 +34,12 @@
 </div>
 <div class="art_pro_tabs">
     <div class="art_pro_tabcon">
-        <a href='#'>转让</a>
-        <a href="#">日K</a>
+        <a href='#' class="qhuan" data-act="quota">转让</a>
+        <a href="#" class="qhuan" data-act="candlestick">日K</a>
     </div>
 </div>
 
-<div class="art_pro_table">
+<div class="art_pro_table" id="quota">
     <div class="art_pro_tit">
         <ul>
             <li>&nbsp;</li>
@@ -57,6 +57,11 @@
     </div>
 
 </div>
+
+<div class="art_pro_table" id="candlestick">
+    <div id="container" style="height:350px"></div>
+</div>
+
 
 
 <div class="pro_footer">
@@ -86,6 +91,7 @@
 </div>
 
 <script type="text/javascript" src="__JS__/jquery.js"></script>
+<script type="text/javascript" src="__JS__/echarts.js"></script>
 <script type="text/javascript">
 	var isLoginUrl = '{:U('index/checkLogin')}';
 	var loginUrl = '{:U('index/login')}';
@@ -93,6 +99,17 @@
     var yj_url = '{:U("trade/yj")}';
 	var gd_url = '{:U("trade/gd")}';
 	var pid = '{$Think.get.id}';
+
+    $('.qhuan').on('click',function(){
+        var act = $(this).data('act');
+        if(act == 'quota') {
+            $("#"+act).css("display","block");
+            $("#candlestick").removeAttr("style").hide();
+        } else {
+            $("#"+act).css("display","block");
+            $("#quota").removeAttr("style").hide();
+        }
+    });
 </script>
 <script type="text/javascript" src="__JS__/trade.js"></script>
 </body>
