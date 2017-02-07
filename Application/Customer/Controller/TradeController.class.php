@@ -423,17 +423,24 @@ class TradeController extends BaseController {
 				}
 			}
 			
+
 			$product_trade_key = 'product_trade:'.$this->pid;
 			$product_trade = $redis->hgetall('product_trade:'.$this->pid);
-			//更新最新价格、最高价、最低价
+			//更新成交量、成交额
+			$redis->hincrby($product_trade_key,'volume',$consume);
+			$new_amount = (float)$product_trade['amount']+$yj_cost;
+			$redis->hset($product_trade_key,'amount',getFloat($new_amount));
+			//更新最新价格、最高价、最低价、开盘价
 			$redis->hset($product_trade_key,'now_price',$this->price);
-			if($this->price>$product_trade['high_price']){
+			if($this->price>(float)$product_trade['high_price']){
 				$redis->hset($product_trade_key,'high_price',$this->price);
 			}
-			if($this->price<$product_trade['low_price']){
+			if((float)$product_trade['low_price']<=0 || $this->price<(float)$product_trade['low_price']){
 				$redis->hset($product_trade_key,'low_price',$this->price);
 			}
-
+			if($product_trade['open_price'] == '--') {
+				$redis->hset($product_trade_key,'open_price',$this->price);
+			}
 			$this->ajaxReturn(array('status'=>1,'msg'=>'应价成功'));
 		} catch (\Exception $e) {
 			$this->ajaxReturn(array('status'=>0,'msg'=>$e->getMessage()));

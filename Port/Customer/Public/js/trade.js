@@ -1,4 +1,98 @@
 $(function(){
+	//画k线
+	function draw(data,name) {
+		var dom = document.getElementById("container");
+	    var myChart = echarts.init(dom);
+	    var app = {};
+	    option = null;
+	    // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
+	    var candlestick = [1];
+	    var data0 = splitData(data);
+
+	    function splitData(rawData) {
+	        var categoryData = [];
+	        var values = []
+	        
+	        for (var i = 0; i < rawData.length; i++) {
+	            categoryData.push(rawData[i].splice(0, 1)[0]);
+	            values.push(rawData[i]);
+	        }
+	        return {
+	            categoryData: categoryData,
+	            values: values
+	        };
+	    }
+
+	    option = {
+	        tooltip : {
+	            trigger: 'axis',
+	            formatter: function (params) {
+	                var res = params[0].name + '<br/>' + params[0].seriesName;
+	                res += '<br/>  开盘价 : ' + params[0].value[0] + '  <br/>最高价 : ' + params[0].value[3];
+	                res += '<br/>  收盘价 : ' + params[0].value[1] + '  <br/>最低价 : ' + params[0].value[2];
+	                res += '<br/>  成交量 : ' + params[0].value[4] + '  <br/>成交额 : ' + params[0].value[5];
+	                return res;
+	            }
+	        },
+	        grid: {
+	            left: '10%',
+	            right: '10%',
+	            bottom: '15%'
+	        },
+	        xAxis: {
+	            type: 'category',
+	            data: data0.categoryData,
+	            scale: true,
+	            boundaryGap : false,
+	            axisLine: {onZero: false},
+	            splitLine: {show: false},
+	            splitNumber: 20,
+	            min: 'dataMin',
+	            max: 'dataMax'
+	        },
+	        yAxis: {
+	            scale: true,
+	            splitArea: {
+	                show: true
+	            }
+	        },
+	        dataZoom: [
+	            {
+	                type: 'inside',
+	                start: 50,
+	                end: 100
+	            },
+	            {
+	                show: true,
+	                type: 'slider',
+	                y: '90%',
+	                start: 50,
+	                end: 100
+	            }
+	        ],
+	        series: [
+	            {
+	                name: name,
+	                type: 'candlestick',
+	                data: data0.values,
+	                itemStyle: {
+	                    normal: {
+	                        color0: '#4c9f1f'// 阴线填充颜色
+	                    }
+	                }, 
+	            }
+	        ]
+	    };
+
+	    ;
+	    if (option && typeof option === "object") {
+	        myChart.setOption(option, true);
+	    }
+	    
+	    $("#candlestick").css("display","none");
+	}
+	
+
 	$(document).on('click','.oBtn',function(){
 		checkLogin();
 		var type = $(this).data('type');
@@ -110,7 +204,16 @@ $(function(){
 					var style,style1='';
 					var sign_flag = '';
 					
-					change = parseFloat(product_info.now_price-product_info.open_price).toFixed(2);
+					
+					change = parseFloat(product_info.now_price-product_info.close_price).toFixed(2);
+					change_percent = (change/product_info.close_price)*100;
+					change_percent = parseFloat(change_percent).toFixed(2);
+					if(!isFinite(change)){
+						change = '--';
+						change_percent = '--';
+					} else {
+						change_percent += '%';
+					}
 					if(change>0) {
 						sign_flag = '+';
 						$(".art_pro_col").removeClass('green');
@@ -123,9 +226,6 @@ $(function(){
 					} else {
 						// $("#arrow").remove();
 					}
-					
-					change_percent = (change/product_info.open_price)*100;
-					change_percent = parseFloat(change_percent).toFixed(2);
 					
 					var length = gd_in_quota.length;	
 					for(var i=length; i>0; i--) {
@@ -188,6 +288,17 @@ $(function(){
 						}
 					}
 					
+					/*name = product_info.short_name;
+					var today = [];
+					var date = new Date();   
+					today[0] = date.pattern("yyyy/MM/dd");
+					today[1] = product_info.open_price;
+					today[2] = product_info.close_price;
+					today[3] = product_info.low_price;
+					today[4] = product_info.high_price;
+					today[5] = product_info.volume;
+					today[6] = product_info.amount;*/
+					
 					$(".product_title").html(product_info.short_name+' '+product_info.product_number);
 					$("#high_price").html(product_info.high_price);
 					$("#low_price").html(product_info.low_price);
@@ -195,7 +306,7 @@ $(function(){
 					$("#left_number").html(product_info.total_number);
 					$("#now_price").html(product_info.now_price);
 					$("#change").html(sign_flag+change);
-					$("#change_percent").html(sign_flag+change_percent+'%');
+					$("#change_percent").html(sign_flag+change_percent);
 					$("#gd_in_html").html(gd_in_html);
 					$("#gd_out_html").html(gd_out_html);
 					$("#trade_price").html('<em>'+product_info.now_price+'</em>跌停:<em>'+product_info.min_price+'</em>涨停:<em>'+product_info.max_price+'</em>');
@@ -209,124 +320,61 @@ $(function(){
     		dataType:'json'
     	});
 	}
+
+	var candlestick_data = [];
+	var candlestick_data1 = [];
+	
+	$.ajax({ 
+		type :"post", 
+		url :candlestick_url, 
+		data :{id:pid}, 
+		// async :false, 
+		success :function(data) {
+			var name = '';//商品简称
+			if(data.status == 1) {
+				candlestick_data1 = candlestick_data = data.list;
+				name = data.name;
+				draw(candlestick_data,name);
+			}
+		}
+	});
 	getQuota();
 	timeticket = setInterval(getQuota,60000);
 	$("#refresh").on('click',function(){
 		getQuota();
 	});
-
-	var dom = document.getElementById("container");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = null;
-    // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
-    var data0 = splitData([
-        ['2013/5/9', 2246.96,2232.97,2221.38,2247.86,12,1200],
-        ['2013/5/10', 2228.82,2246.83,2225.81,2247.67,12,1200],
-        ['2013/5/13', 2247.68,2241.92,2231.36,2250.85,12,1200],
-        ['2013/5/14', 2238.9,2217.01,2205.87,2239.93,12,1200],
-        ['2013/5/15', 2217.09,2224.8,2213.58,2225.19,12,1200],
-        ['2013/5/16', 2221.34,2251.81,2210.77,2252.87,12,1200],
-        ['2013/5/17', 2249.81,2282.87,2248.41,2288.09,12,1200],
-        ['2013/5/20', 2286.33,2299.99,2281.9,2309.39,12,1200],
-        ['2013/5/21', 2297.11,2305.11,2290.12,2305.3,12,1200],
-        ['2013/5/22', 2303.75,2302.4,2292.43,2314.18,12,1200],
-        ['2013/5/23', 2293.81,2275.67,2274.1,2304.95,12,1200],
-        ['2013/5/24', 2281.45,2288.53,2270.25,2292.59,12,1200],
-        ['2013/5/27', 2286.66,2293.08,2283.94,2301.7,12,1200],
-        ['2013/5/28', 2293.4,2321.32,2281.47,2322.1,12,1200],
-        ['2013/5/29', 2323.54,2324.02,2321.17,2334.33,12,1200],
-        ['2013/5/30', 2316.25,2317.75,2310.49,2325.72,12,1200],
-        ['2013/5/31', 2320.74,2300.59,2299.37,2325.53,12,1200],
-        ['2013/6/3', 2300.21,2299.25,2294.11,2313.43,12,1200],
-        ['2013/6/4', 2297.1,2272.42,2264.76,2297.1,12,1200],
-        ['2013/6/5', 2270.71,2270.93,2260.87,2276.86,12,1200],
-        ['2013/6/6', 2264.43,2242.11,2240.07,2266.69,12,1200],
-        ['2013/6/7', 2242.26,2210.9,2205.07,2250.63,12,1200],
-        ['2013/6/13', 2190.1,2148.35,2126.22,2190.1,12,1200]
-    ]);
-
-
-    function splitData(rawData) {
-        var categoryData = [];
-        var values = []
-        for (var i = 0; i < rawData.length; i++) {
-            categoryData.push(rawData[i].splice(0, 1)[0]);
-            values.push(rawData[i])
-        }
-        
-        return {
-            categoryData: categoryData,
-            values: values
-        };
-    }
-
-    option = {
-        tooltip : {
-            trigger: 'axis',
-            formatter: function (params) {
-                var res = params[0].name + '<br/>' + params[0].seriesName;
-                res += '<br/>  开盘价 : ' + params[0].value[0] + '  <br/>最高价 : ' + params[0].value[3];
-                res += '<br/>  收盘价 : ' + params[0].value[1] + '  <br/>最低价 : ' + params[0].value[2];
-                res += '<br/>  成交量 : ' + params[0].value[4] + '  <br/>成交额 : ' + params[0].value[5];
-                return res;
-            }
-        },
-        grid: {
-            left: '10%',
-            right: '10%',
-            bottom: '15%'
-        },
-        // series-candlestick.itemStyle.normal.color0:green,
-        xAxis: {
-            type: 'category',
-            data: data0.categoryData,
-            scale: true,
-            boundaryGap : false,
-            axisLine: {onZero: false},
-            splitLine: {show: false},
-            splitNumber: 20,
-            min: 'dataMin',
-            max: 'dataMax'
-        },
-        yAxis: {
-            scale: true,
-            splitArea: {
-                show: true
-            }
-        },
-        dataZoom: [
-            {
-                type: 'inside',
-                start: 50,
-                end: 100
-            },
-            {
-                show: true,
-                type: 'slider',
-                y: '90%',
-                start: 50,
-                end: 100
-            }
-        ],
-        series: [
-            {
-                name: '日K',
-                type: 'candlestick',
-                data: data0.values,
-                itemStyle: {
-                    normal: {
-                        color0: '#4c9f1f'// 阴线填充颜色
-                    }
-                }, 
-            }
-        ]
-    };
-
-    ;
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
-    
-    $("#candlestick").css("display","none");
+	
+	Date.prototype.pattern=function(fmt) {         
+	    var o = {         
+		    "M+" : this.getMonth()+1, //月份         
+		    "d+" : this.getDate(), //日         
+		    "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+		    "H+" : this.getHours(), //小时         
+		    "m+" : this.getMinutes(), //分         
+		    "s+" : this.getSeconds(), //秒         
+		    "q+" : Math.floor((this.getMonth()+3)/3), //季度         
+		    "S" : this.getMilliseconds() //毫秒         
+	    };         
+	    var week = {         
+		    "0" : "/u65e5",         
+		    "1" : "/u4e00",         
+		    "2" : "/u4e8c",         
+		    "3" : "/u4e09",         
+		    "4" : "/u56db",         
+		    "5" : "/u4e94",         
+		    "6" : "/u516d"        
+	    };         
+	    if(/(y+)/.test(fmt)){         
+	        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));         
+	    }         
+	    if(/(E+)/.test(fmt)){         
+	        fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);         
+	    }         
+	    for(var k in o){         
+	        if(new RegExp("("+ k +")").test(fmt)){         
+	            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));         
+	        }         
+	    }         
+	    return fmt;         
+	}       
 });

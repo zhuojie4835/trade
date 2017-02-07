@@ -57,6 +57,8 @@
 | left_number     | int  |       认购剩余数量|
 | th_number     | int  |       提货数量|
 | status     | int  |     状态|
+| volume     | int  |     成交量|
+| amount     | float  |     成交额|
 
 * 认购记录  subscribe_record (list)
 
@@ -165,3 +167,24 @@
 | other_mobile     | varchar  |       对方客户手机号码|
 | other_name     | varchar  |       对方客户姓名|
 | gid     | varchar  |       挂单gid|
+
+* 历史行情信息表  candlestick : cid (hash)
+
+|字段名称    |类型     |备注|
+| --------   | -----: | ----:  |
+| pid     | int  | 商品id|
+| short_name     | varchar  | 商品简称|
+| product_number     | varchar  |     商品编号|
+| low_price     | float  |       最低价|
+| high_price     | float  |       最高价|
+| open_price     | float  |       开盘价|
+| close_price     | float  |       收盘价|
+| status     | int  |     状态|
+| volume     | int  |     成交量|
+| amount     | float  |     成交额|
+
+* 历史行情自增id表  next_cid 
+
+* 历史行情集合表  candlestice_set : pid (set) 
+
+* 假期集合表  candlestice_set : pid (set) 

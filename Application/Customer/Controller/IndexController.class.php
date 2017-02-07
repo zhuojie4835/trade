@@ -276,4 +276,35 @@ class IndexController extends BaseController {
 		
 		return $this->ajaxReturn(array('status'=>0,'msg'=>'未登录'));
 	}
+
+	#获取历史行情
+	public function candlestick() {
+		$list = array();
+		$id = I('id');
+		$redis = getRedis();
+		$cids = $redis->zrange('candlestick_set:'.$id,0,1000);
+		
+		foreach ($cids as $k=>$v) {
+			$item = array();
+			$info = $redis->hgetall('candlestick:'.$v);
+			$item[] = date('Y/m/d',$info['time']);
+			$item[] = $info['open_price'];
+			$item[] = $info['close_price'];
+			$item[] = $info['low_price'];
+			$item[] = $info['high_price'];
+			$item[] = $info['volume'];
+			$item[] = $info['amount'];
+			$list[] = $item;
+			$name = $info['short_name'];
+		}
+		
+		// dump_log($list);
+		// $list =  array(
+		// 	['2017/1/25', 203,205,201,207,12,2483],
+		// 	['2017/1/26', 203,202,201,207,12,2483],
+		// 	['2017/1/27', 203,206,201,209,12,2483]
+		// );
+		// dump_log($name);
+		$this->ajaxReturn(array('status'=>1,'list'=>$list,'name'=>$name));
+	}
 }

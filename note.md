@@ -63,6 +63,7 @@ yj_out_yj 应价卖出应价方  volume - can_sell -
 	11.更新商品交易信息 now_price high_price low_price
 	12.把gid从 gid_in_by_price:pid:price 中删除（如果需要）
 	13.挂单方、应价方成交记录 deals (list)
+	14.更新成交量、成交额
 	note:注意挂单方和应价方是同一人的特殊情况
 
 挂单买入  
@@ -87,6 +88,7 @@ yj_out_yj 应价卖出应价方  volume - can_sell -
 	11.更新商品交易信息 now_price high_price low_price
 	12.把gid从 gid_in_by_price:pid:price 中删除（如果需要）
 	13.挂单方、应价方成交记录 deals (list)
+	14.更新成交量、成交额
 
 撤销买入挂单
 	1.修改gd_record:gid 状态，数量   (hash)

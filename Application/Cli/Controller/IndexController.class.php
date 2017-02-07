@@ -143,51 +143,7 @@ class IndexController extends Controller {
 			);
 			$redis->hmset($position_key,$position_info);
 		} else {
-			if($scene == 'subscribe') {//认购
-				$redis->hincrby($position_key,'can_sell',$volume);
-				$redis->hincrby($position_key,'volume',$volume);
-				$new_average_price = ($position['volume']*$position['average_price']+$volume*$price)/($position['volume']+$volume);
-				
-				$redis->hset($position_key,'average_price',getFloat($new_average_price));
-				$redis->hset($position_key,'status',$product_trade_info['status']);
-			} elseif($scene == 'yj_in_gd') {//应价买入挂单方
-				$redis->hincrby($position_key,'volume',-$volume);
-				if($position['volume']-$volume>0) {
-					$new_average_price = $price-($price-$position['average_price'])*$position['volume']/($position['volume']-$volume);
-					$redis->hset($position_key,'average_price',getFloat($new_average_price));
-				} else {
-					$new_average_price = 0;//全部卖出
-					$redis->del($position_key);
-					D('Common/Position')->where(array('pid'=>$pid,'customer_id'=>$uid))->delete();//同时删除mysql记录
-				}
-			} elseif($scene == 'yj_in_yj') {//应价买入应价方
-				$redis->hincrby($position_key,'volume',$volume);
-				$redis->hincrby($position_key,'can_sell',$volume);
-				$new_average_price = ($position['volume']*$position['average_price']+$volume*$price)/($position['volume']+$volume);
-				
-				$redis->hset($position_key,'average_price',getFloat($new_average_price));
-				$redis->hset($position_key,'status',$product_trade_info['status']);
-			} elseif($scene == 'yj_out_gd') {//应价卖出挂单方
-				$redis->hincrby($position_key,'can_sell',$volume);
-				$redis->hincrby($position_key,'volume',$volume);
-				$new_average_price = ($position['volume']*$position['average_price']+$volume*$price)/($position['volume']+$volume);
-				
-				$redis->hset($position_key,'average_price',getFloat($new_average_price));
-				$redis->hset($position_key,'status',$product_trade_info['status']);
-			} elseif($scene == 'yj_out_yj') {//应价卖出应价方
-				$redis->hincrby($position_key,'can_sell',-$volume);
-				$redis->hincrby($position_key,'volume',-$volume);
-				if($position['volume']-$volume>0) {
-					$new_average_price = $price-($price-$position['average_price'])*$position['volume']/($position['volume']-$volume);
-					
-					$redis->hset($position_key,'average_price',getFloat($new_average_price));
-					$redis->hset($position_key,'status',$product_trade_info['status']);
-				} else {
-					$new_average_price = 0;//全部卖出
-					$redis->del($position_key);
-					D('Common/Position')->where(array('pid'=>$pid,'customer_id'=>$uid))->delete();//同时删除mysql记录
-				}
-			} elseif ($scene == 'gd_out_cancel') {//挂单卖出撤销
+			if ($scene == 'gd_out_cancel') {//挂单卖出撤销
 				$redis->hincrby($position_key,'can_sell',$volume);
 				$new_average_price = $position['average_price'];
 				
@@ -195,5 +151,67 @@ class IndexController extends Controller {
 				$redis->hset($position_key,'status',$product_trade_info['status']);
 			}
 		}
+	}
+
+	#日结生成行情
+	public function candlestick() {
+		dump_log('candlestick start...');
+		$redis = getRedis();
+		if($pids = D('Common/Product')->field('id')->where(array('status'=>3))->select()) {
+			$next_cid = $redis->incrby('next_cid',1);
+			foreach ($pids as $k=>$v) {
+				$product_trade = $redis->hgetall('product_trade:'.$v['id']);
+				if($product_trade['status'] == 3) {
+					$data = array(
+						'pid'=>$v['id'],
+						'product_number'=>$product_trade['product_number'],
+						'short_name'=>$product_trade['short_name'],
+						'low_price'=>$product_trade['low_price'],
+						'high_price'=>$product_trade['high_price'],
+						'open_price'=>$product_trade['open_price'],
+						'close_price'=>$product_trade['now_price'],
+						'volume'=>$product_trade['volume'],
+						'amount'=>$product_trade['amount'],
+						'status'=>$product_trade['status'],
+						'time'=>time()
+					);
+					
+					$redis->hmset('candlestick:'.$next_cid,$data);
+					$redis->zadd('candlestick_set:'.$v['id'],date('Ymd',time()),$next_cid);
+				}
+			}
+		}
+
+		dump_log('candlestick end');
+	}
+
+	#开盘前重置行情
+	public function reset() {
+		dump_log('reset start...');
+		$redis = getRedis();
+		if($pids = D('Common/Product')->field('id')->where(array('status'=>3))->select()) {
+			foreach ($pids as $k=>$v) {
+				$product_trade = $redis->hgetall('product_trade:'.$v['id']);
+				if($product_trade['status'] == 3) {
+					$price_limit = 0.1;
+					$min_price = getFloat((1-$price_limit)*$product_trade['now_price']);
+					$max_price = getFloat((1+$price_limit)*$product_trade['now_price']);
+					$data = array(
+						'low_price'=>'--',
+						'high_price'=>'--',
+						'open_price'=>'--',
+						'close_price'=>$product_trade['now_price'],
+						'min_price'=>$min_price,
+						'max_price'=>$max_price,
+						'volume'=>0,
+						'amount'=>0
+					);
+					
+					$redis->hmset('product_trade:'.$v['id'],$data);
+				}
+			}
+		}
+
+		dump_log('reset end');
 	}
 }
