@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50632
 File Encoding         : 65001
 
-Date: 2017-02-06 22:34:24
+Date: 2017-02-09 17:13:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,7 +65,7 @@ CREATE TABLE `onethink_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of onethink_action_log
@@ -143,6 +143,8 @@ INSERT INTO `onethink_action_log` VALUES ('70', '1', '1', '3232243969', 'member'
 INSERT INTO `onethink_action_log` VALUES ('71', '1', '1', '3232243969', 'member', '1', 'admin在2017-02-06 19:56登录了后台', '1', '1486382207');
 INSERT INTO `onethink_action_log` VALUES ('72', '10', '1', '3232243969', 'Menu', '140', '操作url：/admin.php?s=/Menu/add.html', '1', '1486382452');
 INSERT INTO `onethink_action_log` VALUES ('73', '10', '1', '3232243969', 'Menu', '140', '操作url：/admin.php?s=/Menu/edit.html', '1', '1486382536');
+INSERT INTO `onethink_action_log` VALUES ('74', '1', '1', '3232243969', 'member', '1', 'admin在2017-02-07 09:09登录了后台', '1', '1486429771');
+INSERT INTO `onethink_action_log` VALUES ('75', '1', '1', '3232243969', 'member', '1', 'admin在2017-02-09 16:06登录了后台', '1', '1486627564');
 
 -- ----------------------------
 -- Table structure for onethink_addons
@@ -840,7 +842,7 @@ CREATE TABLE `onethink_member` (
 -- ----------------------------
 -- Records of onethink_member
 -- ----------------------------
-INSERT INTO `onethink_member` VALUES ('1', 'admin', '0', '0000-00-00', '', '170', '36', '0', '1481298712', '3232243969', '1486382207', '1');
+INSERT INTO `onethink_member` VALUES ('1', 'admin', '0', '0000-00-00', '', '180', '38', '0', '1481298712', '3232243969', '1486627564', '1');
 INSERT INTO `onethink_member` VALUES ('2', 'zhuojie', '0', '0000-00-00', '', '0', '0', '0', '0', '0', '0', '1');
 
 -- ----------------------------
@@ -1110,7 +1112,7 @@ CREATE TABLE `onethink_ucenter_member` (
 -- ----------------------------
 -- Records of onethink_ucenter_member
 -- ----------------------------
-INSERT INTO `onethink_ucenter_member` VALUES ('1', 'admin', 'e5edc271c5cb88af47aca190c1beaf50', 'zhuojie4835@163.com', '', '1481298712', '3232243969', '1486382207', '3232243969', '1481298712', '1');
+INSERT INTO `onethink_ucenter_member` VALUES ('1', 'admin', 'e5edc271c5cb88af47aca190c1beaf50', 'zhuojie4835@163.com', '', '1481298712', '3232243969', '1486627564', '3232243969', '1481298712', '1');
 INSERT INTO `onethink_ucenter_member` VALUES ('2', 'zhuojie', 'e5edc271c5cb88af47aca190c1beaf50', 'qq@q.com', '', '1482480122', '3232243969', '0', '0', '1482480122', '1');
 
 -- ----------------------------
@@ -1259,11 +1261,13 @@ CREATE TABLE `trade_customer` (
   `agent_member_number` int(10) NOT NULL DEFAULT '0' COMMENT '所属会员编号',
   `agent2` int(11) NOT NULL DEFAULT '0' COMMENT '所属高级代理',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=800001 DEFAULT CHARSET=utf8 COMMENT='客户表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='客户表';
 
 -- ----------------------------
 -- Records of trade_customer
 -- ----------------------------
+INSERT INTO `trade_customer` VALUES ('1', '1', '18627540136', '38bf9e203296babf7225bc4087d6a429', '100003', '0', '500010', '0', '卓捷', '430821198912144835', '0', '0', '0.00', '1', '1', '0', '1', '1', '', '', '', '', '0', '0', '', '192.168.33.1', '', '', '0', '0', '1', '1486627696', '0', '1486630468', '500010', '0');
+INSERT INTO `trade_customer` VALUES ('2', '1', '18627540135', '38bf9e203296babf7225bc4087d6a429', '100003', '0', '500010', '0', '阿敏', '430821198912144819', '0', '0', '0.00', '1', '1', '0', '1', '1', '', '', '', '', '0', '0', '', '192.168.33.1', '', '', '1', '0', '1', '1486628011', '0', '1486630554', '500010', '0');
 
 -- ----------------------------
 -- Table structure for trade_deals
@@ -1292,15 +1296,18 @@ CREATE TABLE `trade_deals` (
   `agent_member_number` varchar(32) NOT NULL DEFAULT '' COMMENT '所属会员',
   `user_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '客户类型',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='成交记录';
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='成交记录';
 
 -- ----------------------------
 -- Records of trade_deals
 -- ----------------------------
-INSERT INTO `trade_deals` VALUES ('1', '1', '1', '卓捷', '18627540135', '600012', '版画敦煌', '201.00', '2', '201.00', '1', '', '1486391138', '2', '18627540136', 'amin', 'gd_record:1', '500010', '100003', '500010', '1');
-INSERT INTO `trade_deals` VALUES ('2', '4', '2', 'amin', '18627540136', '600012', '版画敦煌', '201.00', '2', '201.00', '1', '', '1486391138', '[\"1\"]', '[\"18627540135\"]', '[\"\\u5353\\u6377\"]', '[\"gd_record:1\"]', '500010', '100003', '500010', '1');
-INSERT INTO `trade_deals` VALUES ('3', '2', '2', 'amin', '18627540136', '600012', '版画敦煌', '198.00', '2', '396.00', '2', '', '1486391203', '1', '18627540135', '卓捷', 'gd_record:2', '500010', '100003', '500010', '1');
-INSERT INTO `trade_deals` VALUES ('4', '3', '1', '卓捷', '18627540135', '600012', '版画敦煌', '198.00', '2', '396.00', '2', '', '1486391203', '[\"2\"]', '[\"18627540136\"]', '[\"amin\"]', '[\"gd_record:2\"]', '500010', '100003', '500010', '1');
+INSERT INTO `trade_deals` VALUES ('1', '2', '1', '卓捷', '18627540136', '650010', '艺术品A', '102.00', '1', '102.00', '1', '', '1486630561', '2', '18627540135', '阿敏', 'gd_record:3', '500010', '100003', '500010', '1');
+INSERT INTO `trade_deals` VALUES ('2', '3', '2', '阿敏', '18627540135', '650010', '艺术品A', '102.00', '1', '102.00', '1', '', '1486630561', '[\"1\"]', '[\"18627540136\"]', '[\"\\u5353\\u6377\"]', '[\"gd_record:3\"]', '500010', '100003', '500010', '1');
+INSERT INTO `trade_deals` VALUES ('3', '2', '1', '卓捷', '18627540136', '650010', '艺术品A', '102.00', '1', '204.00', '2', '', '1486630568', '2', '18627540135', '阿敏', 'gd_record:3', '500010', '100003', '500010', '1');
+INSERT INTO `trade_deals` VALUES ('4', '2', '1', '卓捷', '18627540136', '650010', '艺术品A', '102.00', '1', '204.00', '0', '', '1486630568', '2', '18627540135', '阿敏', 'gd_record:4', '500010', '100003', '500010', '1');
+INSERT INTO `trade_deals` VALUES ('5', '3', '2', '阿敏', '18627540135', '650010', '艺术品A', '102.00', '1', '204.00', '2', '', '1486630568', '[\"1\",\"1\"]', '[\"18627540136\",\"18627540136\"]', '[\"\\u5353\\u6377\",\"\\u5353\\u6377\"]', '[\"gd_record:3\",\"gd_record:4\"]', '500010', '100003', '500010', '1');
+INSERT INTO `trade_deals` VALUES ('6', '2', '1', '卓捷', '18627540136', '650010', '艺术品A', '103.00', '1', '309.00', '3', '', '1486630695', '2', '18627540135', '阿敏', 'gd_record:5', '500010', '100003', '500010', '1');
+INSERT INTO `trade_deals` VALUES ('7', '3', '2', '阿敏', '18627540135', '650010', '艺术品A', '103.00', '1', '309.00', '3', '', '1486630695', '[\"1\"]', '[\"18627540136\"]', '[\"\\u5353\\u6377\"]', '[\"gd_record:5\"]', '500010', '100003', '500010', '1');
 
 -- ----------------------------
 -- Table structure for trade_follow
@@ -1319,19 +1326,21 @@ CREATE TABLE `trade_follow` (
   `bussiness_desciption` varchar(64) NOT NULL DEFAULT '' COMMENT '交易描述',
   `freeze_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '冻结资金',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='资金流水表';
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='资金流水表';
 
 -- ----------------------------
 -- Records of trade_follow
 -- ----------------------------
-INSERT INTO `trade_follow` VALUES ('1', 'R14863900323597', '1', '18627540135', '5', '50000.00', '50000.00', '1486390032', '卓捷', '注册奖励', '0.00');
-INSERT INTO `trade_follow` VALUES ('2', 'R14863900893737', '2', '18627540136', '5', '50000.00', '50000.00', '1486390089', 'amin', '注册奖励', '0.00');
-INSERT INTO `trade_follow` VALUES ('3', 'S14863901957453', '1', '18627540135', '2', '-30000.00', '20000.00', '1486390195', '卓捷', '认购 600012', '0.00');
-INSERT INTO `trade_follow` VALUES ('4', 'S14863902248744', '2', '18627540136', '2', '-6000.00', '44000.00', '1486390225', 'amin', '认购 600012', '0.00');
-INSERT INTO `trade_follow` VALUES ('5', 'G14863911384997', '1', '18627540135', '3', '-201.00', '19598.00', '1486391138', '卓捷', '挂单买入成交 ', '201.00');
-INSERT INTO `trade_follow` VALUES ('6', 'Y14863911386442', '2', '18627540136', '4', '201.00', '44201.00', '1486391138', 'amin', '应价卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('7', 'G14863912037778', '2', '18627540136', '6', '396.00', '44597.00', '1486391203', 'amin', '挂单卖出成交 ', '0.00');
-INSERT INTO `trade_follow` VALUES ('8', 'Y14863912035004', '1', '18627540135', '7', '-396.00', '19403.00', '1486391203', '卓捷', '应价买入成交 ', '0.00');
+INSERT INTO `trade_follow` VALUES ('1', 'R14866276969210', '1', '18627540136', '5', '50000.00', '50000.00', '1486627696', '卓捷', '注册奖励', '0.00');
+INSERT INTO `trade_follow` VALUES ('2', 'S14866277383465', '1', '18627540136', '2', '-30000.00', '20000.00', '1486627738', '卓捷', '认购 650010', '0.00');
+INSERT INTO `trade_follow` VALUES ('3', 'R14866280117029', '2', '18627540135', '5', '50000.00', '50000.00', '1486628011', '阿敏', '注册奖励', '0.00');
+INSERT INTO `trade_follow` VALUES ('4', 'G14866305613427', '1', '18627540136', '6', '102.00', '19597.00', '1486630561', '卓捷', '挂单卖出成交 ', '505.00');
+INSERT INTO `trade_follow` VALUES ('5', 'Y14866305612396', '2', '18627540135', '7', '-102.00', '49898.00', '1486630561', '阿敏', '应价买入成交 ', '0.00');
+INSERT INTO `trade_follow` VALUES ('6', 'G14866305686119', '1', '18627540136', '6', '204.00', '19801.00', '1486630568', '卓捷', '挂单卖出成交 ', '505.00');
+INSERT INTO `trade_follow` VALUES ('7', 'G14866305686169', '1', '18627540136', '6', '0.00', '19801.00', '1486630568', '卓捷', '挂单卖出成交 ', '505.00');
+INSERT INTO `trade_follow` VALUES ('8', 'Y14866305687410', '2', '18627540135', '7', '-204.00', '49694.00', '1486630568', '阿敏', '应价买入成交 ', '0.00');
+INSERT INTO `trade_follow` VALUES ('9', 'G14866306957527', '1', '18627540136', '6', '309.00', '20110.00', '1486630695', '卓捷', '挂单卖出成交 ', '505.00');
+INSERT INTO `trade_follow` VALUES ('10', 'Y14866306952397', '2', '18627540135', '7', '-309.00', '49385.00', '1486630695', '阿敏', '应价买入成交 ', '0.00');
 
 -- ----------------------------
 -- Table structure for trade_notrade
@@ -1350,11 +1359,11 @@ CREATE TABLE `trade_notrade` (
 -- ----------------------------
 -- Records of trade_notrade
 -- ----------------------------
-INSERT INTO `trade_notrade` VALUES ('1', '1487952000', '周末', '1', '1', '1486384693');
-INSERT INTO `trade_notrade` VALUES ('2', '1486483200', '周末', '1', '1', '1486384706');
-INSERT INTO `trade_notrade` VALUES ('3', '1487088000', '系统升级', '1', '1', '1486386351');
-INSERT INTO `trade_notrade` VALUES ('4', '1487520000', '周末', '1', '1', '1486387748');
-INSERT INTO `trade_notrade` VALUES ('5', '1487001600', '周末', '1', '1', '1486388129');
+INSERT INTO `trade_notrade` VALUES ('1', '1487952000', '周末', '2', '1', '1486384693');
+INSERT INTO `trade_notrade` VALUES ('2', '1486483200', '周末', '2', '1', '1486384706');
+INSERT INTO `trade_notrade` VALUES ('3', '1487088000', '系统升级', '2', '1', '1486386351');
+INSERT INTO `trade_notrade` VALUES ('4', '1487520000', '周末', '2', '1', '1486387748');
+INSERT INTO `trade_notrade` VALUES ('5', '1487001600', '周末', '2', '1', '1486388129');
 
 -- ----------------------------
 -- Table structure for trade_operator
@@ -1446,8 +1455,8 @@ CREATE TABLE `trade_product` (
 -- ----------------------------
 -- Records of trade_product
 -- ----------------------------
-INSERT INTO `trade_product` VALUES ('1', '650010', '艺术品A', '艺术品A', '1', '100.00', '1', '500', '0', '0', '0', '0', '0', '0', '1482387043', '', '2', '1482668572', '1486390171', '');
-INSERT INTO `trade_product` VALUES ('2', '600012', '版画敦煌壁画', '版画敦煌', '1', '200.00', '1', '500', '0', '1', '200', '1', '500', '0', '1484874022', '', '3', '1484530547', '1486390243', '');
+INSERT INTO `trade_product` VALUES ('1', '650010', '艺术品A', '艺术品A', '1', '100.00', '1', '500', '0', '0', '0', '0', '0', '0', '1482387043', '', '3', '1482668572', '1486627754', '');
+INSERT INTO `trade_product` VALUES ('2', '600012', '版画敦煌壁画', '版画敦煌', '1', '200.00', '1', '500', '0', '1', '200', '1', '500', '0', '1484874022', '', '2', '1484530547', '1486627712', '');
 
 -- ----------------------------
 -- Table structure for trade_product_order
@@ -1473,13 +1482,12 @@ CREATE TABLE `trade_product_order` (
   `remark` varchar(300) NOT NULL DEFAULT '',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='产品认购记录';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='产品认购记录';
 
 -- ----------------------------
 -- Records of trade_product_order
 -- ----------------------------
-INSERT INTO `trade_product_order` VALUES ('1', '100003', '1', '500010', '1', '卓捷', '500010', '', '18627540135', '600012', '版画敦煌壁画', '版画敦煌', '200.00', '2', '30000.00', '150', '', '1486390195');
-INSERT INTO `trade_product_order` VALUES ('2', '100003', '2', '500010', '1', 'amin', '500010', '', '18627540136', '600012', '版画敦煌壁画', '版画敦煌', '200.00', '2', '6000.00', '30', '', '1486390225');
+INSERT INTO `trade_product_order` VALUES ('1', '100003', '1', '500010', '1', '卓捷', '500010', '', '18627540136', '650010', '艺术品A', '艺术品A', '100.00', '1', '30000.00', '300', '', '1486627738');
 
 -- ----------------------------
 -- Table structure for trade_recharge
@@ -1566,7 +1574,7 @@ INSERT INTO `trade_settings` VALUES ('3', 'login_timeout', '1800', '1', '1', '1'
 INSERT INTO `trade_settings` VALUES ('4', 'trade_am_start', '00:30', '2', '1', '1', '1485275522', '交易上午开始时间 格式xx:xx');
 INSERT INTO `trade_settings` VALUES ('5', 'trade_am_end', '11:30', '2', '1', '1', '1485253659', '交易上午截止时间 格式xx:xx');
 INSERT INTO `trade_settings` VALUES ('6', 'trade_pm_start', '13:00', '2', '1', '1', '1485253651', '交易下午开始时间 格式xx:xx');
-INSERT INTO `trade_settings` VALUES ('7', 'trade_pm_end', '23:59', '2', '1', '1', '1486391081', '交易下午截止时间 格式xx:xx');
+INSERT INTO `trade_settings` VALUES ('7', 'trade_pm_end', '23:59', '2', '1', '1', '1486627852', '交易下午截止时间 格式xx:xx');
 INSERT INTO `trade_settings` VALUES ('8', 'dayknot_time', '15:40', '2', '1', '1', '1485253635', '日结时间 格式xx:xx');
 INSERT INTO `trade_settings` VALUES ('9', 'amplitude_firstday', '30', '2', '1', '1', '1485253620', '首日涨跌幅 单位%');
 INSERT INTO `trade_settings` VALUES ('10', 'amplitude_ordinaryday', '10', '2', '1', '1', '1485253613', '普通日涨跌幅 单位%');
