@@ -8,12 +8,29 @@
     <div class="cf">
         <!-- <a class="btn" href="{:U('add',array('pid'=>I('get.pid',0)))}">新 增</a> -->
         <!-- 高级搜索 -->
-        <div class="search-form fr cf">
-            <div class="sleft">
-                <input type="text" name="login_name" class="search-input" value="{:I('login_name')}" placeholder="手机号码">
-                <a class="sch-btn" href="javascript:;" id="search" url="__SELF__"><i class="btn-search"></i></a>
+        <form class="search-form fr cf">
+			<div class="sleft">
+                <select name="operator_number">
+					<option value="0">请选择</option>
+					<volist name="operators" id="vo">
+						<option value="{$vo.operator_number}" <if condition="$vo[operator_number] eq I('operator_number')">selected</if>>{$vo.company_name}({$vo.operator_number})</option>
+					</volist>
+				</select>
             </div>
-        </div>
+			<div class="sleft">
+                <input type="text" name="agent_member_number" class="search-input" value="{:I('agent_member_number')}" placeholder="所属会员编号"/>
+            </div>
+			<div class="sleft">
+                <input type="text" name="agent_number" class="search-input" value="{:I('agent_number')}" placeholder="所属代理编号"/>
+            </div>
+			<div class="sleft">
+                <input type="text" name="name" class="search-input" value="{:I('name')}" placeholder="姓名关键词"/>
+            </div>
+            <div class="sleft">
+                <input type="text" name="login_name" class="search-input" value="{:I('login_name')}" placeholder="手机号码"/>
+                <a class="sch-btn" href="javascript:;" id="search" url="{:U('')}"><i class="btn-search"></i></a>
+            </div>
+        </form>
     </div>
 
     <div class="data-table table-striped">
@@ -77,7 +94,7 @@
             //搜索功能
             $("#search").click(function() {
                 var url = $(this).attr('url');
-                var query = $('.search-form').find('input').serialize();
+                var query = $('.search-form').serialize();
                 query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
                 query = query.replace(/^&/g, '');
                 if (url.indexOf('?') > 0) {

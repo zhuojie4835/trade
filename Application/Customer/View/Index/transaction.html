@@ -58,7 +58,7 @@
 
 </div>
 
-<div class="art_pro_table" id="candlestick">
+<div class="art_pro_table" id="candlestick" style="display:none">
     <div id="container" style="height:350px"></div>
 </div>
 
@@ -89,7 +89,7 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" name="history" value='{$history}'>
 <script type="text/javascript" src="__JS__/jquery.js"></script>
 <script type="text/javascript" src="__JS__/echarts.js"></script>
 <script type="text/javascript">
@@ -100,17 +100,6 @@
 	var gd_url = '{:U("trade/gd")}';
     var candlestick_url = '{:U("index/candlestick")}';
 	var pid = '{$Think.get.id}';
-
-    $('.qhuan').on('click',function(){
-        var act = $(this).data('act');
-        if(act == 'quota') {
-            $("#"+act).css("display","block");
-            $("#candlestick").removeAttr("style").hide();
-        } else {
-            $("#"+act).css("display","block");
-            $("#quota").removeAttr("style").hide();
-        }
-    });
 </script>
 <script type="text/javascript" src="__JS__/trade.js"></script>
 </body>

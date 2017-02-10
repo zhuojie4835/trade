@@ -1,4 +1,18 @@
 $(function(){
+	function splitData(rawData) {
+		var categoryData = [];
+		var values = []
+		
+		for (var i = 0; i < rawData.length; i++) {
+			categoryData.push(rawData[i].splice(0, 1)[0]);
+			values.push(rawData[i]);
+		}
+		return {
+			categoryData: categoryData,
+			values: values
+		};
+	}
+		
 	//画k线
 	function draw(data,name) {
 		var dom = document.getElementById("container");
@@ -8,20 +22,6 @@ $(function(){
 	    // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
 	    var candlestick = [1];
 	    var data0 = splitData(data);
-
-	    function splitData(rawData) {
-	        var categoryData = [];
-	        var values = []
-	        
-	        for (var i = 0; i < rawData.length; i++) {
-	            categoryData.push(rawData[i].splice(0, 1)[0]);
-	            values.push(rawData[i]);
-	        }
-	        return {
-	            categoryData: categoryData,
-	            values: values
-	        };
-	    }
 
 	    option = {
 	        tooltip : {
@@ -88,8 +88,6 @@ $(function(){
 	    if (option && typeof option === "object") {
 	        myChart.setOption(option, true);
 	    }
-	    
-	    $("#candlestick").css("display","none");
 	}
 	
 
@@ -152,6 +150,7 @@ $(function(){
 			$("#jisuan_money").html('');
 		}
 	});
+	
 	$(document).on('click','.sub_btn',function(){
 		var price = parseFloat($("#trade_form").find('input[name="price"]').val());
 		var volume = parseInt($("#trade_form").find('input[name="volume"]').val());
@@ -178,6 +177,45 @@ $(function(){
 			}
 		});
 	});
+	
+	//tab切换
+	$('.qhuan').on('click',function(){
+        var act = $(this).data('act');
+        if(act == 'quota') {
+            $("#"+act).css("display","block");
+            $("#candlestick").removeAttr("style").hide();
+        } else {
+            $("#"+act).css("display","block");
+            $("#quota").removeAttr("style").hide();
+			
+			$.ajax({
+				type:'post',
+				url:updateQuotaUrl,
+				data:{id:pid,ignore:1},
+				success:function(data){
+					var product_info = data.product_info;
+					var history = $('input[name="history"]').val();//历史
+					
+					history = JSON.parse(history);
+					var date = new Date();
+					var today = [];
+					if(product_info.volume>=0) {
+						var open = parseFloat(product_info.open_price);
+						var close = parseFloat(product_info.now_price);
+						var low = parseFloat(product_info.low_price);
+						var high = parseFloat(product_info.high_price);
+						today = [date.pattern('yyyy/MM/dd'),open,close,low,high,product_info.volume,product_info.amount];//今日
+						history.push(today);
+					}
+					draw(history,product_info.short_name);
+				},
+				error:function(){
+				},
+				dataType:'json'
+			});
+        }
+    });
+	
 	//登录检查
 	function checkLogin() {
 		$.get(isLoginUrl,function(data){
@@ -203,7 +241,6 @@ $(function(){
 					var gd_out_html = '';
 					var style,style1='';
 					var sign_flag = '';
-					
 					
 					change = parseFloat(product_info.now_price-product_info.close_price).toFixed(2);
 					change_percent = (change/product_info.close_price)*100;
@@ -288,17 +325,6 @@ $(function(){
 						}
 					}
 					
-					/*name = product_info.short_name;
-					var today = [];
-					var date = new Date();   
-					today[0] = date.pattern("yyyy/MM/dd");
-					today[1] = product_info.open_price;
-					today[2] = product_info.close_price;
-					today[3] = product_info.low_price;
-					today[4] = product_info.high_price;
-					today[5] = product_info.volume;
-					today[6] = product_info.amount;*/
-					
 					$(".product_title").html(product_info.short_name+' '+product_info.product_number);
 					$("#high_price").html(product_info.high_price);
 					$("#low_price").html(product_info.low_price);
@@ -320,24 +346,7 @@ $(function(){
     		dataType:'json'
     	});
 	}
-
-	var candlestick_data = [];
-	var candlestick_data1 = [];
 	
-	$.ajax({ 
-		type :"post", 
-		url :candlestick_url, 
-		data :{id:pid}, 
-		// async :false, 
-		success :function(data) {
-			var name = '';//商品简称
-			if(data.status == 1) {
-				candlestick_data1 = candlestick_data = data.list;
-				name = data.name;
-				draw(candlestick_data,name);
-			}
-		}
-	});
 	getQuota();
 	timeticket = setInterval(getQuota,60000);
 	$("#refresh").on('click',function(){

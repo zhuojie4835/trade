@@ -73,7 +73,7 @@ class BaseController extends Controller {
 				} else {
 					$new_average_price = 0;//全部卖出
 					$redis->del($position_key);
-					D('Common/Position')->where(array('pid'=>$pid,'customer_id'=>$uid))->delete();//同时删除mysql记录
+					// D('Common/Position')->where(array('pid'=>$pid,'customer_id'=>$uid))->delete();//同时删除mysql记录
 				}
 			} elseif($scene == 'yj_in_yj') {//应价买入应价方
 				$redis->hincrby($position_key,'volume',$volume);
@@ -100,7 +100,7 @@ class BaseController extends Controller {
 				} else {
 					$new_average_price = 0;//全部卖出
 					$redis->del($position_key);
-					D('Common/Position')->where(array('pid'=>$pid,'customer_id'=>$uid))->delete();//同时删除mysql记录
+					// D('Common/Position')->where(array('pid'=>$pid,'customer_id'=>$uid))->delete();//同时删除mysql记录
 				}
 			} elseif ($scene == 'gd_out_cancel') {//挂单卖出撤销
 				$redis->hincrby($position_key,'can_sell',$volume);

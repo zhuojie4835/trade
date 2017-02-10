@@ -10,6 +10,9 @@ class CustomerController extends AdminController {
 	public function index() {
 		$map = array();
 		I('login_name') && $map['login_name'] = I('login_name');
+		I('operator_number') && $map['operator_number'] = I('operator_number');
+		I('agent_number') && $map['agent_number'] = I('agent_number');
+		I('name') && $map['name'] = array('like','%'.I('name').'%');
 
 		$model = D('Common/Customer');		
         $list   = $this->lists($model,$map);
@@ -22,8 +25,10 @@ class CustomerController extends AdminController {
 			$list[$k]['online'] = $model->_online_val[$online];
 		}
 		
+		$operators = D('Common/Operator')->field('operator_number,company_name')->select();
 		$this->meta_title = '客户列表';
 		$this->assign('list', $list);
+		$this->assign('operators', $operators);
 		$this->display();
 	}
 

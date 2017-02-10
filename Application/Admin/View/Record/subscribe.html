@@ -7,12 +7,12 @@
 
     <div class="cf">
         <!-- 高级搜索 -->
-        <div class="search-form fr cf">
-            <div class="sleft">
-                <input type="text" name="agent_number" class="search-input" value="{:I('agent_number')}" placeholder="代理编号">
+        <form class="search-form fr cf">
+			<div class="sleft">
+                <input type="text" name="member_agent_number" class="search-input" value="{:I('member_agent_number')}" placeholder="所属会员">
             </div>
             <div class="sleft">
-                <input type="text" name="member_agent_number" class="search-input" value="{:I('member_agent_number')}" placeholder="所属会员">
+                <input type="text" name="agent_number" class="search-input" value="{:I('agent_number')}" placeholder="代理编号">
             </div>
             <div class="sleft">
                 <input type="text" name="customer_mobile" class="search-input" value="{:I('customer_mobile')}" placeholder="手机号码">
@@ -21,7 +21,7 @@
                 <input type="text" name="product_number" class="search-input" value="{:I('product_number')}" placeholder="产品编号">
                 <a class="sch-btn" href="javascript:;" id="search" url="__SELF__"><i class="btn-search"></i></a>
             </div>
-        </div>
+        </form>
     </div>
 
     <div class="data-table table-striped">
@@ -80,7 +80,7 @@
             //搜索功能
             $("#search").click(function() {
                 var url = $(this).attr('url');
-                var query = $('.search-form').find('input').serialize();
+                var query = $('.search-form').serialize();
                 query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
                 query = query.replace(/^&/g, '');
                 if (url.indexOf('?') > 0) {

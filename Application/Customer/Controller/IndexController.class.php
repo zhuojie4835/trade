@@ -64,8 +64,9 @@ class IndexController extends BaseController {
 		if($info['status'] != 3) {
 			$this->redirect('index');
 		}
-		$is_login = session('uid') ? 1 : 0;
+		
 		$this->assign('is_login',$is_login);
+		$this->assign('history',json_encode($this->candlestick($id)));
 		$this->display();
 	}
 
@@ -263,7 +264,7 @@ class IndexController extends BaseController {
             'direction' => 'SORT_ASC', 
             'field'     => 'price',
         );  
-        $result =  arr_sort($sort,$result);
+        $result = arr_sort($sort,$result);
 		
 		return $result;
 	}
@@ -278,11 +279,10 @@ class IndexController extends BaseController {
 	}
 
 	#获取历史行情
-	public function candlestick() {
+	public function candlestick($pid=null) {
 		$list = array();
-		$id = I('id');
 		$redis = getRedis();
-		$cids = $redis->zrange('candlestick_set:'.$id,0,1000);
+		$cids = $redis->zrange('candlestick_set:'.$pid,0,1000);
 		
 		foreach ($cids as $k=>$v) {
 			$item = array();
@@ -297,14 +297,12 @@ class IndexController extends BaseController {
 			$list[] = $item;
 			$name = $info['short_name'];
 		}
-		
-		// dump_log($list);
 		// $list =  array(
 		// 	['2017/1/25', 203,205,201,207,12,2483],
 		// 	['2017/1/26', 203,202,201,207,12,2483],
 		// 	['2017/1/27', 203,206,201,209,12,2483]
 		// );
-		// dump_log($name);
-		$this->ajaxReturn(array('status'=>1,'list'=>$list,'name'=>$name));
+		// dump_log($cids);
+		return $list;
 	}
 }

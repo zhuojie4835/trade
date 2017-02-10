@@ -522,7 +522,6 @@ class TradeController extends BaseController {
 			throw new \Exception('现在不是挂单时间');
 		}
 		
-		
 		$this->price = getFloat($data['price']);
 		$this->volume = $data['volume'];
 		$this->pid = $data['pid'];
@@ -532,7 +531,10 @@ class TradeController extends BaseController {
 		if(!$product = $redis->hgetall('product_trade:'.$this->pid)) {
 			throw new \Exception('商品不存在');
 		}
-
+		if($product['status'] != 3) {
+			throw new \Exception('商品为非交易状态');
+		}
+		
 		$min_price = $product['min_price'];
 		$max_price = $product['max_price'];
 		if($this->price>$max_price || $this->price<$min_price) {
@@ -541,6 +543,9 @@ class TradeController extends BaseController {
 
 		$this->product = $product;
 		if($this->direct == 'b') {
+			if($product['total_number']-$product['th_number']<$this->volume) {
+				throw new \Exception('挂单数量超过限制');
+			}
 			$this->trade_money = getFloat($this->volume*$this->price);
 			if($this->trade_money>$this->_userinfo['free_money']) {
 				throw new \Exception('可用资金不足');
