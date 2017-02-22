@@ -288,10 +288,11 @@ class IndexController extends BaseController {
 			$item = array();
 			$info = $redis->hgetall('candlestick:'.$v);
 			$item[] = date('Y/m/d',$info['time']);
-			$item[] = $info['open_price'];
-			$item[] = $info['close_price'];
-			$item[] = $info['low_price'];
-			$item[] = $info['high_price'];
+			$item[] = getFloat($info['open_price']);
+			// $item[] = (float)number_format($info['open_price'],2);
+			$item[] = getFloat($info['close_price']);
+			$item[] = getFloat($info['low_price']);
+			$item[] = getFloat($info['high_price']);
 			$item[] = $info['volume'];
 			$item[] = $info['amount'];
 			$list[] = $item;

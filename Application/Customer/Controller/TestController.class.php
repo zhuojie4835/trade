@@ -41,4 +41,9 @@ class TestController extends BaseController {
 	public function history() {
 
 	}
+
+	public function zhux() {
+
+		$this->display();
+	}
 }

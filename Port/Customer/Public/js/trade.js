@@ -5,6 +5,10 @@ $(function(){
 		
 		for (var i = 0; i < rawData.length; i++) {
 			categoryData.push(rawData[i].splice(0, 1)[0]);
+			rawData[i][0] = parseFloat(rawData[i][0]);
+			rawData[i][1] = parseFloat(rawData[i][1]);
+			rawData[i][2] = parseFloat(rawData[i][2]);
+			rawData[i][3] = parseFloat(rawData[i][3]);
 			values.push(rawData[i]);
 		}
 		return {
@@ -56,20 +60,20 @@ $(function(){
 	                show: true
 	            }
 	        },
-	        dataZoom: [
-	            {
-	                type: 'inside',
-	                start: 50,
-	                end: 100
-	            },
-	            {
-	                show: true,
-	                type: 'slider',
-	                y: '90%',
-	                start: 50,
-	                end: 100
-	            }
-	        ],
+	        // dataZoom: [
+	        //     {
+	        //         type: 'inside',
+	        //         start: 50,
+	        //         end: 100
+	        //     },
+	        //     {
+	        //         show: true,
+	        //         type: 'slider',
+	        //         y: '90%',
+	        //         start: 50,
+	        //         end: 100
+	        //     }
+	        // ],
 	        series: [
 	            {
 	                name: name,
@@ -197,15 +201,21 @@ $(function(){
 					var history = $('input[name="history"]').val();//历史
 					
 					history = JSON.parse(history);
-					var date = new Date();
-					var today = [];
-					if(product_info.volume>=0) {
-						var open = parseFloat(product_info.open_price);
-						var close = parseFloat(product_info.now_price);
-						var low = parseFloat(product_info.low_price);
-						var high = parseFloat(product_info.high_price);
-						today = [date.pattern('yyyy/MM/dd'),open,close,low,high,product_info.volume,product_info.amount];//今日
-						history.push(today);
+					var length = history.length;
+					//避免k线重复
+					if(length) {
+						var last = history[length-1];
+						var date = new Date();
+						var today = [];
+						var today_format = date.pattern('yyyy/MM/dd');
+						if(last[0] != today_format && product_info.volume>0) {
+							var open = parseFloat(product_info.open_price);
+							var close = parseFloat(product_info.now_price);
+							var low = parseFloat(product_info.low_price);
+							var high = parseFloat(product_info.high_price);
+							today = [today_format,open,close,low,high,product_info.volume,product_info.amount];//今日
+							history.push(today);
+						}
 					}
 					draw(history,product_info.short_name);
 				},
@@ -325,6 +335,10 @@ $(function(){
 						}
 					}
 					
+					if(product_info.high_price == '--') {
+						change = '--';
+						change_percent = '--';
+					}
 					$(".product_title").html(product_info.short_name+' '+product_info.product_number);
 					$("#high_price").html(product_info.high_price);
 					$("#low_price").html(product_info.low_price);
