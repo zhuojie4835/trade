@@ -100,6 +100,7 @@ class TradeController extends BaseController {
 			$consume = 0;//此次应价消耗的数量
 			$yj_cost = 0;//此次应价消耗资金
 			$yj_count = 0;//此次应价的笔数
+			$fee = $redis->hget('settings','trade_fee') ? $redis->hget('settings','trade_fee') : 0.01;//交易手续费
 
 			//s代表应价买入 b代表应价卖出
 			if($this->direct == 's') {
@@ -130,8 +131,8 @@ class TradeController extends BaseController {
 							"customer_name"=>$gd_info['name'],
 							"follow_type"=>6,
 							"bussiness_desciption"=>'挂单卖出成交 '.$this->product['product_number'],
-							"money"=>$cost,
-							"new_money"=>$gd_free_money+$cost,
+							"money"=>$cost*(1-$fee),
+							"new_money"=>$gd_free_money+$cost*(1-$fee),
 							"freeze_money"=>$gd_freeze_money,
 							"create_time"=>time(),
 						);
@@ -146,6 +147,7 @@ class TradeController extends BaseController {
 							'volume'=>$gd_info['volume'],
 							'pid'=>$gd_info['pid'],
 							'trade_money'=>getFloat($gd_info['volume']*$gd_info['price']),
+							'trade_fee'=>$cost*$fee,
 							'create_time'=>time(),
 							'other_id'=>$this->_userinfo['uid'],
 							'other_name'=>$this->_userinfo['name'],
@@ -160,7 +162,7 @@ class TradeController extends BaseController {
 						));//修改挂单记录状态、数量
 						$redis->lpush('deals',json_encode($gd_deals_info));//挂单方成交记录
 						$redis->lpush('follow',json_encode($gd_follow_info));//挂单方流水
-						$redis->hset('user:'.$gd_info['uid'],'free_money',getFloat($gd_free_money+$cost));//挂单方资金变化
+						$redis->hset('user:'.$gd_info['uid'],'free_money',getFloat($gd_free_money+$cost*(1-$fee)));//挂单方资金变化
 						$this->generatePosition($this->pid,$gd_info['uid'],$gd_info['volume'],$gd_info['price'],'yj_in_gd');//挂单方库存
 						$redis->zrem('gid_'.$gd_flag.'_by_price:'.$this->pid.':'.$this->price,$gd_info['gid']);//把gid从gid_out_by_price:pid:price表中删除
 					} else {
@@ -180,8 +182,8 @@ class TradeController extends BaseController {
 							"customer_name"=>$gd_info['name'],
 							"follow_type"=>6,
 							"bussiness_desciption"=>'挂单卖出成交 '.$this->product['product_number'],
-							"money"=>$cost,
-							"new_money"=>$gd_free_money+$cost,
+							"money"=>$cost*(1-$fee),
+							"new_money"=>$gd_free_money+$cost*(1-$fee),
 							"freeze_money"=>$gd_freeze_money,
 							"create_time"=>time(),
 						);
@@ -196,6 +198,7 @@ class TradeController extends BaseController {
 							'volume'=>$last_volume,
 							'pid'=>$gd_info['pid'],
 							'trade_money'=>getFloat($yj_cost),
+							'trade_fee'=>$cost*$fee,
 							'create_time'=>time(),
 							'other_id'=>$this->_userinfo['uid'],
 							'other_name'=>$this->_userinfo['name'],
@@ -210,7 +213,7 @@ class TradeController extends BaseController {
 						));
 						$redis->lpush('deals',json_encode($gd_deals_info));//挂单方成交记录
 						$redis->lpush('follow',json_encode($gd_follow_info));//挂单方流水
-						$redis->hset('user:'.$gd_info['uid'],'free_money',getFloat($gd_free_money+$cost));//挂单方资金变化
+						$redis->hset('user:'.$gd_info['uid'],'free_money',getFloat($gd_free_money+$cost*(1-$fee)));//挂单方资金变化
 						$this->generatePosition($this->pid,$gd_info['uid'],$last_volume,$gd_info['price'],'yj_in_gd');//挂单方库存
 						
 						break;
@@ -218,6 +221,7 @@ class TradeController extends BaseController {
 				}
 
 				$new_free_money = $redis->hget('user:'.$this->_userinfo['uid'],'free_money');//重新查询一次，防止同一用户挂单应价时数据错误
+				// dump_log($new_free_money);dump_log($yj_cost*(1+$fee));
 				$yj_follow_info = array(
 					"follow_number"=>generateFollowNumber('Y'),//Y应价成交
 					"customer_id"=>$this->_userinfo['uid'],
@@ -225,8 +229,8 @@ class TradeController extends BaseController {
 					"customer_name"=>$this->_userinfo['name'],
 					"follow_type"=>7,
 					"bussiness_desciption"=>'应价买入成交 '.$this->product['product_number'],
-					"money"=>-$yj_cost,
-					"new_money"=>$new_free_money-$yj_cost,
+					"money"=>-$yj_cost*(1+$fee),
+					"new_money"=>$new_free_money-$yj_cost*(1+$fee),
 					"freeze_money"=>$this->_userinfo['freeze_money'],
 					"create_time"=>time(),
 				);
@@ -241,6 +245,7 @@ class TradeController extends BaseController {
 					'volume'=>$consume,
 					'pid'=>$gd_info['pid'],
 					'trade_money'=>getFloat($yj_cost),
+					'trade_fee'=>$yj_cost*$fee,
 					'create_time'=>time(),
 					'other_id'=>json_encode($gd_id),
 					'other_name'=>json_encode($gd_name),
@@ -251,7 +256,7 @@ class TradeController extends BaseController {
 				$redis->lpush('deals',json_encode($yj_deals_info));
 				$redis->lpush('follow',json_encode($yj_follow_info));//应价方流水
 				$this->generatePosition($this->pid,$this->_userinfo['uid'],$consume,$this->price,'yj_in_yj');//应价方库存
-				$redis->hset('user:'.$this->_userinfo['uid'],'free_money',getFloat($new_free_money-$yj_cost));//应价方资金变化
+				$redis->hset('user:'.$this->_userinfo['uid'],'free_money',getFloat($new_free_money-$yj_cost*(1+$fee)));//应价方资金变化
 				$gd_price_detail_key = 'gd_'.$gd_flag.'_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];
 				$gd_price_volume = $redis->hget($gd_price_detail_key,'volume');
 				
@@ -289,9 +294,9 @@ class TradeController extends BaseController {
 							"customer_name"=>$gd_info['name'],
 							"follow_type"=>3,
 							"bussiness_desciption"=>'挂单买入成交 '.$this->product['product_number'],
-							"money"=>-$cost,
+							"money"=>-$cost*(1+$fee),
 							"new_money"=>$gd_user_money[1],
-							"freeze_money"=>$gd_user_money[0]-$cost,
+							"freeze_money"=>$gd_user_money[0]-$cost*(1+$fee),
 							"create_time"=>time(),
 						);
 						$gd_deals_info = array(
@@ -305,6 +310,7 @@ class TradeController extends BaseController {
 							'volume'=>$gd_info['volume'],
 							'pid'=>$gd_info['pid'],
 							'trade_money'=>getFloat($gd_info['volume']*$gd_info['price']),
+							'trade_fee'=>$cost*$fee,
 							'create_time'=>time(),
 							'other_id'=>$this->_userinfo['uid'],
 							'other_name'=>$this->_userinfo['name'],
@@ -319,7 +325,7 @@ class TradeController extends BaseController {
 						));
 						$redis->lpush('deals',json_encode($gd_deals_info));//成交记录
 						$redis->lpush('follow',json_encode($gd_follow_info));//挂单方流水
-						$redis->hset('user:'.$gd_info['uid'],'freeze_money',getFloat($gd_user_money[0]-$cost));//挂单方资金变化
+						$redis->hset('user:'.$gd_info['uid'],'freeze_money',getFloat($gd_user_money[0]-$cost*(1+$fee)));//挂单方资金变化
 						$this->generatePosition($this->pid,$gd_info['uid'],$gd_info['volume'],$gd_info['price'],'yj_out_gd');//挂单方库存
 						$redis->zrem('gid_'.$gd_flag.'_by_price:'.$this->pid.':'.$this->price,$gd_info['gid']);//把gid从gid_in_by_price:pid:price表中删除
 					} else {
@@ -339,9 +345,9 @@ class TradeController extends BaseController {
 							"customer_name"=>$gd_info['name'],
 							"follow_type"=>3,
 							"bussiness_desciption"=>'挂单买入成交 '.$this->product['product_number'],
-							"money"=>-$cost,
+							"money"=>-$cost*(1+$fee),
 							"new_money"=>$gd_user_money[1],
-							"freeze_money"=>$gd_user_money[0]-$cost,
+							"freeze_money"=>$gd_user_money[0]-$cost*(1+$fee),
 							"create_time"=>time(),
 						);
 						$gd_deals_info = array(
@@ -355,6 +361,7 @@ class TradeController extends BaseController {
 							'volume'=>$last_volume,
 							'pid'=>$gd_info['pid'],
 							'trade_money'=>getFloat($cost),
+							'trade_fee'=>$cost*$fee,
 							'create_time'=>time(),
 							'other_id'=>$this->_userinfo['uid'],
 							'other_name'=>$this->_userinfo['name'],
@@ -369,7 +376,7 @@ class TradeController extends BaseController {
 						));//修改状态记录状态、数量
 						$redis->lpush('deals',json_encode($gd_deals_info));//成交记录
 						$redis->lpush('follow',json_encode($gd_follow_info));//挂单方流水
-						$redis->hset('user:'.$gd_info['uid'],'freeze_money',getFloat($gd_user_money[0]-$cost));//挂单方资金变化
+						$redis->hset('user:'.$gd_info['uid'],'freeze_money',getFloat($gd_user_money[0]-$cost*(1+$fee)));//挂单方资金变化
 						$this->generatePosition($this->pid,$gd_info['uid'],$last_volume,$gd_info['price'],'yj_out_gd');//挂单方库存
 						
 						break;
@@ -384,8 +391,8 @@ class TradeController extends BaseController {
 				    "customer_name"=>$this->_userinfo['name'],
 				    "follow_type"=>4,
 					"bussiness_desciption"=>'应价卖出成交 '.$this->product['product_number'],
-				    "money"=>$yj_cost,
-				    "new_money"=>$this->_userinfo['free_money']+$yj_cost,
+				    "money"=>$yj_cost*(1-$fee),
+				    "new_money"=>$this->_userinfo['free_money']+$yj_cost*(1-$fee),
 					"freeze_money"=>$new_freeze_money,
 				    "create_time"=>time(),
 				);
@@ -400,6 +407,7 @@ class TradeController extends BaseController {
 					'volume'=>$consume,
 					'pid'=>$gd_info['pid'],
 					'trade_money'=>getFloat($yj_cost),
+					'trade_fee'=>$yj_cost*$fee,
 					'create_time'=>time(),
 					'other_id'=>json_encode($gd_id),
 					'other_name'=>json_encode($gd_name),
@@ -410,7 +418,7 @@ class TradeController extends BaseController {
 				$redis->lpush('deals',json_encode($yj_deals_info));//成交记录
 				$redis->lpush('follow',json_encode($yj_follow_info));//应价方流水
 				$this->generatePosition($this->pid,$this->_userinfo['uid'],$consume,$this->price,'yj_out_yj');//应价方库存
-				$redis->hset('user:'.$this->_userinfo['uid'],'free_money',getFloat($this->_userinfo['free_money']+$yj_cost));//应价方资金变化
+				$redis->hset('user:'.$this->_userinfo['uid'],'free_money',getFloat($this->_userinfo['free_money']+$yj_cost*(1-$fee)));//应价方资金变化
 				$gd_price_detail_key = 'gd_'.$gd_flag.'_price_detail:'.$gd_info['pid'].':'.$gd_info['price'];
 				$gd_price_volume = $redis->hget($gd_price_detail_key,'volume');
 				
@@ -543,10 +551,11 @@ class TradeController extends BaseController {
 
 		$this->product = $product;
 		if($this->direct == 'b') {
+			$fee = $redis->hget('settings','trade_fee') ? $redis->hget('settings','trade_fee') : 0.01;//交易手续费
 			if($product['total_number']-$product['th_number']<$this->volume) {
 				throw new \Exception('挂单数量超过限制');
 			}
-			$this->trade_money = getFloat($this->volume*$this->price);
+			$this->trade_money = getFloat($this->volume*$this->price*(1+$fee));//手续费计算在内
 			if($this->trade_money>$this->_userinfo['free_money']) {
 				throw new \Exception('可用资金不足');
 			}

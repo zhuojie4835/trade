@@ -46,4 +46,76 @@ class TestController extends BaseController {
 
 		$this->display();
 	}
+
+	public function test() {
+		$redis = getRedis();
+
+		//同步成交
+		$addList3 = array();
+		$p1 = $p2 = $a1 = $a2 = $a3 = $j = 0;//直接推荐人、间接推荐人、代理、高级代理、会员、交易所分佣金额
+		//各级分佣比例
+		$p1_bl = $redis->hget('settings','p1') ? $redis->hget('settings','p1') : C('p1');
+		$p2_bl = $redis->hget('settings','p2') ? $redis->hget('settings','p2') : C('p2');
+		$a1_bl = $redis->hget('settings','a1') ? $redis->hget('settings','a1') : C('a1');
+		$a2_bl = $redis->hget('settings','a2') ? $redis->hget('settings','a2') : C('a2');
+		$a3_bl = $redis->hget('settings','a3') ? $redis->hget('settings','a3') : C('a3');
+
+		$list = array(
+			'{"deals_type":1,"customer_id":"2","customer_name":"amin","customer_mobile":"18627540135","product_number":"650010","short_name":"\u827a\u672f\u54c1A","price":"181.00","volume":"10","pid":"1","trade_money":"1810.00","trade_fee":18.1,"create_time":1488170948,"other_id":"2","other_name":"amin","other_mobile":"18627540135","gid":"gd_record:61"}',
+			'{"deals_type":4,"customer_id":"2","customer_name":"amin","customer_mobile":"18627540135","product_number":"650010","short_name":"\u827a\u672f\u54c1A","price":"181.00","volume":10,"pid":"1","trade_money":"1810.00","trade_fee":18.1,"create_time":1488170948,"other_id":"[\"2\"]","other_name":"[\"amin\"]","other_mobile":"[\"18627540135\"]","gid":"[\"gd_record:61\"]"}'
+		);
+
+		$fee_percent = $redis->hget('settings','trade_fee') ? $redis->hget('settings','trade_fee') : 0.01;//交易手续费
+		foreach($list as $k=>$v) {
+			$item = json_decode($v,true);
+			$userinfo = $redis->hgetall('user:'.$item['customer_id']);
+			$save_data = array();
+
+			$save_data['customer_id'] = $userinfo['uid'];
+			$save_data['customer_name'] = $userinfo['name'];
+			$save_data['customer_mobile'] = $userinfo['mobile'];
+			$save_data['agent_number'] = $userinfo['agent_number'];
+			$save_data['agent_member_number'] = $userinfo['agent_member_number'];
+			$save_data['agent_number'] = $userinfo['agent_number'];
+			$save_data['pid'] = $item['pid'];
+			$save_data['product_number'] = $item['product_number'];
+			$save_data['short_name'] = $item['short_name'];
+			$save_data['gid'] = $item['gid'];
+			$save_data['create_time'] = time();
+			$save_data['fee_percent'] = $fee_percent;
+
+			if($userinfo['parent1']) {
+				$p1 = $item['trade_fee']*$p1_bl;
+				$save_data['fee'] = $p1;
+				M('commission1','trade_')->add($save_data);
+			}
+			if($userinfo['parent2']) {
+				$p2 = $item['trade_fee']*$p2_bl-$p1;
+				$save_data['fee'] = $p2;
+				M('commission1','trade_')->add($save_data);
+			}
+			if($userinfo['agent_number']) {
+				$a1 = $item['trade_fee']*$a1_bl-$p1-$p2;
+				$save_data['fee'] = $a1;
+				$save_data['ss_agent'] = $userinfo['agent_number'];
+				M('commission2','trade_')->add($save_data);
+			}
+			if($userinfo['agent2'] && ($userinfo['agent_number'] != $userinfo['agent2'])) {
+				$a2 = $item['trade_fee']*$a2_bl-$p1-$p2-$a1;
+				$save_data['fee'] = $a2;
+				$save_data['ss_agent'] = $userinfo['agent2'];
+				M('commission2','trade_')->add($save_data);
+			}
+			if($userinfo['agent_member_number'] && ($userinfo['agent_number'] != $userinfo['agent_member_number'])) {
+				$a3 = $item['trade_fee']*$a3_bl-$p1-$p2-$a1-$a2;
+				$save_data['fee'] = $a3;
+				$save_data['ss_agent'] = $userinfo['agent_member_number'];
+				M('commission2','trade_')->add($save_data);
+			}
+			$j = $item['trade_fee']-$p1-$p2-$a1-$a2-$a3;
+			$save_data['fee'] = $j;
+			M('commission3','trade_')->add($save_data);
+			dump_log($p1);dump_log($p2);dump_log($a1);dump_log($a2);dump_log($a3);dump_log($j);
+		}
+	}
 }

@@ -1,0 +1,134 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{$meta_title}</h2>
+    </div>
+
+    <div class="cf">
+        <!-- <a class="btn" href="{:U('add',array('pid'=>I('get.pid',0)))}">新 增</a> -->
+        <!-- 高级搜索 -->
+        <form class="search-form fr cf">
+			<div class="sleft">
+                <select name="operator_number">
+					<option value="0">请选择</option>
+					<volist name="operators" id="vo">
+						<option value="{$vo.operator_number}" <if condition="$vo[operator_number] eq I('operator_number')">selected</if>>{$vo.company_name}({$vo.operator_number})</option>
+					</volist>
+				</select>
+            </div>
+			<div class="sleft">
+                <input type="text" name="agent_member_number" class="search-input" value="{:I('agent_member_number')}" placeholder="所属会员编号"/>
+            </div>
+			<div class="sleft">
+                <input type="text" name="agent_number" class="search-input" value="{:I('agent_number')}" placeholder="所属代理编号"/>
+            </div>
+			<div class="sleft">
+                <input type="text" name="name" class="search-input" value="{:I('name')}" placeholder="姓名关键词"/>
+            </div>
+            <div class="sleft">
+                <input type="text" name="login_name" class="search-input" value="{:I('login_name')}" placeholder="手机号码"/>
+                <a class="sch-btn" href="javascript:;" id="search" url="{:U('')}"><i class="btn-search"></i></a>
+            </div>
+        </form>
+    </div>
+
+    <div class="data-table table-striped">
+        <form class="ids">
+            <table>
+                <thead>
+                    <tr>
+                        <!-- <th>操作</th> -->
+                        <th>账号</th>
+                        <th>手机号码</th>
+                        <th>姓名</th>
+                        <th>所属运营中心</th>
+                        <th>所属会员</th>
+                        <th>直属经济</th>
+                        <th>客户类别</th>
+                        <!-- <th>入金状态</th>
+                        <th>资金状态</th> -->
+						<th>佣金</th>
+                        <!-- <th>最近编辑时间</th> -->
+                        <th>创建时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<notempty name="list">
+                <volist name="list" id="vo">
+                    <tr>
+                        <!-- <td>
+                            <a href="{:U('view',array('id'=>$vo['id']))}">查看</a>
+                        </td> -->
+                        <td>{$vo.customer_id}</td>
+                        <td>{$vo.customer_mobile}</td>
+                        <td>{$vo.customer_name}</td>
+                        <td>{$vo.operator_number}</td>
+                        <td>{$vo.agent_member_number}</td>
+                        <td>{$vo.agent_number}</td>
+                        <td>{$vo.user_type_text}</td>
+                        <!-- <td>{$vo.is_balance_text}</td>
+                        <td>{$vo.funds_status_text}</td> -->
+						<td>{$vo.fee}</td>
+                        <!-- <td><if condition="$vo.create_time lt 0">{$vo.update_time|date='Y-m-d H:i:s',###}</if></td> -->
+                        <td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
+                    </tr>
+                </volist>
+				<else/>
+				<td colspan="13" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('index')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

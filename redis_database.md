@@ -152,7 +152,8 @@
 | pid     | int  |        商品id|
 | price     | float  |        价格|
 | volume     | int  |        数量|
-| trade_money     | flaot  |        成交金额|
+| trade_money     | float  |        成交金额|
+| trade_fee     | float  |        交易手续费|
 | deals_type     | int  |       成交类型|
 | customer_id     | int  |       客户id|
 | customer_mobile     | int  |       客户手机号码|
