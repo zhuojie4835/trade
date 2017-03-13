@@ -88,4 +88,17 @@ return array(
     ), //附件上传配置（文件上传类配置）
 	'PWD_SALT' => '68739cae48904d91496b40a3f808e6c5',//密码加盐
     'LOGIN_TIMEOUT'=>1800,//登录有效时间
+
+    'WXPAY' => array(
+        'APPID'=>'wx0673e06ca2aa08e9',
+        'MCHID'=>'1250389101',
+        'KEY' => 'tuyoulituyoulituyoulituyouli6688',
+        'APPSECRET' => '68a9ebfb60ce563d1810cb44d7dbb7c6',
+        'COMPANY' => '图有利',
+        'NOTIFY_URL' => 'http://121.43.116.138/weipay/index.php/home/index/notify',
+        'TRADE_TYPE' => 'NATIVE',
+        'CURL_TIMEOUT'=>30,
+        'SSLCERT_PATH'=>'',
+        'SSLKEY_PATH'=>''
+    ),
 );
