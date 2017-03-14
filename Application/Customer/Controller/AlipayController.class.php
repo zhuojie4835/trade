@@ -28,7 +28,7 @@ class AlipayController extends Controller {
 		    $payRequestBuilder->setTotalAmount($total_amount);
 		    $payRequestBuilder->setTimeExpress($timeout_express);
 
-		    $config = C('ALIPAY')
+		    $config = C('ALIPAY');
 		    $payResponse = new \AlipayTradeService($config);
 		    $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
 

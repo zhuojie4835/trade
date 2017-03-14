@@ -115,7 +115,7 @@ return array(
         //签名方式
         'sign_type'=>"RSA2",
         //支付宝网关
-        'gatewayUrl' => "https://openapi.alipay.com/gateway.do",
+        'gatewayUrl' => "https://openapi.alipaydev.com/gateway.do",
         //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
         'alipay_public_key' => "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyxY+EsKeA9i5LL66avZdye94gBlMib5CAX8iCYPfKey3WA2IN9QiXlTentLUx55y7zHI/qQomShK3otjl6ri+Sfo71X4Z0iKmatORhQoYOwPC2BBwctAMo2YEE/sSid1uYnkE+tVmzNlfQXHwQYn9EWbbiYUPmb765UIZk5ciFFFYbRM0OV4WPXH4FYgLR1fjFcxYOHa8tGzrSF2gV6TeFGoRuYosuXyJIXQAarwrDqY/kuQmFf8d0SpzPpmLR+rhaUms828ZSjI/hVQFGZ5bkTVl1m5Y7UXI3ZmWlEyWs2Dc7GE4qDxmgBZcVIGgt9kS+1vT1z3C24dvpl32Z4a4QIDAQAB",
     ),
