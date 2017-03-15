@@ -1,0 +1,30 @@
+[ 2017-02-27T11:53:13+08:00 ] 192.168.33.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+ERR: 无法加载数据库驱动: Think\Db\Driver\
+
+[ 2017-02-27T11:53:34+08:00 ] 192.168.33.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+ERR: 无法加载数据库驱动: Think\Db\Driver\
+
+[ 2017-02-27T11:56:01+08:00 ] 192.168.33.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+ERR: 无法加载数据库驱动: Think\Db\Driver\
+
+[ 2017-02-27T11:56:03+08:00 ] 192.168.33.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+ERR: 无法加载数据库驱动: Think\Db\Driver\
+
+[ 2017-02-27T12:01:43+08:00 ] 192.168.33.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+ERR: 无法加载数据库驱动: Think\Db\Driver\
+
+[ 2017-02-27T12:01:46+08:00 ] 192.168.33.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+ERR: 无法加载数据库驱动: Think\Db\Driver\
+
