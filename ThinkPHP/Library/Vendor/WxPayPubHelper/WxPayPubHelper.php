@@ -28,7 +28,8 @@
  * 		postXmlSSLCurl(),使用证书，以post方式提交xml到对应的接口url
 */
 	include_once("SDKRuntimeException.php");
-	include_once("WxPay.pub.config.php");
+
+	// include_once("WxPay.pub.config.php");
 
 /**
  * 所有接口的基类
@@ -65,6 +66,7 @@ class Common_util_pub
 
 		if(isset($config['appid'])){
 
+		/*if(isset($config['appid'])) {
 			$this->APPID = $config['appid'];
 			$this->MCHID = $config['mchid'];
 			$this->KEY = $config['key'];
@@ -73,6 +75,7 @@ class Common_util_pub
 			$this->SSLKEY_PATH = $config['sslkey_path'];
 			$this->COMPANY = $config['company'];
 		}else{
+		} else {
 			//=======【基本信息设置】=====================================
 			//微信公众号身份的唯一标识。审核通过后，在微信发送的邮件中查看
 			$this->APPID = 'wx0673e06ca2aa08e9';
@@ -89,7 +92,20 @@ class Common_util_pub
 			//商户名称
 			$this->COMPANY = '图有利';
 
+
 		}
+
+		}*/
+
+		$this->APPID = C('WXPAY.APPID');
+		$this->MCHID = C('WXPAY.MCHID');
+		$this->KEY = C('WXPAY.KEY');
+		$this->APPSECRET = C('WXPAY.APPSECRET');
+		//证书路径,注意应该填写绝对路径
+		$this->SSLCERT_PATH = './cacert/apiclient_cert.pem';
+		$this->SSLKEY_PATH = './cacert/apiclient_key.pem';
+		//商户名称
+		$this->COMPANY = C('WXPAY.COMPANY');
 
 	}
 
@@ -373,7 +389,9 @@ class UnifiedOrder_pub extends Wxpay_client_pub
 		//设置接口链接
 		$this->url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		//设置curl超时时间
-		$this->curl_timeout = WxPayConf_pub::CURL_TIMEOUT;
+
+		$this->curl_timeout = C('WXPAY.CURL_TIMEOUT');
+
 		parent::__construct($config);
 	}
 	
@@ -435,7 +453,7 @@ class OrderQuery_pub extends Wxpay_client_pub
 		//设置接口链接
 		$this->url = "https://api.mch.weixin.qq.com/pay/orderquery";
 		//设置curl超时时间
-		$this->curl_timeout = WxPayConf_pub::CURL_TIMEOUT;	
+		$this->curl_timeout = C('WXPAY.CURL_TIMEOUT');	
 		parent::__construct($config);	
 	}
 
@@ -475,7 +493,7 @@ class Refund_pub extends Wxpay_client_pub
 		//设置接口链接
 		$this->url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 		//设置curl超时时间
-		$this->curl_timeout = WxPayConf_pub::CURL_TIMEOUT;	
+		$this->curl_timeout = C('WXPAY.CURL_TIMEOUT');	
 		parent::__construct($config);	
 	}
 	
@@ -531,7 +549,7 @@ class RefundQuery_pub extends Wxpay_client_pub
 		//设置接口链接
 		$this->url = "https://api.mch.weixin.qq.com/pay/refundquery";
 		//设置curl超时时间
-		$this->curl_timeout = WxPayConf_pub::CURL_TIMEOUT;
+		$this->curl_timeout = C('WXPAY.CURL_TIMEOUT');
 		parent::__construct($config);		
 	}
 	
@@ -583,7 +601,7 @@ class DownloadBill_pub extends Wxpay_client_pub
 		//设置接口链接
 		$this->url = "https://api.mch.weixin.qq.com/pay/downloadbill";
 		//设置curl超时时间
-		$this->curl_timeout = WxPayConf_pub::CURL_TIMEOUT;
+		$this->curl_timeout = C('WXPAY.CURL_TIMEOUT');
 		parent::__construct($config);
 
 	}
@@ -603,6 +621,7 @@ class DownloadBill_pub extends Wxpay_client_pub
 		   	$this->parameters["mch_id"] = parent::getConfig('MCHID');//商户号
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
 		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
+
 		    return  $this->arrayToXml($this->parameters);
 		}catch (SDKRuntimeException $e)
 		{
@@ -634,7 +653,7 @@ class ShortUrl_pub extends Wxpay_client_pub
 		//设置接口链接
 		$this->url = "https://api.mch.weixin.qq.com/tools/shorturl";
 		//设置curl超时时间
-		$this->curl_timeout = WxPayConf_pub::CURL_TIMEOUT;	
+		$this->curl_timeout = C('WXPAY.CURL_TIMEOUT');	
 		parent::__construct($config);	
 	}
 	
@@ -845,7 +864,7 @@ class JsApi_pub extends Common_util_pub
 	function __construct() 
 	{
 		//设置curl超时时间
-		$this->curl_timeout = WxPayConf_pub::CURL_TIMEOUT;
+		$this->curl_timeout = C('WXPAY.CURL_TIMEOUT');
 		parent::__construct($config);
 	}
 	
