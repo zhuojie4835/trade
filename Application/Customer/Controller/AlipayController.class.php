@@ -5,10 +5,10 @@ use Think\Controller;
 class AlipayController extends Controller {
 	public function index() {
 		if(IS_POST) {
-			// vendor('Alipay.wappay.service.AlipayTradeService');
-			// vendor('Alipay.wappay.buildermodel.AlipayTradeWapPayContentBuilder');
-			require VENDOR_PATH.'Alipay/wappay/service/AlipayTradeService.php';
-			require VENDOR_PATH.'Alipay/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
+			vendor('AliPay.wappay.service.AlipayTradeService');
+			vendor('AliPay.wappay.buildermodel.AlipayTradeWapPayContentBuilder');
+			// require VENDOR_PATH.'Alipay/wappay/service/AlipayTradeService.php';
+			// require VENDOR_PATH.'Alipay/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
 			
 			$out_trade_no = $_POST['WIDout_trade_no'];
 
