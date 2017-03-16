@@ -30,9 +30,6 @@ class AlipayController extends Controller {
 		    $config = C('ALIPAY');
 		    $payResponse = new \AlipayTradeService($config);
 		    $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
-
-		    return ;
-			var_dump(C('ALIPAY'));
 		}
 
 		$this->display('index');
@@ -42,14 +39,32 @@ class AlipayController extends Controller {
 	统一收单线下交易查询
 	 */
 	public function wapquery() {
+		vendor('AliPay.wappay.service.AlipayTradeService');
+		vendor('AliPay.wappay.buildermodel.AlipayTradeQueryContentBuilder');
 		
+		$out_trade_no = $_POST['WIDout_trade_no'];
+	    //订单名称，必填
+	    $subject = $_POST['WIDsubject'];
+	    //付款金额，必填
+	    $total_amount = $_POST['WIDtotal_amount'];
+	    //商品描述，可空
+	    $body = $_POST['WIDbody'];
+	    //超时时间
+	    $timeout_express="1m";
+	    $out_trade_no = '20173161710449';
+	    $payQueryBuilder = new \AlipayTradeQueryContentBuilder();
+	    $payQueryBuilder->setOutTradeNo($out_trade_no);
+
+	    $config = C('ALIPAY');
+	    $response = new \AlipayTradeService($config);
+	    $result = $response->Query($payQueryBuilder,$config['return_url'],$config['notify_url']);
 	}
+
 	/*
 	pc网页支付
 	 */
 	public function pcpay() {
 		if(IS_POST) {
-			vendor("AliPay.pcpay_md5.alipay_config");
 			vendor("AliPay.pcpay_md5.lib.alipay_submit");
 			/**************************请求参数**************************/
 	        //商户订单号，商户网站订单系统中唯一订单号，必填
@@ -60,6 +75,8 @@ class AlipayController extends Controller {
 	        $total_fee = $_POST['WIDtotal_fee'];
 	        //商品描述，可空
 	        $body = $_POST['WIDbody'];
+
+	        $alipay_config = C('ALIPAYPC');
 			/************************************************************/
 			//构造要请求的参数数组，无需改动
 			$parameter = array(

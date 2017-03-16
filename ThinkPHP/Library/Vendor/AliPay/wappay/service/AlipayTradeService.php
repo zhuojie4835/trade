@@ -132,7 +132,8 @@ class AlipayTradeService {
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request);
 		$response = $response->alipay_trade_query_response;
-		var_dump($response);
+		
+		$this->writeLog("response: ".var_export($result,true));
 		return $response;
 	}
 	
