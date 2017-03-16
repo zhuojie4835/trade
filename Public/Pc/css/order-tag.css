@@ -1,0 +1,114 @@
+
+.order-tag{ background-color: #f3f2f2; font-family: '微软雅黑'; padding-bottom: 136px; }
+.order-tag .wrap{ width: 1000px; margin: 0 auto; }
+.order-tag .tag{ background-color: #fff;}
+.order-tag .tag-item{ padding: 15px 0; border-top: 1px solid #e9e9e9;}
+.order-tag .tag .title{ float: left; width: 75px; text-align: right; font-size: 18px; color: #292929; font-weight: 700; }
+.order-tag .tag-item a{font-size: 16px; color: #373737; text-decoration: none; padding:1px 10px; border-radius: 14px; white-space:nowrap; }
+.order-tag .tag-item a:hover{ text-decoration: none; color: #fff; background-color: #fa4d32;}
+.order-tag .tag-item .current{ color: #fff; background-color: #fa4d32;}
+.order-tag .tag .all{ width: 75px; float: left; text-align: right; margin-right: 10px; }
+.order-tag .sub{ overflow: hidden; }
+.order-tag .sub .a1{ display: block; float: left; margin-left: 30px; margin-bottom: 20px; }
+
+.order-tag .total{ margin-top: 40px; margin-bottom: 30px; }
+.order-tag .total-tag{ float: left; }
+.order-tag .total-tag li{ float: left; height: 29px; line-height: 29px; margin-right: 10px;}
+.order-tag .total-tag i{ padding:0 3px; display: block; height: 28px; float: left; font-size: 16px; color: #fff; font-style: inherit; background-color: #cdcdcd; vertical-align: top}
+.order-tag .total-tag .bd-arrow-left{
+    padding:0;width: 8px; background: transparent url(../images/course/list/bd-arrow-left.png) no-repeat center right;
+}
+.order-tag .total-tag .bd-arrow-right{
+    padding:0;width: 18px; background: transparent url(../images/course/list/bd-arrow-right.png) no-repeat center left;
+}
+.order-tag .total-tag .reset{
+    width: 71px; height: 29px; line-height: 29px; margin-left: 22px; text-align: center; color: #C1C1C1;
+    border: 1px solid #c1c1c1; border-radius: 5px; overflow: hidden;
+}
+.order-tag .total-page{ float: right;}
+.order-tag .total-page .cur{ color: #fa4d32;}
+.order-tag .total-page span{ font-size: 16px; line-height: 30px; }
+.order-tag .total-page .btn{ float: right; margin-right: 40px; margin-left: 6px;}
+.order-tag .total-page a{ display: block; float: left; margin-left: 10px; }
+.order-tag .total-page .pre{ background-position: -50px -55px; }
+.order-tag .total-page .next{ background-position: -60px 0px; }
+.order-tag .total-page .pre.disable{ background-position: -110px 0px; cursor: default;}
+.order-tag .total-page .next.disable{ background-position: -60px 0px; cursor: default;}
+
+.order-tag .list-view{ width: 110%; }
+.order-tag .item-wrap{ padding-bottom: 42px; }
+.order-tag .item-wrap .item{
+    float: left; width: 226px; height: 307px; margin: 0 28px 28px 0; border-radius: 5px;
+    border: 1px solid #cdcdcd;overflow: hidden;
+}
+.order-tag .item-wrap .item:hover{  box-shadow: 0 1px 10px #decbca; }
+.order-tag .list-view .bd-1{ background: url(../images/course/list/item-bd-1.png) no-repeat left top;}
+.order-tag .list-view .bd-2{ background: url(../images/course/list/item-bd-2.png) no-repeat left top;}
+.order-tag .list-view .bd-3{ background: url(../images/course/list/item-bd-3.png) no-repeat left top;}
+.order-tag .list-view .bd-4{ background: url(../images/course/list/item-bd-4.png) no-repeat left top;}
+.order-tag .list-view .bd-5{ background: url(../images/course/list/item-bd-5.png) no-repeat left top;}
+.order-tag .list-view .bd-6{ background: url(../images/course/list/item-bd-6.png) no-repeat left top;}
+.order-tag .list-view .bd-7{ background: url(../images/course/list/item-bd-7.png) no-repeat left top;}
+.order-tag .list-view .bd-8{ background: url(../images/course/list/item-bd-8.png) no-repeat left top;}
+.order-tag .list-view .bd-9{ background: url(../images/course/list/item-bd-9.png) no-repeat left top;}
+.order-tag .list-view .bd-10{ background: url(../images/course/list/item-bd-10.png) no-repeat left top;}
+.order-tag .list-view .title{ height: 60px; font-size: 20px; color: #fff; padding: 10px 10px 0 10px; }
+.order-tag .list-view .s1{ margin-left: 5px; }
+.order-tag .list-view .summ{ height: 45px;font-size: 16px; color: #292929; padding: 10px; }
+.order-tag .list-view .price{ margin: 0 10px; padding-bottom: 11px; font-size: 12px; color: #767676; border-bottom: 1px dotted #cacaca; }
+.order-tag .list-view .cur{ float: right; }
+.order-tag .list-view .bef{ text-decoration:line-through;}
+.order-tag .list-view .priv{ height: 67px; padding-bottom: 15px; }
+.order-tag .list-view .p-left{ display: none; }
+.order-tag .list-view .r1{ color: #373737; float: left; }
+.order-tag .list-view .r2{ color: #fa4d32; float: left; }
+.order-tag .list-view .p-right{ font-size: 16px; overflow: hidden; padding-top: 10px; padding-left: 10px; }
+.order-tag .coupon .priv{ background: url(../images/course/list/item-priv-bd.png) no-repeat 16px 9px;}
+.order-tag .coupon .p-left{ display: block; float: left; margin-left: 42px; margin-top: 34px; text-align: center; line-height: 1.2; color: #fff; font-size: 14px; font-family: '黑体'; }
+.order-tag .coupon .p-right{ float: right; padding: 0; margin-top: 27px; line-height: 1.3; width: 70px; text-align: center; margin-right: 26px;}
+.order-tag .list-view .btn{
+    display: block; margin: 10px auto 0; width: 171px; height: 31px; line-height: 31px; font-size: 16px; color: #fff; background-color: #fa4d32;
+    text-align: center; border-radius: 4px; overflow: hidden;
+}
+
+.paging{ text-align: center; line-height: 22px; }
+.paging .pag-wrap{ display: inline-block; *display: inline; *zoom: 1; overflow: hidden;  vertical-align: top; }
+.paging-list{ float: left; list-style: none; overflow: hidden; }
+.paging .item{ float: left; margin: 0 2px; }
+.paging .pre{ margin-right: 10px; }
+.paging .next{ margin-left: 10px; }
+.paging a{
+    display: block; font-size: 14px; color: #616161; text-decoration: none;  line-height: 1;
+    padding: 6px 10px; border: 1px solid #bfbfbf; border-radius: 4px; overflow: hidden;
+}
+.paging a:hover{ text-decoration: none; color: #fff; background-color: #fa4d32; border-color: #fa4d32;}
+.paging a.cur{ color: #fff; background-color: #fa4d32; border-color: #fa4d32; }
+.paging .paging-cell{ float: left; font-size: 14px; color: #616161; line-height: 28px; margin-left: 5px; }
+.paging .paging-cell .sp{ margin-left: 10px; }
+.paging .ipt-num{
+    width: 30px; margin: 0 5px; line-height: 26px; border: 1px solid #bfbfbf;
+    text-indent: 5px; vertical-align: top; border-radius: 4px; overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$meta_title}</title>
+    <link rel="stylesheet" href="__CSS__/global.css" type="text/css">
+    <link rel="stylesheet" href="__CSS__/Login.css" type="text/css">
+    <link rel="stylesheet" href="__CSS__/common.css" type="text/css">
+    <script src="__JS__/jquery/1.9.0/jquery.min.js"></script>
+    <script src="__JS__/common/plugin/JUI/1.0.0/JUI.js"></script>
+    <script src="__JS__/js/Login.js"></script>
+
+</head>
+<body>
+    <header class="Login_header">
+        <div class="Login_header_center">
+            <div class="login_logo"><img src="__IMG__/common/logo_nav.png"></div>
+            <div class="login_back"><a href="#">返回升学首页</a></div>
+
+        </div>
+
+    </header>
+    <div class="login_content">
+        <div id="Login_bg">
+            <!--<img src="../../images/member/login_bg.png" alt=""/>-->
+        </div>
+        <div class="login_box">
+            <!--切换栏-->
+            <div  class="login_box_header reg_title">
+                账号注册
+            </div>
+            <!--账号登录-->
+            <form action="" method="post">
+                <div class="user_login_box"  id="user_login_box">
+                    <div class="input_box reg_phone">
+                        <input type="text" name="reg_phone" id="reg_phone" placeholder="请输入手机号">
+                    </div>
+                    <div class="input_box reg_yzm">
+                        <input type="text" name="reg_yzm" placeholder="请输入验证码">
+                        <input type="button" value="获取验证码" class="get_yzm">
+                    </div>
+                    <div class="input_box reg_password">
+                        <input type="text" name="reg_password" id="reg_pwd" placeholder="请输入密码">
+                    </div>
+                    <input type="button" value="立即注册" id="reg_button"/>
+                    <p class="zhuce_tishi">已有账号？<a href="#">点我登录</a></p>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+<include file="Common:foot"/>

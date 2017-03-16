@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$meta_title}</title>
+    <link rel="stylesheet" href="__CSS__/global.css" type="text/css">
+    <link rel="stylesheet" href="__CSS__/common.css" type="text/css">
+    <link rel="stylesheet" href="__CSS__/order-tag.css">
+    <script src="__JS__/jquery/1.9.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div id="nav" class="media-width">
+            <div class="sx-logo"></div>
+            <ul class="nav-tab">
+                <li><a href="javascript:;" target="_blank">首页</a></li>
+                <li>
+                    <a href="javascript:;" target="_blank">关于升学</a>
+                    <ul class="nav-second">
+                        <li>
+                            <a href="intro.html" target="_blank">升学简介</a>
+                        </li>
+                        <li>
+                            <a href="course.html" target="_blank">发展历程</a>
+                        </li>
+                        <li>
+                            <a href="honor.html" target="_blank">升学荣誉</a>
+                        </li>
+                        <li>
+                            <a href="advantage.html" target="_blank">升学优势</a>
+                        </li>
+                        <li>
+                            <a href="service.html" target="_blank">教学服务</a>
+                        </li>
+                        <li>
+                            <a href="diploma.html" target="_blank">毕业证书</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" target="_blank">分校介绍</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="{:U('/hotclass')}" target="_blank">热门课程</a></li>
+                <li><a href="javascript:;" target="_blank">免费体验</a></li>
+                <li><a href="javascript:;" target="_blank">我的课堂</a></li>
+            </ul>
+
+            <ul class="login-in-out">
+                <li class="login-in">
+                    <a href="{:U('member/login')}">登录</a>
+                </li>
+                <li class="login-out">
+                    <a href="{:U('member/register')}">注册</a>
+                </li>
+
+            </ul>
+        </div>
+    </header>
+    <script>
+        navObj = {
+            bgChange:function(n){
+                $(".nav-tab li").mouseover(function () {
+                    var _index=$(this).index();
+                    if(_index==n){
+                        $(".nav-second").show();
+                    }
+                }).mouseout(function () {
+                    $(".nav-second").hide();
+                });
+            }
+        };
+        navObj.bgChange(1);
+    </script>

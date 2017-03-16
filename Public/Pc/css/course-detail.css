@@ -1,0 +1,158 @@
+body{
+    background: #f9f7f8;
+}
+.det-main-box{
+    width:100%;
+    height:auto;
+}
+.det-main-txt{
+    display: block;
+    width:1000px;
+    height:auto;
+    margin: auto;
+}
+.det-subject{
+    display: block;
+    width:100%;
+    margin: auto;
+}
+.det-subject .det-subject-l{
+    float: left;
+    display: inline-block;
+    width:31.6%;
+    margin-right: 6.4%
+    
+    
+}
+.det-subject .det-subject-l img{
+    display: block;
+    width:100%;
+    margin:80px 0 74px 0;
+}
+.det-subject-r{
+    float: left;
+    display: inline-block;
+    width:62%;
+    margin-left: 0;
+    /*padding-left:2%;*/
+    /*padding-right:2%;*/
+}
+.det-subject-names{
+    display: block;
+    width:100%;
+    margin:80px auto 50px auto;
+    font:30px/30px  "Microsoft Yahei";
+    color: #292929;
+}
+.det-subject-datas{
+    display: block;
+    width:100%;
+    background: #ececec;
+    
+}
+.det-bot-border{
+
+    padding:0 3.23%;
+}
+.det-subject-datas hr{
+    border:1px dashed #adadac;
+    margin: 0 20px;
+    background: #ececec;
+}
+.det-data-price{
+    display: block;
+    width: 100%;
+    background: #ececec;
+    font:16px/48px "Microsoft Yahei";
+    color: #767676;
+    border-bottom: 1px dashed #adadac;
+}
+.det-market-price,
+.det-sx-price{
+    display:inline-block;
+}
+.det-sx-price{
+    margin-left: 30px;
+}
+.det-data-allowances{
+    display: block;
+    width:100%;
+    background: #ececec;
+    padding: 24px 0;
+
+}
+.sx-allowance,
+.xy-allowance
+{
+    display: block;
+    width:100%;
+    font:20px/20px "Microsoft Yahei";
+    color: #FA4D32;
+}
+.xy-allowance
+{
+    margin-top: 14px;
+}
+.soonBuy{
+    display: block;
+    width: 176px;
+    height: 40px;
+    background: #FA4D32;
+    font:22px/40px "Microsoft Yahei";
+    color: #FFF;
+    border:none;
+    margin-top: 28px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+.det-bot-table{
+    display: block;
+    width:100%;
+
+}
+.det-title-wrap{
+    display: block;
+    margin:74px auto 50px 0;
+    border-bottom: 1px solid #FA4D32;
+}
+.det-bot-title{
+    display: inline-block;
+    width:114px;
+
+    background: #FA4D32;
+    font: 20px/30px "Microsoft Yahei";
+    text-align: center;
+    color: #FFF;
+}
+.det-course-table{
+    width:100%;
+    margin-bottom: 160px;
+
+}
+.det-course-table th,
+.det-course-table td{
+    width:33%;
+    height:56px;
+    font:18px/56px "Microsoft Yahei";
+    text-align: center;
+    color: #616161;
+}
+.det-course-table th{
+    font:30px/56px "Microsoft Yahei";
+    background: #ececec;
+    color: #292929;
+}
+.det-course-table tr td:first-child{
+    color: #292929;
+}
+@media only screen and (min-width:1600px) {
+    .media-width{
+        width:1200px !important;
+    }
+    .media-min-width{
+        min-width:1200px !important;
+    }
+}

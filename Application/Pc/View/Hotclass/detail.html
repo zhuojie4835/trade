@@ -1,0 +1,101 @@
+<include file="Common:head" />
+<link rel="stylesheet" href="__CSS__/course-detail.css" type="text/css">
+
+<div class="det-main-box media-min-width">
+    <div class="det-main-txt media-width">
+        <div class="det-subject clearfix">
+            <div class="det-subject-l">
+                <img src="__IMG__/course/detail/ke1.png"/>
+            </div>
+            <div class="det-subject-r">
+                <div class="det-subject-names">
+                    【专业名称】&nbsp;&nbsp;&nbsp;(级别名称)——班型名称
+                </div>
+                <div class="det-subject-datas">
+                    <div class="det-bot-border">
+                        <div class="det-data-price">
+                            <del class="det-market-price">市场价：¥<em>{$info.basic_price}</em></del>
+                            <span class="det-sx-price">升学价：¥<em>{$info.sale_price}</em></span>
+                        </div>
+                        <div class="det-data-allowances">
+                            <div class="sx-allowance">升学补贴：¥<em>{$info.subsidy_price}</em></div>
+                            <div class="xy-allowance">学员价格：¥<em>{$info[sale_price]-$info[subsidy_price]}</em></div>
+                        </div>
+                    </div>
+
+                </div>
+                <input type="submit" value="立即购买" class="soonBuy">
+            </div>
+        </div>
+        <div class="det-bot-table">
+            <div class="det-title-wrap">
+                <div class="det-bot-title">课程详情</div>
+            </div>
+            <table class="det-course-table" border="1">
+                <thead>
+                <tr>
+                    <th>课程</th>
+                    <th>服务</th>
+                    <th>教辅</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>艺术设计</td>
+                    <td>冲刺串讲预测考点(面授+串讲)</td>
+                    <td>小白手册，考试规划备考须知</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<include file="Common:foot" />

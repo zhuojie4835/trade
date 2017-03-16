@@ -1,0 +1,203 @@
+/*header部分样式*/
+header {
+    width: 100%;
+    min-width: 1000px;
+    height: 56px;
+    margin: auto;
+    border-bottom: 1px solid #e8e8e8;
+    display: block;
+    background: #fff;
+}
+#nav{
+    width: 1000px;
+    height:56px;
+    display: block;
+    margin: auto;
+}
+#nav .sx-logo{
+    width:196px;
+    height: 36px;
+    margin: 10px 0;
+    background: url("../images/common/logo_nav.png") no-repeat 0 0;
+    display: inline-block;
+}
+#nav .nav-tab{
+    margin: 0 0 0 30px;
+    height: 56px;
+    display: inline-block;
+
+}
+#nav .nav-tab li{
+    height:56px;
+    font: 16px/56px "MircrosoftYaHei";
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+#nav .nav-tab li a{
+    padding: 0 30px;
+    font: 16px/56px "MircrosoftYaHei";
+    color: #484848;
+    display: inline-block;
+    float: left;
+}
+#nav .nav-tab li a:hover{
+    background: #FA4D32;
+    color: #FFF;
+}
+#nav .nav-tab .nav-second{
+    position: absolute;
+    left:0;
+    top: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.96);
+    font: 16px/56px "MircrosoftYaHei";
+    /*display: inline-block;*/
+    z-index: 99;
+    display: none;
+}
+#nav .nav-tab .nav-second li{
+    height: 56px;
+    display: inline-block;
+    float: left;
+}
+#nav .nav-tab .nav-second li a{
+    font:16px/56px "MircrosoftYaHei";
+    height:56px;
+    background: #FFF;
+    color: #484848;
+    display: inline-block;
+    float: left;
+}
+#nav .nav-tab  li:nth-child(2) a:hover .nav-second{
+    display: block;
+}
+#nav .nav-tab .nav-second li a:hover{
+    background: #e5e5e5;
+    color: #FA4D32;
+}
+
+#nav .login-in-out{
+    height: 56px;
+    margin-right: 60px;
+    display: inline-block;
+    float: right;
+}
+#nav .login-in-out li{
+    height: 56px;
+    font: 16px/56px "MircrosoftYaHei";
+    display: inline-block;
+}
+#nav .login-in-out a{
+    height: 20px;
+    padding: 0 8px;
+    margin-top:18px;
+    margin-left:0;
+    color: #484848;
+    font:16px/20px "MircrosoftYaHei";
+
+    display: inline-block;
+}
+#nav .login-in-out .login-in a{
+    border-right: 1px solid #484848;
+}
+/*底部样式*/
+footer{
+    width: 100%;
+    min-width: 1000px;
+    margin: auto;
+    background: #393939;
+    border-bottom: 1px solid #e8e8e8;
+    display: block;
+}
+#foot{
+    display: block;
+    width:1000px;
+    text-align: center;
+    margin:auto;
+}
+.foot-row-t{
+    display: block;
+    /*background: #FF0;*/
+    text-align: center;
+    margin: 20px auto auto
+
+}
+.sx-logo-link{
+    display: inline-block;
+    width:55px;
+    height: 24px;
+    margin-top: 20px;
+    background: url("../images/common/LOGO18.png") no-repeat 0 0 ;
+    -webkit-background-size:100% 100%;
+    background-size:100% 100%;
+}
+.select-lists{
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 28px;
+}
+.select-lists li{
+    float: left;
+    display: inline-block;
+    height: 24px;
+}
+.select-lists li a{
+    border-left: 2px solid #999999;
+    font: 16px/16px 'MircrosoftYaHei';
+    margin:4px 0;
+    padding: 0 50px 0 5px;
+    color: #999999;
+}
+
+.select-lists li a:hover{
+    color: #FFF;
+}
+.foot-row-b{
+    display: block;
+    width:1000px;
+    margin:auto;
+    background: #f00;
+}
+#friendly-link{
+    display: block;
+    height:20px;
+    color: #999999;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 28px;
+}
+.foot-tel{
+    display: inline-block;
+    font:20px/20px "Microsoft Yahei";
+}
+.foot-yue-hao{
+    display: inline-block;
+    margin-left: 10px;
+    font:12px/20px "Microsoft Yahei";
+
+}
+.foot-rights{
+    display: inline-block;
+    margin-left: 10px;
+    font:12px/20px "Microsoft Yahei";
+
+}
+
+
+.main{width: 1000px;margin: 0 auto;}
+@media screen and (min-width:1600px){
+    .main{width: 1200px}
+    .index .hr hr{width: 495px;}
+    .diploma .conbox .picScroll .bd li {width:auto;margin-left: 2%;  }
+
+}
+
+
+/*lc先写里面用一下*/
+.clearfix{overflow:hidden;_zoom:1;}
+.fb{font-weight: 700;}
+.lh0{line-height: 0;}
+/*颜色系列*/
+.c1{color:#fa4d32;} /*红色*/
+.c2{color:#a8a8a8;} /*灰色*/

@@ -6,27 +6,20 @@ class AlipayController extends Controller {
 	/*
 	手机网页支付
 	 */
-	public function index() {
+	public function wappay() {
 		if(IS_POST) {
 			vendor('AliPay.wappay.service.AlipayTradeService');
 			vendor('AliPay.wappay.buildermodel.AlipayTradeWapPayContentBuilder');
-			// require VENDOR_PATH.'Alipay/wappay/service/AlipayTradeService.php';
-			// require VENDOR_PATH.'Alipay/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
 			
 			$out_trade_no = $_POST['WIDout_trade_no'];
-
 		    //订单名称，必填
 		    $subject = $_POST['WIDsubject'];
-
 		    //付款金额，必填
 		    $total_amount = $_POST['WIDtotal_amount'];
-
 		    //商品描述，可空
 		    $body = $_POST['WIDbody'];
-
 		    //超时时间
 		    $timeout_express="1m";
-
 		    $payRequestBuilder = new \AlipayTradeWapPayContentBuilder();
 		    $payRequestBuilder->setBody($body);
 		    $payRequestBuilder->setSubject($subject);
@@ -42,18 +35,22 @@ class AlipayController extends Controller {
 			var_dump(C('ALIPAY'));
 		}
 
-		$this->display();
+		$this->display('index');
 	}
 
 	/*
+	统一收单线下交易查询
+	 */
+	public function wapquery() {
+		
+	}
+	/*
 	pc网页支付
 	 */
-	public function pc() {
+	public function pcpay() {
 		if(IS_POST) {
-			// vendor("AliPay.pcpay_md5.alipay_config");
-			require_once (VENDOR_PATH."AliPay/pcpay_md5/alipay_config.php");
+			vendor("AliPay.pcpay_md5.alipay_config");
 			vendor("AliPay.pcpay_md5.lib.alipay_submit");
-			
 			/**************************请求参数**************************/
 	        //商户订单号，商户网站订单系统中唯一订单号，必填
 	        $out_trade_no = $_POST['WIDout_trade_no'];
@@ -63,7 +60,6 @@ class AlipayController extends Controller {
 	        $total_fee = $_POST['WIDtotal_fee'];
 	        //商品描述，可空
 	        $body = $_POST['WIDbody'];
-
 			/************************************************************/
 			//构造要请求的参数数组，无需改动
 			$parameter = array(
@@ -73,7 +69,6 @@ class AlipayController extends Controller {
 				"payment_type"	=> $alipay_config['payment_type'],
 				"notify_url"	=> $alipay_config['notify_url'],
 				"return_url"	=> $alipay_config['return_url'],
-				
 				"anti_phishing_key"=>$alipay_config['anti_phishing_key'],
 				"exter_invoke_ip"=>$alipay_config['exter_invoke_ip'],
 				"out_trade_no"	=> $out_trade_no,
@@ -91,6 +86,6 @@ class AlipayController extends Controller {
 			echo $html_text;
 		}
 
-		$this->display();
+		$this->display('pc');
 	}
 }

@@ -1,0 +1,169 @@
+<include file="Common:head" />
+
+    <style>
+        .paging a,.paging span {display:inline-block;margin:0 2px;border: 1px solid #bfbfbf;}
+        .paging span.current {line-height:26px;margin:0;padding:0;width:28px;background:#fa4d32;border-radius: 4px;}
+    </style>
+    <div class="order-tag">
+        <div class="wrap">
+            <div class="tag">
+                <div class="tag-item clearfix project">
+                    <div class="title">项目：</div>
+                    <div class="all">
+                        <a href="javascript:;" data-id="0" class="<if condition="!I(prjid)">current</if> a1">全部</a>
+                    </div>
+                    <div class="sub">
+                        <volist name="project" id="vo">
+                            <a href="javascript:;" data-id="{$key}" class="<if condition="I(prjid) eq $key">current</if> a1">{$vo}</a>
+                        </volist>
+                    </div>
+                </div>
+
+                <div class="tag-item clearfix major">
+                    <div class="title">专业：</div>
+                    <div class="all">
+                        <a href="javascript:;" data-id="0" class="<if condition="!I(majorid)">current</if> a1">全部</a>
+                    </div>
+                    <div class="sub">
+                        <volist name="major" id="vo">
+                            <a href="javascript:;" data-id="{$key}" class="<if condition="I(majorid) eq $key">current</if> a1">{$vo}</a>
+                        </volist>
+                    </div>
+                </div>
+
+                <div class="tag-item clearfix pgrade">
+                    <div class="title">级别：</div>
+                    <div class="all">
+                        <a href="javascript:;" data-id="0" class="<if condition="!I(pgradeid)">current</if> a1">全部</a>
+                    </div>
+                    <div class="sub">
+                        <volist name="grade" id="vo">
+                            <a href="javascript:;" data-id="{$key}" class="<if condition="I(pgradeid) eq $key">current</if> a1">{$vo}</a>
+                        </volist>
+                    </div>
+                </div>
+            </div>
+
+            <div class="total clearfix">
+                <div class="total-tag dib-wrap">
+                    <ul class="list clearfix dib">
+                        <li>
+                            <i class="bd-arrow-left"></i>
+                            <i>学历</i>
+                            <i class="bd-arrow-right"></i>
+                        </li>
+                        <li>
+                            <i class="bd-arrow-left"></i>
+                            <i>艺术设计设计</i>
+                            <i class="bd-arrow-right"></i>
+                        </li>
+                        <li>
+                            <i class="bd-arrow-left"></i>
+                            <i>全部</i>
+                            <i class="bd-arrow-right"></i>
+                        </li>
+                    </ul>
+                    <a href="javascript:;" class="reset dib">清空</a>
+                </div>
+
+                <div class="total-page clearfix">
+                    <div class="btn clearfix">
+                        <a href="javascript:;" class="pre disable icon-zhh"></a>
+                        <a href="javascript:;" class="next icon-yhh"></a>
+                    </div>
+
+                    <span class="cur"><if condition="I(p)">{:I(p)}<else/>1</if></span>
+                    <span>/</span>
+                    <span class="sum">{$totalpage}</span>
+                </div>
+            </div>
+
+            <div class="item-wrap">
+                <ul class="list-view clearfix">
+                    <volist name="class" id="vo">
+                            <li class="item bd-1 coupon">
+                                <h5 class="title">{$vo[majorid_text]}<span class="s1">{$vo[pgradeid_text]}</span></h5>
+                                <div class="summ">【{$vo[majorid_text]}】（{$vo[pgradeid_text]}）<br>————{$vo[name]}</div>
+                                <div class="price cleargix">
+                                    <span class="cur">升学价：￥{$vo[sale_price]}</span>
+                                    <span class="bef">市场价：￥{$vo[basic_price]}</span>
+                                </div>
+                                <div class="priv clearfix">
+                                    <div class="p-left">
+                                        <div class="p1">升学补贴</div>
+                                        <div class="p2">￥{$vo[subsidy_price]}</div>
+                                    </div>
+                                    <div class="p-right">
+                                        <div class="r1">学员价格</div>
+                                        <div class="r2">￥{$vo[sale_price]-$vo[subsidy_price]}</div>
+                                    </div>
+                                </div>
+                                <a href="{:U('detail',array('id'=>$vo[id]))}" class="btn">立即购买</a>
+                            </li>
+                        </volist>
+                    
+                </ul>
+            </div>
+
+            <div class="paging">
+                <!-- <div class="pag-wrap">
+                    <ul class="paging-list">
+                        <li class="item pre"><a href="javascript:;">上一页</a></li>
+                        <li class="item"><a href="#1" class="num">1</a></li>
+                        <li class="item"><a href="#2" class="num cur">2</a></li>
+                        <li class="item"><a href="#3" class="num">3</a></li>
+                        <li class="item"><a href="#4" class="num">4</a></li>
+                        <li class="item"><a href="#5" class="num">5</a></li>
+                        <li class="item">...</li>
+                        <li class="item next"><a href="javascript:;">下一页</a></li>
+                    </ul>
+                    <div class="paging-cell">
+                        共17页
+                        <span class="sp">
+                            到第<input type="text" class="ipt-num" placeholder="2">页
+                        </span>
+                    </div>
+                    <div class="paging-cell">
+                        <a href="javascript:;" class="sub-btn">确定</a>
+                    </div>
+
+                </div> -->
+                {$page}
+            </div>
+        </div>
+    </div>
+
+<script>
+    $('.project a').on('click',function(){
+        var prjid = $(this).data('id');
+        var majorid = '{:I('majorid')}';
+        var pgradeid = '{:I('pgradeid')}';
+        var url = '{:U('',array('prjid'=>'prjidstr','majorid'=>'majoridstr','pgradeid'=>'pgradeidstr'))}';
+        url = url.replace('prjidstr',prjid);
+        url = url.replace('majoridstr',majorid);
+        url = url.replace('pgradeidstr',pgradeid);
+        window.location.href = url;
+    });
+    $('.major a').on('click',function(){
+        var majorid = $(this).data('id');
+        var prjid = '{:I('prjid')}';
+        var pgradeid = '{:I('pgradeid')}';
+        var url = '{:U('',array('prjid'=>'prjidstr','majorid'=>'majoridstr','pgradeid'=>'pgradeidstr'))}';
+        url = url.replace('prjidstr',prjid);
+        url = url.replace('majoridstr',majorid);
+        url = url.replace('pgradeidstr',pgradeid);
+        window.location.href = url;
+    });
+    $('.pgrade a').on('click',function(){
+        var pgradeid = $(this).data('id');
+        var prjid = '{:I('prjid')}';
+        var majorid = '{:I('majorid')}';
+        var url = '{:U('',array('prjid'=>'prjidstr','majorid'=>'majoridstr','pgradeid'=>'pgradeidstr'))}';
+        url = url.replace('prjidstr',prjid);
+        url = url.replace('majoridstr',majorid);
+        url = url.replace('pgradeidstr',pgradeid);
+        window.location.href = url;
+    });
+
+</script>
+<include file="Common:foot" />

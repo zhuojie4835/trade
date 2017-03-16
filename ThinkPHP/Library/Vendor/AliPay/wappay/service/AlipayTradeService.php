@@ -89,7 +89,7 @@ class AlipayTradeService {
 		return $response;
 	}
 
-	 function aopclientRequestExecute($request,$ispage=false) {
+	function aopclientRequestExecute($request,$ispage=false) {
 
 		$aop = new AopClient ();
 		$aop->gatewayUrl = $this->gateway_url;

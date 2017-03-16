@@ -1,0 +1,199 @@
+
+html,body{margin: 0;width: 100%;height: 100%;}
+.Login_header{width: 100%;height:50px;}
+.Login_header_center{width:1200px;margin: 0 auto; }
+#Login_bg{
+    width: 100%;
+    height:calc(100% - 51px);
+    background-image:url('../images/member/login_bg.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.login_logo{
+    margin-top:6px;
+    height: 50px;
+    display: inline-block;
+    float: left;
+    line-height: 50px;}
+.login_back a{    color: #999;}
+.login_back{
+    font-family: 'microsoft yahei', Arial, sans-serif;
+    color:#999;
+    font-size: 16px;
+    display: inline-block;
+    float: right;
+    height: 50px;
+    line-height: 50px;}
+.login_content{
+    position: relative;
+    width: 100%;
+    height: calc(100% - 51px);
+    background: #f9f7f8;
+}
+.login_box{
+    width:392px;
+    height:462px;
+    position: absolute;
+    background: #fff;
+    left:0;
+    right: -800px;
+    top: -75px;
+    bottom: 0;
+    margin:auto;
+    box-shadow: 1px 1px 2px 0 #e5e5e5;
+}
+.login_box_header{height:76px;
+    border-bottom: 4px solid #f9f7f8;
+    position: relative;
+    font-family: "Microsoft Yahei";}
+.login_box_header .switch{
+    height: 76px;
+    position: absolute;
+    left:70px;
+    bottom: 0;
+    font-size: 19px;
+    line-height: 76px;
+}
+.login_box_header .switch #switch_userlogin {
+    margin-right:90px;
+}
+
+.login_box_header .switch .switch_btn_focus {
+    color: #333;
+    display: inline-block;
+    height: 45px;
+    line-height: 45px;
+    outline: none;
+}
+#switch_bottom {
+    position: absolute;
+
+    border-bottom: 4px solid #fa4d32;
+}
+.user_login_box{display: block;padding:40px 30px 30px;}
+.wechat_login_box{display: none;padding: 40px 30px 30px;position: relative;}
+.switch a{color:#333;}
+.input_box{
+
+    width: 332px;
+    height: 56px;
+    margin: auto;
+    background: #f9f8f7;
+}
+.input_box input{
+    width: 332px;
+    height: 56px;
+    background: #f9f8f7;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #484848;
+    text-indent: 20px;
+    font-family: 'microsoft yahei', Arial, sans-serif;
+}
+.login_username{
+    margin-bottom: 10px;
+}
+.login_password{
+    margin-bottom: 20px;
+}
+.rem_pw .for_ps{float: right;color: #484848;}
+#login_button{
+    width: 332px;
+    height: 56px;
+    border: none;
+    outline: none;
+    background: #fa4d32;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 40px 0 20px;
+    font-family: "Î¢ÈíÑÅºÚ";
+}
+#login_button:hover{
+    cursor: pointer;
+}
+.zhuce_tishi{text-align: center;font-size: 14px;font-family: 'microsoft yahei', Arial, sans-serif;color: #484848;}
+.zhuce_tishi a{color: #fa4d32;}
+
+
+.wechat_login_box .wechat_box{
+    width: 160px;
+    height: 160px;
+    position: absolute;
+    top: 160px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 1px solid #e5e5e5;
+}
+.wechat_login_box .wechat_box .wechat_img{
+    width: 140px;
+    height: 140px;
+    border: 1px solid #efefef;
+    margin: 10px;
+    background: #efefef;
+    text-align: center;
+    line-height: 140px;
+    color: #aaa;
+}
+.wechat_tip {
+
+    position: absolute;
+    top: 260px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    text-align: center;
+}
+.wechat_tip p{
+    font-family: 'microsoft yahei', Arial, sans-serif;
+    font-size: 16px;
+    margin-bottom: 32px;
+}
+.wechat_tip .zhuce_tishi{
+    font-size: 14px;
+}
+.reg_title{text-align: center;line-height: 80px;font-size:20px;color: #333;}
+
+.reg_yzm{margin: 10px 0;position: relative;}
+.reg_yzm input{width: 200px;}
+
+#reg_button{
+    width: 332px;
+    height: 56px;
+    border: none;
+    outline: none;
+    background: #fa4d32;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 30px 0 20px;
+    font-family: "Î¢ÈíÑÅºÚ";
+}
+.user_login_box .reg_yzm .get_yzm{
+    background: #fa4d32;
+    position: absolute;
+    width: 108px;
+    height: 38px;
+    color: #fff;
+    text-indent: 0px;
+    font-family: 'microsoft yahei', Arial, sans-serif;
+    font-size: 16px;
+    top: 9px;
+    right: 10px;
+}
+.user_login_box .reg_yzm .get_yzm:hover{
+    cursor: pointer;
+}
+#reg_button:hover{
+    cursor: pointer;
+}
+
+
+
+
