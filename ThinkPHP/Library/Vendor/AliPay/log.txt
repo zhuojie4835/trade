@@ -4,3 +4,22 @@
 2017-03-16 17:32:51  {"out_trade_no":"20173161710449"}
 2017-03-16 17:33:17  {"productCode":"QUICK_WAP_PAY","body":"购买测试商品0.01元","subject":"测试","out_trade_no":"201731617469222","total_amount":"0.01","timeout_express":"1m"}
 2017-03-16 17:33:17  response: '<form id=\'alipaysubmit\' name=\'alipaysubmit\' action=\'https://openapi.alipaydev.com/gateway.do?charset=UTF-8\' method=\'POST\'><input type=\'hidden\' name=\'biz_content\' value=\'{"productCode":"QUICK_WAP_PAY","body":"购买测试商品0.01元","subject":"测试","out_trade_no":"201731617469222","total_amount":"0.01","timeout_express":"1m"}\'/><input type=\'hidden\' name=\'app_id\' value=\'2016080400164364\'/><input type=\'hidden\' name=\'version\' value=\'1.0\'/><input type=\'hidden\' name=\'format\' value=\'json\'/><input type=\'hidden\' name=\'sign_type\' value=\'RSA2\'/><input type=\'hidden\' name=\'method\' value=\'alipay.trade.wap.pay\'/><input type=\'hidden\' name=\'timestamp\' value=\'2017-03-16 17:33:17\'/><input type=\'hidden\' name=\'alipay_sdk\' value=\'alipay-sdk-php-20161101\'/><input type=\'hidden\' name=\'notify_url\' value=\'http://www.vw87china.com/wxpay/index.php\'/><input type=\'hidden\' name=\'return_url\' value=\'http://www.baidu.com\'/><input type=\'hidden\' name=\'charset\' value=\'UTF-8\'/><input type=\'hidden\' name=\'sign\' value=\'kQvGA/Pv0gW/NMcbmNznRcLdNAbcpdnRaZm0wMg3gfAN5XxCVyH8kw+QOZVafSqhKH6Dm4w5fALa3jFUsZTGrXnviYbwVgTop8lyvL++SLn6OsUQwXLNhLKsWK7GuqilfzKJy+Gdw2NbshOFmIeduzLqhsp4Fy/DtC1k86i/vRp5/JYVW0Skamjb9ANcledQjH9sctxOdoZDZsCEpPYGgZgJnKuXJiwlcJW7b0ZDMLNQaXwfhaPPhN2rBIvscrVoni5i/Iirpx0PPzgxSDNm2H/8p+m8+nMMc/jIY5RyoE3hxfyY1DgfIr9anhTq+NeIJcRbXwLN1VOCMQ3Hi/t9PQ==\'/><input type=\'submit\' value=\'ok\' style=\'display:none;\'\'></form><script>document.forms[\'alipaysubmit\'].submit();</script>'
+2017-03-16 18:08:03  {"trade_no":"2017031621001004340200123318"}
+2017-03-16 18:09:51  {"out_trade_no":"2017316181520479"}
+2017-03-16 18:09:57  {"out_trade_no":"2017316181520479"}
+2017-03-16 18:11:05  {"out_trade_no":"2017316181520479"}
+2017-03-16 18:16:03  {"out_trade_no":"2017316181520479"}
+2017-03-16 18:16:49  {"out_trade_no":"2017316181520479"}
+2017-03-16 18:17:14  {"out_trade_no":"2017316181520479"}
+2017-03-16 18:18:27  {"out_trade_no":"2017316181520479"}
+2017-03-16 18:20:10  {"out_trade_no":"2017316181520479"}
+2017-03-16 18:20:58  {"out_trade_no":"2017316181520479"}
+2017-03-16 19:31:47  {"out_trade_no":"2017316181520479"}
+2017-03-16 19:32:09  {"out_trade_no":"201731618152047"}
+2017-03-16 19:32:16  {"out_trade_no":"2017316181520479"}
+2017-03-16 19:45:07  {"out_trade_no":"2017316181520479"}
+2017-03-16 19:45:23  {"out_trade_no":"2017316181520479"}
+2017-03-16 19:53:26  {"out_trade_no":"2017316181520479"}
+2017-03-16 19:53:36  {"out_trade_no":"2017316181520479"}
+2017-03-16 19:53:42  {"out_trade_no":"2017316181520479"}
+2017-03-16 19:55:11  {"out_trade_no":"2017316181520479"}

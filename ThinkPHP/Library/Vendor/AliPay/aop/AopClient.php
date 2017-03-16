@@ -398,7 +398,7 @@ class AopClient {
 		//获取业务参数
 		$apiParams = $request->getApiParas();
 
-			if (method_exists($request,"getNeedEncrypt") &&$request->getNeedEncrypt()){
+		if (method_exists($request,"getNeedEncrypt") &&$request->getNeedEncrypt()){
 
 			$sysParams["encrypt_type"] = $this->encryptType;
 

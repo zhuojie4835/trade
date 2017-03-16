@@ -42,16 +42,8 @@ class AlipayController extends Controller {
 		vendor('AliPay.wappay.service.AlipayTradeService');
 		vendor('AliPay.wappay.buildermodel.AlipayTradeQueryContentBuilder');
 		
-		$out_trade_no = $_POST['WIDout_trade_no'];
-	    //订单名称，必填
-	    $subject = $_POST['WIDsubject'];
-	    //付款金额，必填
-	    $total_amount = $_POST['WIDtotal_amount'];
-	    //商品描述，可空
-	    $body = $_POST['WIDbody'];
-	    //超时时间
-	    $timeout_express="1m";
-	    $out_trade_no = '20173161710449';
+		
+	    $out_trade_no = '2017316181520479';
 	    $payQueryBuilder = new \AlipayTradeQueryContentBuilder();
 	    $payQueryBuilder->setOutTradeNo($out_trade_no);
 
