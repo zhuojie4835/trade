@@ -132,7 +132,7 @@ class AlipayTradeService {
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request);
 		$response = $response->alipay_trade_query_response;
-		var_dump($response);
+		// var_dump($response);
 		return $response;
 	}
 	
@@ -150,8 +150,8 @@ class AlipayTradeService {
 	
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request);
-		$response = $response->alipay_trade_refund_response;
-		var_dump($response);
+		// $response = $response->alipay_trade_refund_response;
+		// var_dump($response);
 		return $response;
 	}
 
@@ -169,8 +169,8 @@ class AlipayTradeService {
 	
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request);
-		$response = $response->alipay_trade_close_response;
-		var_dump($response);
+		// $response = $response->alipay_trade_close_response;
+		// var_dump($response);
 		return $response;
 	}
 	
@@ -188,7 +188,7 @@ class AlipayTradeService {
 	
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request);
-		var_dump($response);
+		// var_dump($response);
 		return $response;
 	}
 	/**
@@ -205,8 +205,8 @@ class AlipayTradeService {
 	
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request);
-		$response = $response->alipay_data_dataservice_bill_downloadurl_query_response;
-		var_dump($response);
+		// $response = $response->alipay_data_dataservice_bill_downloadurl_query_response;
+		// var_dump($response);
 		return $response;
 	}
 

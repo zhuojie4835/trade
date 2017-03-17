@@ -19,7 +19,7 @@ class AlipayController extends Controller {
 		    //商品描述，可空
 		    $body = $_POST['WIDbody'];
 		    //超时时间
-		    $timeout_express="1m";
+		    $timeout_express="10m";
 		    $payRequestBuilder = new \AlipayTradeWapPayContentBuilder();
 		    $payRequestBuilder->setBody($body);
 		    $payRequestBuilder->setSubject($subject);
@@ -38,18 +38,128 @@ class AlipayController extends Controller {
 	/*
 	统一收单线下交易查询
 	 */
-	public function wapquery() {
+	public function tradequery() {
 		vendor('AliPay.wappay.service.AlipayTradeService');
 		vendor('AliPay.wappay.buildermodel.AlipayTradeQueryContentBuilder');
 		
-		
-	    $out_trade_no = '2017316181520479';
+		$out_trade_no = I('out_trade_no','');
+		$trade_no = I('trade_no','');
+	    // $out_trade_no = '2017316181520479';
 	    $payQueryBuilder = new \AlipayTradeQueryContentBuilder();
 	    $payQueryBuilder->setOutTradeNo($out_trade_no);
+	    $payQueryBuilder->setTradeNo($trade_no);
 
 	    $config = C('ALIPAY');
 	    $response = new \AlipayTradeService($config);
 	    $result = $response->Query($payQueryBuilder,$config['return_url'],$config['notify_url']);
+	    if($result->code == 10000) {
+
+	    } else {
+
+	    }
+	    var_dump($result);
+	}
+
+	/*
+	统一收单交易关闭接口
+	 */
+	public function tradeclose() {
+		vendor('AliPay.wappay.service.AlipayTradeService');
+		vendor('AliPay.wappay.buildermodel.AlipayTradeCloseContentBuilder');
+		
+		$out_trade_no = I('out_trade_no','');
+		$trade_no = I('trade_no','');
+	    // $out_trade_no = '2017316181520479';
+	    $tradeCloseBuilder = new \AlipayTradeCloseContentBuilder();
+	    $tradeCloseBuilder->setOutTradeNo($out_trade_no);
+	    $tradeCloseBuilder->setTradeNo($trade_no);
+
+	    $config = C('ALIPAY');
+	    $response = new \AlipayTradeService($config);
+	    $result = $response->Close($tradeCloseBuilder,$config['return_url'],$config['notify_url']);
+	    if($result->code == 10000) {
+
+	    } else {
+
+	    }
+	    var_dump($result);
+	}
+
+	/*
+	统一收单交易退款接口
+	 */
+	public function traderefund() {
+		vendor('AliPay.wappay.service.AlipayTradeService');
+		vendor('AliPay.wappay.buildermodel.AlipayTradeRefundContentBuilder');
+		
+		$out_trade_no = I('out_trade_no','');
+		$trade_no = I('trade_no','');
+	    // $out_trade_no = '2017316181520479';
+	    $tradeRefundBuilder = new \AlipayTradeRefundContentBuilder();
+	    $tradeRefundBuilder->setOutTradeNo($out_trade_no);
+	    $tradeRefundBuilder->setTradeNo($trade_no);
+	    $tradeRefundBuilder->setRefundAmount('0.01');
+
+	    $config = C('ALIPAY');
+	    $response = new \AlipayTradeService($config);
+	    $result = $response->Refund($tradeRefundBuilder,$config['return_url'],$config['notify_url']);
+	    if($result->code == 10000) {
+
+	    } else {
+
+	    }
+	    var_dump($result);
+	}
+
+	/*
+	统一收单交易退款查询
+	 */
+	public function refundquery() {
+		vendor('AliPay.wappay.service.AlipayTradeService');
+		vendor('AliPay.wappay.buildermodel.AlipayTradeFastpayRefundQueryContentBuilder');
+		
+		$out_trade_no = I('out_trade_no','');
+		$trade_no = I('trade_no','');
+	    // $out_trade_no = '2017316181520479';
+	    $refundqueryBuilder = new \AlipayTradeFastpayRefundQueryContentBuilder();
+	    $refundqueryBuilder->setOutTradeNo($out_trade_no);
+	    $refundqueryBuilder->setTradeNo($trade_no);
+	    $refundqueryBuilder->setOutRequestNo($out_trade_no);
+
+	    $config = C('ALIPAY');
+	    $response = new \AlipayTradeService($config);
+	    $result = $response->refundQuery($refundqueryBuilder,$config['return_url'],$config['notify_url']);
+	    if($result->code == 10000) {
+
+	    } else {
+
+	    }
+	    var_dump($result);
+	}
+
+	/*
+	查询对账单下载地址
+	 */
+	public function billdownloadurlquery() {
+		vendor('AliPay.wappay.service.AlipayTradeService');
+		vendor('AliPay.wappay.buildermodel.AlipayDataDataserviceBillDownloadurlQueryContentBuilder');
+		
+		$bill_type = I('out_trade_no','');
+		$bill_date = I('trade_no','');
+	    // $out_trade_no = '2017316181520479';
+	    $billdownloadurlqueryBuilder = new \AlipayDataDataserviceBillDownloadurlQueryContentBuilder();
+	    $billdownloadurlqueryBuilder->setBillType('signcustomer');
+	    $billdownloadurlqueryBuilder->setBillDate('2017-03-17');
+
+	    $config = C('ALIPAY');
+	    $response = new \AlipayTradeService($config);
+	    $result = $response->downloadurlQuery($billdownloadurlqueryBuilder,$config['return_url'],$config['notify_url']);
+	    if($result->code == 10000) {
+
+	    } else {
+
+	    }
+	    var_dump($result);
 	}
 
 	/*

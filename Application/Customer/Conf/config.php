@@ -117,7 +117,7 @@ return array(
         //支付宝网关
         'gatewayUrl' => "https://openapi.alipaydev.com/gateway.do",
         //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
-        'alipay_public_key' => "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyxY+EsKeA9i5LL66avZdye94gBlMib5CAX8iCYPfKey3WA2IN9QiXlTentLUx55y7zHI/qQomShK3otjl6ri+Sfo71X4Z0iKmatORhQoYOwPC2BBwctAMo2YEE/sSid1uYnkE+tVmzNlfQXHwQYn9EWbbiYUPmb765UIZk5ciFFFYbRM0OV4WPXH4FYgLR1fjFcxYOHa8tGzrSF2gV6TeFGoRuYosuXyJIXQAarwrDqY/kuQmFf8d0SpzPpmLR+rhaUms828ZSjI/hVQFGZ5bkTVl1m5Y7UXI3ZmWlEyWs2Dc7GE4qDxmgBZcVIGgt9kS+1vT1z3C24dvpl32Z4a4QIDAQAB",
+        'alipay_public_key' => "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv2veRqM76I/nUjTbYK6rzDEfDtJvsgWOFu8XGB/2+V7+LgmouxvGT20L4q4/xpgRKcPqZKF0X86DqjwbAzO9JUq0h9+hSjFcpwhUzckUI7eMmrjyHx/V9g+4CNY+PsSk5eKI/1kMdFfOs7NvSwulzlcdcXlmI0NPJZ7tfABrjxpbcFTu0op+zPfCZ8kgGz44Znd4W/DOVQqIdMfYqk6bY9Hd+4VZCXcLbwHjGBpgdJ6KPiGYAB2wes2KVF6Ntjs02HrtO61KWp4Iqd6a+IDXI40wWxTpsE55V0uxXdLg2AY71sL3jJuDbrO2PWE7SwBbR+Ww8oaMhkD6klSC2oLEwwIDAQAB",
     ),
     // 支付宝pc网页配置
     'ALIPAYPC' => array(
