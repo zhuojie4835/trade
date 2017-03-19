@@ -8,7 +8,7 @@ class WxpayController extends Controller {
     public function _initialize()
     {
         //引入WxPayPubHelper
-        vendor('WxPayPubHelper.WxPayPubHelper');
+        // vendor('WxPayPubHelper.WxPayPubHelper');
     }
 
     //生成二维码
@@ -164,6 +164,32 @@ class WxpayController extends Controller {
                 }
             }   
         }
+    }
+
+    public function test() {
+        require_once VENDOR_PATH . 'Wxpay/lib/WxPay.Api.php';
+        require_once VENDOR_PATH . 'Wxpay/example/WxPay.NativePay.php';
+        require_once VENDOR_PATH . 'Wxpay/example/log.php';
+
+        $notify = new \NativePay();
+        $this->url1 = $notify->GetPrePayUrl("123456789");
+
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("test");
+        $input->SetAttach("test");
+        $input->SetOut_trade_no(\WxPayConfig::MCHID.date("YmdHis"));
+        $input->SetTotal_fee("1");
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("test");
+        $input->SetNotify_url("http://www.vw87china.com/wxpay/example/notify.php");
+        $input->SetTrade_type("NATIVE");
+        $input->SetProduct_id("123456789");
+        $result = $notify->GetPayUrl($input);
+        $this->url2 = $result["code_url"];
+
+        // var_dump($url2);die;
+        $this->display();
     }
 }
 
