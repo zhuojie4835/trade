@@ -207,4 +207,40 @@ class AlipayController extends Controller {
 
 		$this->display('pc');
 	}
+
+	/*
+	支付异步通知
+	 */
+	public function notify() {
+		vendor("AliPay.pcpay_md5.lib.alipay_notify");
+
+		$alipay_config = C('ALIPAYPC');
+		//计算得出通知验证结果
+		$alipayNotify = new \AlipayNotify($alipay_config);
+		$verify_result = $alipayNotify->verifyNotify();
+
+		if($verify_result) {//验证成功
+
+			$out_trade_no = $_POST['out_trade_no'];//商户订单号
+			$trade_no = $_POST['trade_no'];//支付宝交易号
+			$trade_status = $_POST['trade_status'];//交易状态
+
+			if($out_trade_no) {//查询订单
+				#code...
+			}
+		    if($_POST['trade_status'] == 'TRADE_FINISHED') {
+
+		        logResult(json_encode($_POST));
+		    } elseif ($_POST['trade_status'] == 'TRADE_SUCCESS') {
+
+		        logResult(json_encode($_POST));
+		    }
+		        
+			echo "success";
+		} else {//验证失败
+		    
+		    echo "fail";
+		    logResult(json_encode($_POST));
+		}
+	}
 }
