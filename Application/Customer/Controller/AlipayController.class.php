@@ -243,4 +243,8 @@ class AlipayController extends Controller {
 		    logResult(json_encode($_POST));
 		}
 	}
+
+	public function test() {
+		echo 333;
+	}
 }
