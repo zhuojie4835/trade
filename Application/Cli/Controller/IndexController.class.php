@@ -214,4 +214,9 @@ class IndexController extends Controller {
 
 		dump_log('reset end');
 	}
+
+	public function fixclassnu() {
+		echo 222;
+	}
+
 }

@@ -398,6 +398,110 @@ class ExcelController extends Controller {
 			$model->where(array('id'=>$v['id']))->save(array('success_msg'=>$success_msg));
 			// var_dump($success_msg);
 		}
+	}
+
+	public function test() {
+		date_default_timezone_set('Asia/shanghai');
+		$start_time = mktime(0,0,0,8,10,2014);
+		$end_time = mktime(0,0,0,5,10,2017);
+
+		// $xy_model = M('Xueyuan','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		// $ms_model = M('MemberClassnuData','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		// $m_model = M('Member','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		$xy_model = M('Xueyuan','t_');
+		$ms_model = M('MemberClassnuData','t_');
+		$m_model = M('Member','t_');
+
+		// $sql = 'SELECT username,count(username) number,m.crt_time,m.from source from t_member_classnu_data mcd LEFT JOIN t_member m on mcd.userid=m.id WHERE m.crt_time>1493740800 GROUP BY userid having(count(username)>=1)';
+		// $sql = 'SELECT username,count(username) number,m.crt_time,m.from source from t_member_classnu_data mcd LEFT JOIN t_member m on mcd.userid=m.id WHERE m.crt_time>'.$start_time.' and m.crt_time<'.$end_time.' GROUP BY userid having(count(username)>=1)';
+		// $sql = 'SELECT phone,crt_time from  t_member   WHERE crt_time>'.$start_time.' and crt_time<'.$end_time;
+		$sql = 'SELECT m.phone,m.nickname,x.xy_name,m.crt_time,x.xy_no,mcd.id as classnuid from  t_member m LEFT JOIN t_xueyuan x '. 
+			'ON m.phone=x.xy_phone LEFT JOIN t_member_classnu_data mcd ON m.phone=mcd.username '. 
+			'WHERE x.xy_no is not null and mcd.classnuid is null and crt_time>'.$start_time.' and crt_time<'.$end_time.' ORDER BY m.crt_time DESC';
+		$data = $xy_model->query($sql);
+		// var_dump($sql);die;
+		// $data = array(array('phone'=>1234,'crt_time'=>date('Y-m-d H:i:s'),'xy_no'=>1111));
 		
+		vendor("PHPExcel.PHPExcel");
+        $phpexcel = new \PHPExcel();  
+		$filename = "学员资料".date('YmdHis'); 
+
+		$phpexcel->getActiveSheet()->setTitle($filename);  
+        $phpexcel->getActiveSheet()  
+              ->setCellValue('A1','手机')  
+              ->setCellValue('B1','姓名') 
+              ->setCellValue('C1','学员姓名') 
+              ->setCellValue('D1','创建时间') 
+              ->setCellValue('E1','报名班号');  
+        
+        foreach($data as $i=>$val) {
+        	$phpexcel->getActiveSheet()   
+                ->setCellValue('A'.($i+2), $val['phone'])  
+                ->setCellValue('B'.($i+2), $val['nickname'])  
+                ->setCellValue('C'.($i+2), $val['xy_name'])  
+                ->setCellValue('D'.($i+2), date('Y-m-d H:i:s',$val['crt_time']))  
+                ->setCellValue('E'.($i+2), $val['xy_no']);
+        }
+        $obj_Writer = \PHPExcel_IOFactory::createWriter($phpexcel,'Excel5');
+
+        //设置header  
+        header("Content-Type: application/force-download");   
+        header("Content-Type: application/octet-stream");   
+        header("Content-Type: application/download");   
+        header('Content-Disposition:inline;filename="'.$filename.'.xls"');   
+        header("Content-Transfer-Encoding: binary");   
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");   
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");   
+        header("Pragma: no-cache");   
+        $obj_Writer->save('php://output');//输出 
+        exit(); 
+		/*foreach($list as $k=>$v) {
+			$item = array();
+			$list1 = $ms_model->where(array('username'=>$v['phone']))->select();
+			if($list1) {
+				$item['phone'] = $v['phone'];
+				$item['status'] = '正常';
+				$item['desc'] = '';
+				$item['crt_time'] = date('Y-m-d H:i:s',$v['crt_time']);
+				foreach($list1 as $k1=>$v1) {
+					$yichang_id = '';
+					if(!$m_model->where(array('id'=>$v1['userid'],'phone'=>$v1['username']))->find()) {
+						$yichang_id .= $v1['userid'];
+						$item['status'] = '异常';
+					}
+					if($yichang_id) {
+						$item['desc'] .= $yichang_id.' ';
+					}
+				}
+				$data[] = $item;
+			}
+		}
+
+		$this->data = $data;
+		$this->count = count($data);
+		$this->display();*/
+	}
+
+	public function test2() {
+		// $mcd_model = M('MemberClassnuData','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		// $mc_model = M('MemberClassnu','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		// $xud_model = M('XyUploadData','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		// $mcd_model = M('MemberClassnuData','t_');
+		// $mc_model = M('MemberClassnu','t_');
+		// $xud_model = M('XyUploadData','t_');
+		// $userids = $xud_model->field('userid')->select();
+		// var_dump($userids);die;
+		// foreach($userids as $v) {
+		// 	$classnuid = $majorid = array();
+		// 	$classnuid = $mcd_model->where(array('userid'=>$v['userid']))->getField('classnuid',true);
+		// 	!$classnuid && $classnuid = array();
+	 //    	if($classnuid) {
+	 //    		$majorid = $mc_model->where(array('id'=>array('in',$classnuid)))->getField('majorid',true);
+	 //    	}
+
+	 //    	$xud_model->where(array('userid'=>$v['userid']))->save(array('classnuid'=>json_encode($classnuid),'majorid'=>json_encode($majorid)));
+		// }
+		
+		ExcelCustomers();
 	}
 }

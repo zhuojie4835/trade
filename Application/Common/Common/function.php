@@ -1149,7 +1149,8 @@ function getValue($array, $key, $default = null) {
 /**
  * 打印调试日志
  */
-function dump_log($msg,$file=APP_PATH . '/log.txt') {
+function dump_log($msg) {
+    $file=APP_PATH . '/log.txt';
     error_log(date('H:i:s').'---'.json_encode($msg) . "\n\r", 3, $file);
 }
 
@@ -1238,3 +1239,154 @@ function arr_sort($sort_arr,$arr) {
 	return $redis->hget('settings',$key);
  }
  
+/**
+ * PHP Excel表格导出图片方法
+ * 2015-07-30 巴亚云
+ */
+function ExcelCustomers() {
+    vendor("PHPExcel.PHPExcel");
+    /*实例化excel类*/
+    $excel = new \PHPExcel();
+
+    /*设置文本对齐方式*/
+    $excel->getDefaultStyle()->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $excel->getDefaultStyle()->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+    $objActSheet = $excel->getActiveSheet();
+
+    $letter = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N');
+    /*设置表头数据*/
+    $tableheader = array('导出日期','姓名', '身份证号', '民族','性别' ,'地址','房号','入住次数','身份头像');
+    
+    
+    /*填充表格表头*/
+    for($i = 0;$i < count($tableheader);$i++) {
+        $excel->getActiveSheet()->setCellValue("$letter[$i]1","$tableheader[$i]");
+        /*设置font*/
+        $excel->getActiveSheet()->getStyle("$letter[$i]1")->getFont()->setName(iconv('gbk', 'utf-8', '宋体'));
+        $excel->getActiveSheet()->getStyle("$letter[$i]1")->getFont()->setSize(16);
+        $excel->getActiveSheet()->getStyle("$letter[$i]1")->getFont()->setBold(true);
+        /*设置下划线*/
+        //$excel->getActiveSheet()->getStyle("$letter[$i]1")->getFont()->setUnderline(PHPExcel_Style_Font::UNDERLINE_SINGLE);
+        /*设置字体颜色*/
+        //$excel->getActiveSheet()->getStyle("$letter[$i]1")->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
+        //$excel->getActiveSheet()->getStyle("$letter[$i]1")->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
+        /*设置表格宽度*/
+        $objActSheet->getColumnDimension("$letter[$i]")->setWidth(20);
+        $objActSheet->getColumnDimension("$letter[2]")->setWidth(30);
+        $objActSheet->getColumnDimension("$letter[5]")->setWidth(60);
+    }
+    
+    $startdate = !empty($_POST['startdate']) ? $_POST['startdate'] : date('Y-m-d',time());
+                
+    /* 设置表格数据*/
+   /* $hotel_customer = M('hotel_customer');
+    $sql = "SELECT addtime,username,idcard,gender,national,address,photo,photo_s,number,check_num FROM tc_hotel_customer WHERE last_checkin = '".$startdate."'";
+    $Obj = $hotel_customer ->query($sql);*/
+    $Obj = array(
+        array(
+            'addtime'=>149678767,
+            'username'=>'卓捷',
+            'idcard'=>43051545,
+            'gender'=>1,
+            'national'=>2,
+            'address'=>111,
+            'photo'=>'/vagrant/jhzx.com/Port/Wap/Public/images/common/404.png',
+            'photo_s'=>'/vagrant/jhzx.com/Port/Wap/Public/images/common/404.png',
+            'number'=>1,
+            'check_num'=>1
+        )
+    );
+    // var_dump(is_file($Obj['photo']));die;
+    if(!empty($Obj)){
+        foreach ($Obj as $k=>$v){
+            $Obj[$k]['addtime'] = date('Y-m-d',time());
+            list($Oldrwidth, $Oldheight) = getimagesize($v['photo']);
+            if($Oldrwidth > 126 && $Oldheight > 102){
+                $Obj[$k]['photos'] = $v['photo_s'];
+            }else{
+                $Obj[$k]['photos'] = $v['photo'];
+            }
+            if($v['gender'] == 1){
+                $Obj[$k]['gender'] = '男';
+            }else{
+                $Obj[$k]['gender'] = '女';
+            }
+            // unset($Obj[$k]['photo']);
+            // unset($Obj[$k]['photo_s']);
+        }
+    }
+        
+    /*向每行单元格插入数据*/
+    for ($i = 0;$i < count($Obj);$i++) {
+        $j = $i + 2;
+        /*设置表格高度*/
+        $excel->getActiveSheet()->getRowDimension($j)->setRowHeight(50);
+        $excel->getActiveSheet()->getStyle($j)->getFont()->setSize(12);
+        /*设置表格格式*/
+        $excel->getActiveSheet()->getStyle("$letter[2]$j")->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER);
+        for ($row = 0;$row < count($Obj[$i]);$row++) {
+            $photos = '';
+            if ($row == (count($Obj[$i]) - 1 )) {
+                /*实例化excel图片处理类*/
+                $objDrawing = new \PHPExcel_Worksheet_Drawing();
+                if(!empty($Obj[$i]['photos'])){
+                        // $photo = substr($Obj[$i]['photos'],7);
+                        // $photoAry = explode('/',$photo);
+                    
+                        // if(in_array('uploadfiles',$photoAry)){
+                        //     unset($photoAry[0]);
+                        //     $photos = implode('/',$photoAry);
+                        //     //var_dump($photos);exit;
+                        //     /*设置图片路径 切记：只能是本地图片*/
+                        //     $objDrawing->setPath($photos);
+                        // }
+                        $objDrawing->setPath($Obj[$i]['photos']);
+                }else{
+                    $objDrawing->setPath($Obj[$i]['photos'],false);
+                }
+            
+                /*设置图片高度*/
+                $objDrawing->setWidth(20);
+                $objDrawing->setHeight(60);
+                
+                /*设置图片要插入的单元格*/
+                $objDrawing->setCoordinates("I$j");
+                
+                /*设置图片所在单元格的格式*/
+                $objDrawing->setOffsetX(50);
+                $objDrawing->setRotation(20);
+                $objDrawing->getShadow()->setVisible(true);
+                $objDrawing->getShadow()->setDirection(50);
+                $objDrawing->setWorksheet($excel->getActiveSheet());
+                continue;
+            
+            }
+            
+            $excel->getActiveSheet()->setCellValue("$letter[0]$j",$Obj[$i]['addtime']);
+            $excel->getActiveSheet()->setCellValue("$letter[1]$j",$Obj[$i]['username']);
+            $excel->getActiveSheet()->setCellValue("$letter[2]$j",$Obj[$i]['idcard']);
+            $excel->getActiveSheet()->setCellValue("$letter[3]$j",$Obj[$i]['national']);
+            $excel->getActiveSheet()->setCellValue("$letter[4]$j",$Obj[$i]['gender']);
+            $excel->getActiveSheet()->setCellValue("$letter[5]$j",$Obj[$i]['address']);
+            $excel->getActiveSheet()->setCellValue("$letter[6]$j",$Obj[$i]['number']);
+            $excel->getActiveSheet()->setCellValue("$letter[7]$j",$Obj[$i]['check_num']);
+        }
+    
+    }
+    $date = $startdate."的住客资料";
+
+    /*实例化excel输入类并完成输出excel文件*/
+    $write = new \PHPExcel_Writer_Excel5($excel);
+    
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+    header("Content-Type:application/force-download");
+    header("Content-Type:application/vnd.ms-execl");
+    header("Content-Type:application/octet-stream");
+    header("Content-Type:application/download");
+    header("Content-Disposition:attachment;filename=$date.xls");
+    header("Content-Transfer-Encoding:binary");
+    $write->save('php://output');
+    //var_dump($row);exit;
+}
