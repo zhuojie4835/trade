@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> New Document </TITLE>
+<META NAME="Generator" CONTENT="EditPlus">
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+</HEAD>
+ 
+<BODY>
+<div style="text-align:center;">
+  <div>数量 {$count}</div>
+  <table width="613" border="0" cellpadding="2" cellspacing="1" id="SignFrame">
+        <tr id="trHeader">
+        <td width="27" bgcolor="#96E0E2">手机号码</td>
+        <td width="27" bgcolor="#96E0E2">创建时间</td>
+        <td width="64" bgcolor="#96E0E2">状态</td>
+        <td width="98" bgcolor="#96E0E2">异常userid</td>
+        </tr>
+        <volist name="data" id="vo">
+          <tr id="trHeader">
+            <td width="27" bgcolor="#96E0E2">{$vo.phone}</td>
+            <td width="27" bgcolor="#96E0E2">{$vo.crt_time}</td>
+            <td width="64" bgcolor="#96E0E2">{$vo.status}</td>
+            <td width="98" bgcolor="#96E0E2">{$vo.desc}</td>
+          </tr>
+        </volist>
+  </table>
+</div>
+ 
+</BODY>
+ 
+<script language="javascript">// Example: obj = findObj("image1");
+
+</script>
+</HTML>

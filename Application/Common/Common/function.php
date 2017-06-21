@@ -1390,3 +1390,23 @@ function ExcelCustomers() {
     $write->save('php://output');
     //var_dump($row);exit;
 }
+
+function addFileToZip($path, $zip) {
+    $handler = opendir($path); //打开当前文件夹由$path指定。
+    /*
+    循环的读取文件夹下的所有文件和文件夹
+    其中$filename = readdir($handler)是每次循环的时候将读取的文件名赋值给$filename，
+    为了不陷于死循环，所以还要让$filename !== false。
+    一定要用!==，因为如果某个文件名如果叫'0'，或者某些被系统认为是代表false，用!=就会停止循环
+    */
+    while (($filename = readdir($handler)) !== false) {
+        if ($filename != "." && $filename != "..") {//文件夹文件名字为'.'和‘..’，不要对他们进行操作
+            if (is_dir($path . "/" . $filename)) {// 如果读取的某个对象是文件夹，则递归
+                addFileToZip($path . "/" . $filename, $zip);
+            } else { //将文件加入zip对象
+            $zip->addFile($path . "/" . $filename);
+            }
+        }
+    }
+    @closedir($path);
+}

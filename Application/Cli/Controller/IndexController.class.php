@@ -219,4 +219,127 @@ class IndexController extends Controller {
 		echo 222;
 	}
 
+
+	public function test4() {
+		$mcd_model = M('MemberClassnuData','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		$mc_model = M('MemberClassnu','t_');
+		$onc_model = M('OldNewClass','t_');
+		// $mcd_model = M('MemberClassnuData','t_');
+		// $mc_model = M('MemberClassnu','t_');
+		// $onc_model = M('OldNewClass','t_');
+		
+		$where = 'id in(117,121,37)';
+		$old_classnuids = $mc_model->where($where)->getField('id',true);
+		$log_name = '/nsql_'.date('m_d_H_i');
+		// error_log('mch:data = '.M()->getLastSql()."\r\n",3,APP_PATH.'/sql.log');
+		// var_dump($old_classnuids);die;
+		if($old_classnuids) {
+			foreach ($old_classnuids as $old_classnuid) {
+				$all_mcd = $mcd_model->where(array('classnuid'=>$old_classnuid))->select();//查询所有老班号下的学员
+				error_log('查询所有老班号下的学员 '.count($all_mcd)."\r\n",3,realpath(APP_PATH).$log_name.'.log');
+				$i = 0;
+				$data = array();
+				foreach($all_mcd as $k=>$v) {
+					$new_name = $onc_model->where(array('old_id'=>$v['classnuid']))->select();//查询新班号的名称
+					error_log('查询新班号信息 '.json_encode($new_name)."\r\n",3,realpath(APP_PATH).$log_name.'.log');
+					if($new_name) {
+						foreach ($new_name as $k1=> $v1) {
+							//根据班号名称判断新班号是否存在以及数据是否重复
+							if(($new_classnuid = $v1['new_id']) && !$mcd_model->where(array('classnuid'=>$new_classnuid,'userid'=>$v['userid']))->find()) {
+								
+								$i++;
+								$item = $v;
+								unset($item['id']);
+								$item['crttime'] = time();
+								$item['classnuid'] = $new_classnuid;
+								// var_dump($item);die;
+								$mcd_model->add($item);
+								error_log('userid='.$v['userid'].'&phone='.$v['username']."操作成功 \r\n",3,realpath(APP_PATH).$log_name.'.log');
+							}
+						}
+					}
+				}
+			}
+		}
+
+		var_dump($i);
+	}
+
+	public function test6() {
+		$mcd_model = M('MemberClassnuData','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/test#utf8');
+		$mcd_online_model = M('MemberClassnuData','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		$mc_model = M('MemberClassnu','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/test#utf8');
+		$onc_model = M('OldNewClass','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/test#utf8');
+		$xy_online_model = M('Xueyuan','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		// $mcd_model = M('MemberClassnuData','t_');
+		// $mc_model = M('MemberClassnu','t_');
+		// $onc_model = M('OldNewClass','t_');
+		
+		$where = 'id>21791';
+		$new_mcd_data = $mcd_online_model->where($where)->group('userid')->order('userid asc')->select();//查询上线后生成的班内学员表数据，根据userid分组
+		error_log(date('m/d H:i:s').' 所有用户数量 '.count($new_mcd_data).' 用户详情 '.json_encode($new_mcd_data)."\r\n",3,APP_PATH.'/sql_new_data_import.log');
+		foreach ($new_mcd_data as $k=>$v) {
+			$id = $v['id'];
+			error_log(date('m/d H:i:s').' userid='.$v['userid']." start \r\n",3,APP_PATH.'/sql_new_data_import.log');
+			if(preg_match('/^1[34578]\d{9}$/',$v['username'])) {
+				$xy_arr = $xy_online_model->where(array('xy_phone'=>$v['username']))->select();//查询userid对应的学员表的班型信息
+				if($xy_arr) {
+					foreach ($xy_arr as $key=>$value) {
+						$classnuids = $mc_model->where(array('classtypeid'=>$value['ctid']))->select();//根据班型查询到班号信息
+						if($classnuids) {
+							foreach ($classnuids as $k2=>$v2) {
+								if(!$mcd_model->where(array('username'=>$v['username'],'classnuid'=>$v2['id']))->find()) {
+									$item = $v;
+									$item['crttime'] = time();
+									$item['classnuid'] = $v2['id'];
+									unset($item['id']);
+									// var_dump($item);die;
+									// $mcd_model->add($item);//插入到班内学员
+									error_log(date('m/d H:i:s').' userid='.$v['userid'].'phone='.$v['username'].'插入班号'.$v2['id']."成功 ".json_decode($item)."\r\n",3,APP_PATH.'/sql_new_data_import.log');
+								}
+
+							}
+						} else {
+							error_log(date('m/d H:i:s').' notice，班型没有对应的班号：'.$value['ctid']."\r\n",3,APP_PATH.'/sql_new_data_import.log');
+						}
+					}
+
+				} else {
+					error_log(date('m/d H:i:s').' error，学员表没有信息：'.$v['username']."\r\n",3,APP_PATH.'/sql_new_data_import.log');
+				}
+			} else {
+				error_log(date('m/d H:i:s').' error，不是手机号码：'.$v['username']."\r\n",3,APP_PATH.'/sql_new_data_import.log');
+			}
+			
+		}
+
+		
+	}
+
+	public function test7() {
+		$mcd_model = M('MemberClassnuData','t_');
+		$mc_model = M('MemberClassnu','t_');
+
+		// $mcd_model = M('MemberClassnuData','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		// $mc_model = M('MemberClassnu','t_','mysql://admin:%Al&9FlPFKzSdm$V@120.24.183.111/sxmaps_i_new#utf8');
+		
+		$sql = "SELECT id,`name` FROM t_member_classnu GROUP BY `name` HAVING count(1)>1";
+		$all_repeat_classnu = $mc_model->query($sql);//所有重复班号
+		
+		foreach ($all_repeat_classnu as $k=>$v) {
+			$classnuids = $mc_model->where(array('name'=>$v['name']))->getField('id',true);//班号名称相同的所有班号id
+			$baoliu_classnuid = $v['id'];//保留的班号id
+			
+			foreach ($classnuids as $classnuid) {
+				if($classnuid != $baoliu_classnuid) {
+					error_log('classnuid='.$baoliu_classnuid."开始\r\n",3,realpath(APP_PATH).'/asql_'.date('m_d_H_i').'log');
+					$mcd_model->where(array('classnuid'=>$classnuid))->save(array('classnuid'=>$baoliu_classnuid));
+					error_log('classnuid='.$baoliu_classnuid."结束\r\n",3,realpath(APP_PATH).'/asql_'.date('m_d_H_i').'log');
+				}
+				
+			}
+			// var_dump($baoliu_classnuid);die;
+		}
+		
+	}
 }
