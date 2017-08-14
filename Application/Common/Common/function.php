@@ -1149,9 +1149,14 @@ function getValue($array, $key, $default = null) {
 /**
  * 打印调试日志
  */
-function dump_log($msg) {
-    $file=APP_PATH . '/log.txt';
-    error_log(date('H:i:s').'---'.json_encode($msg) . "\n\r", 3, $file);
+function dump_log($msg, $file='') {
+    if(!$file) {
+        $file = 'log.txt';
+    }
+    if(is_array($msg)) {
+        $msg = json_encode($msg);
+    }
+    error_log(date('Y-m-d H:i:s').'---'.$msg . "\n\r", 3, realpath(APP_PATH).'/'.$file);
 }
 
 /**
@@ -1409,4 +1414,68 @@ function addFileToZip($path, $zip) {
         }
     }
     @closedir($path);
+}
+
+/**
+ * 发送post请求
+ */
+function request_post($url = '', $param = '') {
+    if (empty($url) || empty($param)) {
+        return false;
+    }
+    $postUrl = $url;
+    $curlPost = $param;
+    $ch = curl_init(); //初始化curl
+    curl_setopt($ch, CURLOPT_URL, $postUrl); //抓取指定网页
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    curl_setopt($ch, CURLOPT_HEADER, 0); //设置header
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //要求结果为字符串且输出到屏幕上
+    curl_setopt($ch, CURLOPT_POST, 1); //post提交方式
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
+    $data = curl_exec($ch); //运行curl
+    curl_close($ch);
+    
+    return $data;
+}
+
+function request_get($url = '')
+{
+    if (empty($url)) {
+        return false;
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+
+    return $data;
+}
+
+function get_access_token() {
+    $token_file = realpath(APP_PATH).'/access_token.txt';
+    $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".C('WX_APPID')."&secret=".C('WX_APPSECRET');
+    
+    if(!is_file($token_file)) {
+        $token_info = json_decode(request_get($url),true);
+        $token_info['expire_time'] = $token_info['expires_in']+time();
+        file_put_contents($token_file,json_encode($token_info));
+
+        $access_token = $token_info['access_token'];
+    } else {
+        $data = json_decode(file_get_contents($token_file),true);
+        if((int)$data['expire_time']<time()) {// 过期
+            $token_info = json_decode(request_get($url),true);
+            $token_info['expire_time'] = $token_info['expires_in']+time();// 失效时间压缩一小时
+            file_put_contents($token_file,json_encode($token_info));
+
+            $access_token = $token_info['access_token'];
+        } else {
+            $access_token = $data['access_token'];
+        }
+    }
+    
+    return $access_token;
 }

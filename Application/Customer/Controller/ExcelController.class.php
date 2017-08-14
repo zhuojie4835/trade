@@ -784,4 +784,47 @@ class ExcelController extends Controller {
 			$model->rollback();
 		}
 	}
+
+	public function test9() {
+		$str = '</div>';
+		$n_str = htmlspecialchars($str);
+		var_dump($n_str);
+	}
+
+	public function test10() {
+		Vendor('PHPMailer.PHPMailerAutoload');
+		$mail = new \PHPMailer(); //实例化
+		$mail->IsSMTP(); // 启用SMTP
+		// $mail->Host = "smtp.qq.com"; //SMTP服务器 以163邮箱为例子
+		$mail->Host = "smtp.163.com"; //SMTP服务器 以163邮箱为例子
+		$mail->Port = 25;  //邮件发送端口
+		$mail->SMTPAuth   = true;  //启用SMTP认证
+		$mail->CharSet  = "UTF-8"; //字符集
+		$mail->Encoding = "base64"; //编码方式
+		$mail->Username = "zhuojie4835@163.com";  //你的邮箱
+		// $mail->Username = "1290622449@qq.com";  //你的邮箱
+		// $mail->Password = "3546425Zj@";  //你的密码
+		$mail->Password = "3546425zhuojie@";  //你的密码
+		$mail->Subject = "你好"; //邮件标题
+		// $mail->From = "1290622449@qq.com";  //发件人地址（也就是你的邮箱）
+		$mail->From = "zhuojie4835@163.com";  //发件人地址（也就是你的邮箱）
+		$mail->FromName = "月光光";  //发件人姓名
+		// $address = "zhuojie4835@163.com";//收件人email
+		$address = "1290622449@qq.com";//收件人email
+		$mail->AddAddress($address, "亲");//添加收件人（地址，昵称）
+		// $mail->AddAttachment('xx.xls','我的附件.xls'); // 添加附件,并指定名称
+		$mail->IsHTML(true); //支持html格式内容
+		$mail->AddEmbeddedImage("logo.jpg",""); //设置邮件中的图片
+		$mail->Body = '你好, <b>朋友</b>! <br/>这是一封来自<a href="http://www.baidu.com" 
+		target="_blank">helloweba.com</a>的邮件！<br/>
+		<img alt="helloweba" src="http://www.sxmaps.com/Public/Pc/images/about/sx_introd/banner_intro.jpg">'; //邮件主体内容
+
+
+		//发送
+		if(!$mail->Send()) {
+		  echo "Mailer Error: " . $mail->ErrorInfo;
+		} else {
+		  echo "Message sent!";
+		}
+	}
 }
